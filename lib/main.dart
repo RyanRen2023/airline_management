@@ -3,7 +3,7 @@ import 'package:airline_management/customer/CustomerPage.dart';
 import 'package:airline_management/airline/AirlinePage.dart';
 import 'package:airline_management/flights/FlightsPage.dart';
 import 'package:airline_management/reservation/ReservationPage.dart';
-import 'package:airline_management/Config.dart';
+import 'package:airline_management/Properties.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,15 +21,16 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Ariline Management Homepage'),
+      home: const MyHomePage(title: 'Airline Management Homepage'),
       initialRoute: '/home',
       routes: {
-        '/home': (context) =>
-            const MyHomePage(title: 'Ariline Management Homepage'),
-        Config.NAV_CUSTOMER: (context) => const CustomerPage(title: "Customer"),
-        Config.NAV_AIRLINE: (context) => const AirlinePage(title: "Airline"),
-        Config.NAV_FLIGHTS: (context) => const FlightsPage(title: "Flights"),
-        Config.NAV_RESERVATION: (context) => const ReservationPage(title: "Reservation"),
+        Properties.NAV_HOME: (context) =>
+            const MyHomePage(title: 'Airline Management Homepage'),
+        Properties.NAV_CUSTOMER: (context) => const CustomerPage(title: "Customer"),
+        Properties.NAV_AIRLINE: (context) => const AirlinePage(title: "Airline"),
+        Properties.NAV_FLIGHTS: (context) => const FlightsPage(title: "Flights"),
+        Properties.NAV_RESERVATION: (context) =>
+            const ReservationPage(title: "Reservation"),
       },
     );
   }
@@ -45,8 +46,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,30 +57,35 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ElevatedButton(onPressed: () {
-              Navigator.pushNamed(context, Config.NAV_AIRLINE);
-            }, child: const Text("Airline")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, Properties.NAV_AIRLINE);
+                },
+                child: const Text("Airline")),
             SizedBox(
-              height: Config.SIZEDBOX_HIGHT,
-            ),
-            ElevatedButton(onPressed: () {
-              Navigator.pushNamed(context, Config.NAV_FLIGHTS);
-
-            }, child: const Text("Flights")),
-            SizedBox(
-              height: Config.SIZEDBOX_HIGHT,
+              height: Properties.SIZEDBOX_HIGHT,
             ),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, Config.NAV_CUSTOMER);
+                  Navigator.pushNamed(context, Properties.NAV_FLIGHTS);
+                },
+                child: const Text("Flights")),
+            SizedBox(
+              height: Properties.SIZEDBOX_HIGHT,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, Properties.NAV_CUSTOMER);
                 },
                 child: const Text("Customer")),
             SizedBox(
-              height: Config.SIZEDBOX_HIGHT,
+              height: Properties.SIZEDBOX_HIGHT,
             ),
-            ElevatedButton(onPressed: () {
-              Navigator.pushNamed(context, Config.NAV_RESERVATION);
-            }, child: const Text("Reservation")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, Properties.NAV_RESERVATION);
+                },
+                child: const Text("Reservation")),
           ],
         ),
       ),
