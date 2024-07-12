@@ -4,7 +4,7 @@ import 'package:airline_management/customer/CustomerListPage.dart';
 import 'package:airline_management/customer/Customer.dart';
 import 'package:airline_management/customer/CustomerDetailView.dart';
 
-import 'CustermerDetailPage.dart';
+import 'CustomerDetailPage.dart';
 
 class CustomerPage extends StatefulWidget {
   const CustomerPage({super.key, required this.title});
@@ -21,11 +21,13 @@ class _CustomerPageState extends State<CustomerPage> {
 
   final List<Customer> customers = [
     Customer(
+        id: 1,
         firstName: 'John',
         lastName: 'Doe',
         address: '123 Main St',
         birthday: '1990-01-01'),
     Customer(
+        id: 2,
         firstName: 'Jane',
         lastName: 'Smith',
         address: '456 Elm St',

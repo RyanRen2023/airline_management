@@ -4,7 +4,7 @@ import 'package:airline_management/customer/Customer.dart';
 class CustomerDetailView extends StatelessWidget {
   final Customer customer;
 
-  CustomerDetailView({required this.customer});
+  CustomerDetailView({super.key, required this.customer});
 
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();

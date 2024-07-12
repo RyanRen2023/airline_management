@@ -5,7 +5,11 @@ import 'package:airline_management/flights/FlightsPage.dart';
 import 'package:airline_management/reservation/ReservationPage.dart';
 import 'package:airline_management/Properties.dart';
 
-void main() {
+import 'database/DatabaseOperator.dart';
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseOperator.initDatabase();
   runApp(const MyApp());
 }
 

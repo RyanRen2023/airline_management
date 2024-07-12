@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:airline_management/customer/CustermerDetailPage.dart';
+import 'package:airline_management/customer/CustomerDetailPage.dart';
 import 'package:airline_management/customer/Customer.dart';
 
 class CustomerListPage extends StatelessWidget {
