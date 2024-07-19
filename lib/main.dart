@@ -7,6 +7,7 @@ import 'package:airline_management/Properties.dart';
 
 import 'database/DatabaseOperator.dart';
 
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseOperator.initDatabase();
@@ -33,12 +34,13 @@ class MyApp extends StatelessWidget {
         Properties.NAV_CUSTOMER: (context) => const CustomerPage(title: "Customer"),
         Properties.NAV_AIRLINE: (context) => const AirlinePage(title: "Airline"),
         Properties.NAV_FLIGHTS: (context) => const FlightsPage(title: "Flights"),
-        Properties.NAV_RESERVATION: (context) =>
-            const ReservationPage(title: "Reservation"),
+        Properties.NAV_RESERVATION: (context) => const ReservationPage(title: "Reservation"),
       },
     );
   }
 }
+
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
