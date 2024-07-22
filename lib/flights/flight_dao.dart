@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
-import 'database.dart';  // Import the generated database file
+// import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
+import 'package:airline_management/database/database.dart';  // Import the generated database file
 import 'flight_item.dart';  // Import the FlightItem entity
 import 'flight_dao.dart';  // Import the FlightDao
 
-class FlightsPage extends StatefulWidget{
-  const FlightsPage({super.key,required this.title});
-  
-  final String title;
+class FlightsPage extends StatefulWidget {
+  const FlightsPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _FlightsPageState();
-
+  State<FlightsPage> createState() => _FlightsPageState();
 }
 
 class _FlightsPageState extends State<FlightsPage> {
