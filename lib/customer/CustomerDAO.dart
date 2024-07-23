@@ -13,7 +13,7 @@ abstract class CustomerDAO {
   Future<void> deleteCustomerById(int id);
 
   @insert
-  Future<void> insertCustomer(Customer customer);
+  Future<int> insertCustomer(Customer customer);
 
   @update
   Future<void> updateCustomer(Customer customer);

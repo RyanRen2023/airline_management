@@ -1,8 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:airline_management/customer/Customer.dart';
 
 class CustomerDetailView extends StatelessWidget {
-  final Customer customer;
+  Customer customer;
   Function(Customer) updateCustomer;
   Function(Customer) deleteCustomer;
 
@@ -32,8 +33,35 @@ class CustomerDetailView extends StatelessWidget {
     updateCustomer(customer);
   }
 
+  void deleteDialogConfirm(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm to Delete Customer?'),
+          content: Text('Confirm to Delete Customer?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                deleteCustomers();
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
   void deleteCustomers() {
-    Customer cus = this.customer;
+    Customer cus = this.customer!;
     Customer customer = Customer(
         id: cus.id,
         firstName: cus.firstName,
@@ -45,10 +73,11 @@ class CustomerDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _firstNameController.text = customer.firstName;
-    _lastNameController.text = customer.lastName;
-    _addressController.text = customer.address;
-    _birthdayController.text = customer.birthday;
+    Customer cus = customer!;
+    _firstNameController.text = cus.firstName!;
+    _lastNameController.text = cus.lastName!;
+    _addressController.text = cus.address;
+    _birthdayController.text = cus.birthday;
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -79,7 +108,9 @@ class CustomerDetailView extends StatelessWidget {
                 child: Text('Update'),
               ),
               ElevatedButton(
-                onPressed: deleteCustomers,
+                onPressed: () {
+                  deleteDialogConfirm(context);
+                },
                 child: Text('Delete'),
               ),
             ],

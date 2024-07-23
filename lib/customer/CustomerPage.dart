@@ -39,7 +39,6 @@ class _CustomerPageState extends State<CustomerPage> {
   @override
   void dispose() {
     super.dispose();
-    super.setState(() {});
   }
 
   void onCustomerSelectedWide(Customer customer) {
@@ -50,12 +49,13 @@ class _CustomerPageState extends State<CustomerPage> {
 
   void onCustomerSelected(Customer customer) {
     _selectedCustomer = customer;
+
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) {
         return CustomerDetailPage(
           title: 'Customer Detail',
-          customer: customer,
+          customer: _selectedCustomer!,
           updateCustomer: onUpdateCustomer,
           deleteCustomer: onDeleteCustomer,
         );
@@ -63,12 +63,17 @@ class _CustomerPageState extends State<CustomerPage> {
     );
   }
 
-  void onAddNewCustomer(Customer customer) {
+  void onAddNewCustomer(Customer customer) async {
+    int? customerId = await customerDAO?.insertCustomer(customer);
+    Customer newCus = Customer(id:customerId,firstName: customer.firstName,lastName: customer.lastName,address: customer.address,birthday: customer.birthday);
     setState(() {
-      customers.add(customer);
+      customers.add(newCus);
     });
+    if (customerId != null) {
+      print('New customer ID: $customerId');
+    }
+    showSnackBar("add customer successfully");
 
-    customerDAO?.insertCustomer(customer);
   }
 
   void onUpdateCustomer(Customer customer) {
@@ -82,6 +87,8 @@ class _CustomerPageState extends State<CustomerPage> {
       }
     }
     customerDAO?.updateCustomer(customer);
+    showSnackBar("update customer successfully");
+
   }
 
   void onDeleteCustomer(Customer customer) {
@@ -95,6 +102,15 @@ class _CustomerPageState extends State<CustomerPage> {
       }
     }
     customerDAO?.deleteCustomerById(customer.id!);
+    setState(() {
+      _selectedCustomer = null;
+    });
+    showSnackBar("delete customer successfully");
+  }
+
+  void showSnackBar(String message) {
+    var snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   Widget responsiveLayout() {
