@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:airline_management/customer/CustomerPage.dart';
-import 'package:airline_management/airline/AirlinePage.dart';
+//import 'package:airline_management/airline/AirlinePage.dart';
+import 'package:airline_management/airplane/AirplanePage.dart';
 import 'package:airline_management/flights/FlightsPage.dart';
 import 'package:airline_management/reservation/ReservationPage.dart';
 import 'package:airline_management/Properties.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         Properties.NAV_HOME: (context) =>
             const MyHomePage(title: 'Airline Management Homepage'),
         Properties.NAV_CUSTOMER: (context) => const CustomerPage(title: "Customer"),
-        Properties.NAV_AIRLINE: (context) => const AirlinePage(title: "Airline"),
+        Properties.NAV_AIRPLANE: (context) => const AirplanePage(title: "Airplane"),
         Properties.NAV_FLIGHTS: (context) => const FlightsPage(title: "Flights"),
         Properties.NAV_RESERVATION: (context) => const ReservationPage(title: "Reservation"),
       },
@@ -65,9 +66,9 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, Properties.NAV_AIRLINE);
+                  Navigator.pushNamed(context, Properties.NAV_AIRPLANE);
                 },
-                child: const Text("Airline")),
+                child: const Text("Airplane")),
             SizedBox(
               height: Properties.SIZEDBOX_HIGHT,
             ),
