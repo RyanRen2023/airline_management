@@ -11,5 +11,12 @@ class Properties {
   static const String NAV_RESERVATION = '/conversation';
 
   // button text;
+  static const List<String> BUTTON_SUBMIT = ['Submit','提交'];
+
+  static int lang_index = 1;
+
+  //
+  static const List<String> LABLE_FIRST_NAME = ['First Name','名字'];
+
 
 }
