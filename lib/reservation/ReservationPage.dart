@@ -144,93 +144,82 @@ class _ReservationPageState extends State<ReservationPage> {
     );
   }
 
+
   Widget ReservationList() {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            controller: _firstNameController,
-            decoration: InputDecoration(labelText: 'First Name'),
+    return SingleChildScrollView( // Added SingleChildScrollView
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _firstNameController,
+              decoration: InputDecoration(labelText: 'First Name'),
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            controller: _lastNameController,
-            decoration: InputDecoration(labelText: 'Last Name'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _lastNameController,
+              decoration: InputDecoration(labelText: 'Last Name'),
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            controller: _emailController,
-            decoration: InputDecoration(labelText: 'Email'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _emailController,
+              decoration: InputDecoration(labelText: 'Email'),
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            controller: _flightCodeController,
-            decoration: InputDecoration(labelText: 'Flight Code'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _flightCodeController,
+              decoration: InputDecoration(labelText: 'Flight Code'),
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            controller: _dateController,
-            decoration: InputDecoration(labelText: 'Date'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _dateController,
+              decoration: InputDecoration(labelText: 'Date'),
+            ),
           ),
-        ),
-        ElevatedButton(
-          child: Text('Add Reservation'),
-          onPressed: _addReservation,
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: reservations.length,
-            itemBuilder: (context, index) {
-              final reservation = reservations[index];
-              return Card(
-                child: ListTile(
-                  title: Text('Name: ${reservation.firstName} ${reservation.lastName}'),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Flight Code: ${reservation.flightCode}'),
-                      Text('Date: ${reservation.date}'),
-                    ],
+          ElevatedButton(
+            child: Text('Add Reservation'),
+            onPressed: _addReservation,
+          ),
+          SizedBox(  // Added SizedBox with a fixed height
+            height: 300, //height for the card list
+            child: ListView.builder(
+              itemCount: reservations.length,
+              itemBuilder: (context, index) {
+                final reservation = reservations[index];
+                return Card(
+                  child: ListTile(
+                    title: Text('Name: ${reservation.firstName} ${reservation.lastName}'),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Flight Code: ${reservation.flightCode}'),
+                        Text('Date: ${reservation.date}'),
+                      ],
+                    ),
+                    isThreeLine: true,
+                    onTap: () {
+                      setState(() {
+                        selectedReservation = reservation;
+                      });
+                    },
                   ),
-
-                  isThreeLine: true,
-                      onTap: () {
-                        setState(() {
-                          selectedReservation = reservation;
-                        });
-                      },
-                ),
-              );
-
-/*
-
-              return ListTile(
-                title: Text('Name: ${reservation.firstName} ${reservation.lastName}'),
-                subtitle: Text('Flight Code: ${reservation.flightCode}'),
-                onTap: () {
-                  setState(() {
-                    selectedReservation = reservation;
-                  });
-                },
-              );
-
-              */
-
-            },
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
+
 
   Widget DetailsPage() {
     if (selectedReservation == null) {
