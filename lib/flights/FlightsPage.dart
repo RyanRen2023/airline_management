@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
-import '../database/database.dart';
+import 'package:airline_management/database/DatabaseOperator.dart';
 import 'FlightDao.dart';
 import 'FlightItem.dart';
-import 'package:airline_management/database/DatabaseOperator.dart';
-
+  // Import the FlightDao
 
 class FlightsPage extends StatefulWidget{
   const FlightsPage({super.key,required this.title});
@@ -23,7 +22,6 @@ class _FlightsPageState extends State<FlightsPage> {
   final TextEditingController _destinationCityController = TextEditingController();
   final TextEditingController _departureTimeController = TextEditingController();
   final TextEditingController _arrivalTimeController = TextEditingController();
-  late AppDatabase _database;
   late FlightDao _flightDao;
   final EncryptedSharedPreferences _preferences = EncryptedSharedPreferences();
 
@@ -37,7 +35,7 @@ class _FlightsPageState extends State<FlightsPage> {
     _loadPreferences();
   }
 
-  Future<void> _initDatabase() async {;
+  Future<void> _initDatabase() async {
     _flightDao = (await DatabaseOperator.getFlightsDAO())!;
     _loadFlights();
   }
