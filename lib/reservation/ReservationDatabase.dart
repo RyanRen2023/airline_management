@@ -3,7 +3,6 @@ import 'package:floor/floor.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 
- import '../flights/flight_item.dart';
 import 'Reservation.dart';
 import 'ReservationDAO.dart';
 
