@@ -1,5 +1,5 @@
 import 'package:floor/floor.dart';
-import 'flight_item.dart';
+import 'package:airline_management/flights/FlightItem.dart';
 
 @dao
 abstract class FlightDao {
