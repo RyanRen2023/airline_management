@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
-import 'database.dart';  // Import the generated database file
-import 'flight_item.dart';  // Import the FlightItem entity
-import 'flight_dao.dart';  // Import the FlightDao
+import '../database/database.dart';
+import 'FlightDao.dart';
+import 'FlightItem.dart';
+
 
 class FlightsPage extends StatefulWidget{
   const FlightsPage({super.key,required this.title});
