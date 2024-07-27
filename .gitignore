@@ -42,3 +42,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 /lib/database/database.g.dart
+/ios/Podfile
+/macos/Podfile
+/macos/Podfile.lock
