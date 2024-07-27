@@ -3,6 +3,12 @@
   "MAIN_BUTTON_FLIGHTS"                           : "Flights",
   "MAIN_BUTTON_CUSTOMER"                          : "Customer",
   "MAIN_BUTTON_RESERVATION"                       : "Reservation",
+  "FIRST_NAME"                                    : "First Name",
+  "LAST_NAME"                                     : "Last Name",
+  "EMAIL"                                         : "Email",
+  "FLIGHT_CODE"                                   : "Flight Code",
+  "DATE"                                          : "Date",
+  "ADD_RESERVATION"                               : "Add Reservation",
   "GO_BACK"                                       : "Go back",
   "DELETE"                                        : "Delete"
 

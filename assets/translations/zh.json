@@ -3,6 +3,12 @@
   "MAIN_BUTTON_FLIGHTS"                           : "航班",
   "MAIN_BUTTON_CUSTOMER"                          : "顾客",
   "MAIN_BUTTON_RESERVATION"                       : "预定",
+  "FIRST_NAME"                                    : "名字",
+  "LAST_NAME"                                     : "姓氏",
+  "EMAIL"                                         : "电子邮件",
+  "FLIGHT_CODE"                                   : "航班代码",
+  "DATE"                                          : "日期",
+  "ADD_RESERVATION"                               : "添加预订",
   "GO_BACK"                                       : "返回",
   "DELETE"                                        : "删除"
 
