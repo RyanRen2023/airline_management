@@ -1,6 +1,6 @@
 import 'package:floor/floor.dart';
 import 'package:airline_management/flights/FlightItem.dart';
-
+// version 2
 @dao
 abstract class FlightDao {
   @Query('SELECT * FROM FlightItem')

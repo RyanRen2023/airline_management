@@ -3,8 +3,8 @@ import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:airline_management/database/DatabaseOperator.dart';
 import 'FlightDao.dart';
 import 'FlightItem.dart';
-  // Import the FlightDao
 
+  // version 2
 class FlightsPage extends StatefulWidget{
   const FlightsPage({super.key,required this.title});
   

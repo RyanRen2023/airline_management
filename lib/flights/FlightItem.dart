@@ -1,5 +1,5 @@
 import 'package:floor/floor.dart';
-
+//version 2
 @entity
 class FlightItem {
   @primaryKey
