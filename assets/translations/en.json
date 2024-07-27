@@ -9,9 +9,20 @@
   "FLIGHT_CODE"                                   : "Flight Code",
   "DATE"                                          : "Date",
   "ADD_RESERVATION"                               : "Add Reservation",
+  "RESERVATION"                                   : "Reservation",
+  "RESERVATION_ID"                                : "Reservation Id",
+  "YES"                                           : "Yes",
+  "NO"                                            : "No",
+  "FULL_NAME"                                     : "Full Name",
   "GO_BACK"                                       : "Go back",
-  "DELETE"                                        : "Delete"
-
+  "DELETE"                                        : "Delete",
+  "ALERT"                                         : "Alert",
+  "OK"                                            : "OK",
+  "WANT_TO_DELETE"                                : "Want to Delete?",
+  "PRES_YES_TO_DELETE"                            : "Press 'Yes' to Delete",
+  "NO_RESERVATION_SELECTED"                       : "No reservation selected",
+  "RESERVATION_ADDED_SUCCESSFULLY"                : "Reservation added successfully",
+  "PLEASE_FILL_ALL_FIELDS"                        : "Please fill all fields"
 
 
 

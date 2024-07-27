@@ -9,8 +9,24 @@
   "FLIGHT_CODE"                                   : "航班代码",
   "DATE"                                          : "日期",
   "ADD_RESERVATION"                               : "添加预订",
+  "RESERVATION"                                   : "预订",
+  "RESERVATION_ID"                                : "预订号",
+  "YES"                                           : "是",
+  "NO"                                            : "否",
+  "FULL_NAME"                                     : "全名",
   "GO_BACK"                                       : "返回",
-  "DELETE"                                        : "删除"
+  "DELETE"                                        : "删除",
+  "WANT_TO_DELETE"                                : "是否要删除?",
+  "PRES_YES_TO_DELETE"                            : "按'是'删除",
+  "NO_RESERVATION_SELECTED"                       : "未选择任何预订",
+  "RESERVATION_ADDED_SUCCESSFULLY"                : "预订添加成功",
+  "PLEASE_FILL_ALL_FIELDS"                        : "请填写所有字段"
+
+
+
+
+
+
 
 }
 

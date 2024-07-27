@@ -9,8 +9,32 @@
   "FLIGHT_CODE"                                   : "Code de vol",
   "DATE"                                          : "Date",
   "ADD_RESERVATION"                               : "Ajouter une réservation",
+  "RESERVATION"                                   : "Réservation",
+  "RESERVATION_ID"                                : "Identifiant de réservation",
+  "YES"                                           : "Oui",
+  "NO"                                            : "Non",
+  "FULL_NAME"                                     : "Nom complet",
   "GO_BACK"                                       : "Retour",
-  "DELETE"                                        : "Supprimer"
+  "DELETE"                                        : "Supprimer",
+  "WANT_TO_DELETE"                                : "Voulez-vous supprimer ?",
+  "PRES_YES_TO_DELETE"                            : "Appuyez sur 'Oui' pour supprimer",
+  "NO_RESERVATION_SELECTED"                       : "Aucune réservation sélectionnée",
+  "RESERVATION_ADDED_SUCCESSFULLY"                : "Réservation ajoutée avec succès",
+  "PLEASE_FILL_ALL_FIELDS"                        : "Veuillez remplir tous les champs"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 
