@@ -11,6 +11,7 @@ import 'package:airline_management/flights/FlightDao.dart';
 import '../customer/Customer.dart';
 import 'database.dart';
 
+
 /**
  * The DatabaseOperator class handles database operations
  * such as initializing the database and accessing data access objects (DAOs).
@@ -22,7 +23,9 @@ import 'database.dart';
  */
 class DatabaseOperator {
   // Static variable to hold the database instance
+
   static late final AppDatabase? _database;
+  static final String databaseFile = "airline_database2.db";
 
   /**
    * Initializes the database if it has not been initialized.
@@ -31,8 +34,7 @@ class DatabaseOperator {
    * @return Future<void> A Future that completes when the database is initialized.
    */
   static Future<void> initDatabase() async {
-    _database =
-    await $FloorAppDatabase.databaseBuilder('airline_database.db').build();
+    _database = await $FloorAppDatabase.databaseBuilder(databaseFile).build();
   }
 
 
@@ -42,7 +44,6 @@ class DatabaseOperator {
     }
     return _database?.customerDAO;
   }
-
 
   static Future<List<Customer>> getAllCustomers() async {
     List<Customer> list = [];
@@ -58,4 +59,5 @@ class DatabaseOperator {
       await initDatabase();
     }
     return _database?.flightDao;
-  }}
+  }
+}
