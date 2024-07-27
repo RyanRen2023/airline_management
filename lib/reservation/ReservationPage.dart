@@ -49,8 +49,8 @@ class _ReservationPageState extends State<ReservationPage> {
     showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Want to Delete?'),
-        content: const Text('Press \'Yes\' to Delete'),
+        title:   Text(AppLocalizations.of(context)!.translate('WANT_TO_DELETE')!),
+        content:  Text(AppLocalizations.of(context)!.translate('PRES_YES_TO_DELETE')!),
         actions: <Widget>[
 
           FilledButton(onPressed: (){
@@ -58,7 +58,7 @@ class _ReservationPageState extends State<ReservationPage> {
             Navigator.of(context).pop();
 
 
-          }, child: Text("No")),
+          }, child: Text(AppLocalizations.of(context)!.translate("NO")!)),
 
           FilledButton(
               onPressed: (){
@@ -74,7 +74,7 @@ class _ReservationPageState extends State<ReservationPage> {
                   ),
                 );*/
               },
-              child: Text("Yes")),
+              child: Text(AppLocalizations.of(context)!.translate("YES")!)),
 
 
         ],
@@ -110,9 +110,9 @@ class _ReservationPageState extends State<ReservationPage> {
       await reservationDAO.insertReservation(newReservation);
       _loadReservations();
       _clearInputs();
-      _showSnackBar('Reservation added successfully');
+      _showSnackBar('RESERVATION_ADDED_SUCCESSFULLY');
     } else {
-      _showAlertDialog('Please fill all fields');
+      _showAlertDialog('PLEASE_FILL_ALL_FIELDS');
     }
   }
 
@@ -125,7 +125,7 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
   void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.translate(message)!)));
   }
 
   void _showAlertDialog(String message) {
@@ -133,11 +133,17 @@ class _ReservationPageState extends State<ReservationPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Alert'),
-          content: Text(message),
+          title:
+          Text(AppLocalizations.of(context)!.translate('ALERT')!),
+
+          content: Text(AppLocalizations.of(context)!.translate(message)!),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child:
+
+              Text(AppLocalizations.of(context)!.translate('OK')!),
+
+
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -161,39 +167,39 @@ class _ReservationPageState extends State<ReservationPage> {
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: _firstNameController,
-                decoration: InputDecoration(labelText: 'First Name'),
+                decoration: InputDecoration(labelText:  AppLocalizations.of(context)!.translate('FIRST_NAME')!),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: _lastNameController,
-                decoration: InputDecoration(labelText: 'Last Name'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate('LAST_NAME')),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: InputDecoration(labelText:  AppLocalizations.of(context)!.translate('EMAIL')),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: _flightCodeController,
-                decoration: InputDecoration(labelText: 'Flight Code'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate('FLIGHT_CODE')),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: _dateController,
-                decoration: InputDecoration(labelText: 'Date'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate('DATE')),
               ),
             ),
             ElevatedButton(
-              child: Text('Add Reservation'),
+              child: Text(AppLocalizations.of(context)!.translate('ADD_RESERVATION')!),
               onPressed: _addReservation,
             ),
             SizedBox(  // Added SizedBox with a fixed height
@@ -204,12 +210,16 @@ class _ReservationPageState extends State<ReservationPage> {
                   final reservation = reservations[index];
                   return Card(
                     child: ListTile(
-                      title: Text('Name: ${reservation.firstName} ${reservation.lastName}'),
+                      title:
+
+                      Text('${AppLocalizations.of(context)!.translate('FULL_NAME')}: ${reservation!.firstName} ${reservation!.lastName}'),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Flight Code: ${reservation.flightCode}'),
-                          Text('Date: ${reservation.date}'),
+
+                          Text('${AppLocalizations.of(context)!.translate('FLIGHT_CODE')}: ${reservation.flightCode} '),
+                          Text('${AppLocalizations.of(context)!.translate('DATE')}: ${reservation.date} '),
+
                         ],
                       ),
                       isThreeLine: true,
@@ -233,7 +243,7 @@ class _ReservationPageState extends State<ReservationPage> {
 
   Widget DetailsPage() {
     if (selectedReservation == null) {
-      return Center(child: Text("No reservation selected"));
+      return Center(child: Text(AppLocalizations.of(context)!.translate("NO_RESERVATION_SELECTED")!));
     } else {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -241,12 +251,21 @@ class _ReservationPageState extends State<ReservationPage> {
           Column(
 
             children: [
+/*
 
               Text('Reservation Id: ${selectedReservation!.id} '),
               Text('Name: ${selectedReservation!.firstName} ${selectedReservation!.lastName}'),
               Text('Email: ${selectedReservation!.email}'),
               Text('Flight Code: ${selectedReservation!.flightCode}'),
               Text('Date: ${selectedReservation!.date}'),
+*/
+
+              Text('${AppLocalizations.of(context)!.translate('RESERVATION_ID')}: ${selectedReservation!.id} '),
+              Text('${AppLocalizations.of(context)!.translate('FULL_NAME')}: ${selectedReservation!.firstName} ${selectedReservation!.lastName}'),
+              Text('${AppLocalizations.of(context)!.translate('EMAIL')}: ${selectedReservation!.email}'),
+              Text('${AppLocalizations.of(context)!.translate('FLIGHT_CODE')}: ${selectedReservation!.flightCode}'),
+              Text('${AppLocalizations.of(context)!.translate('DATE')}: ${selectedReservation!.date}'),
+
 
             ],
 
