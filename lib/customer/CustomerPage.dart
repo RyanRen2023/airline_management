@@ -1,9 +1,11 @@
+import 'package:airline_management/database/DatabaseOperator.dart';
 import 'package:flutter/material.dart';
 import 'package:airline_management/customer/AddCustomerPage.dart';
 import 'package:airline_management/customer/CustomerListPage.dart';
 import 'package:airline_management/customer/Customer.dart';
 import 'package:airline_management/customer/CustomerDetailView.dart';
 
+import 'CustomerDAO.dart';
 import 'CustomerDetailPage.dart';
 
 class CustomerPage extends StatefulWidget {
@@ -16,46 +18,107 @@ class CustomerPage extends StatefulWidget {
 }
 
 class _CustomerPageState extends State<CustomerPage> {
-  int _selectedIndex = 0;
   Customer? _selectedCustomer;
+  late CustomerDAO? customerDAO;
+  List<Customer> customers = [];
 
-  final List<Customer> customers = [
-    Customer(
-        id: 1,
-        firstName: 'John',
-        lastName: 'Doe',
-        address: '123 Main St',
-        birthday: '1990-01-01'),
-    Customer(
-        id: 2,
-        firstName: 'Jane',
-        lastName: 'Smith',
-        address: '456 Elm St',
-        birthday: '1992-02-02'),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    DatabaseOperator.getAllCustomers().then((value) {
+      setState(() {
+        customers = value;
+      });
+    });
 
-  void _onCustomerSelectedWide(Customer customer) {
+    DatabaseOperator.getCustomerDAO().then((value) {
+      customerDAO = value;
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  void onCustomerSelectedWide(Customer customer) {
     setState(() {
       _selectedCustomer = customer;
     });
   }
 
-  void _onCustomerSelected(Customer customer) {
+  void onCustomerSelected(Customer customer) {
     _selectedCustomer = customer;
+
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) {
-        return CustomerDetailPage(title: 'Add Customer', customer: customer);
+        return CustomerDetailPage(
+          title: 'Customer Detail',
+          customer: _selectedCustomer!,
+          updateCustomer: onUpdateCustomer,
+          deleteCustomer: onDeleteCustomer,
+        );
       }),
     );
   }
 
+  void onAddNewCustomer(Customer customer) async {
+    int? customerId = await customerDAO?.insertCustomer(customer);
+    Customer newCus = Customer(id:customerId,firstName: customer.firstName,lastName: customer.lastName,address: customer.address,birthday: customer.birthday);
+    setState(() {
+      customers.add(newCus);
+    });
+    if (customerId != null) {
+      print('New customer ID: $customerId');
+    }
+    showSnackBar("add customer successfully");
+
+  }
+
+  void onUpdateCustomer(Customer customer) {
+    for (int i = 0; i < customers.length; i++) {
+      if (customer.id == customers[i].id) {
+        setState(() {
+          customers[i] = customer;
+          _selectedCustomer = customer;
+        });
+        break;
+      }
+    }
+    customerDAO?.updateCustomer(customer);
+    showSnackBar("update customer successfully");
+
+  }
+
+  void onDeleteCustomer(Customer customer) {
+    for (int i = 0; i < customers.length; i++) {
+      if (customer.id == customers[i].id) {
+        setState(() {
+          customers.removeAt(i);
+          _selectedCustomer = null;
+        });
+        break;
+      }
+    }
+    customerDAO?.deleteCustomerById(customer.id!);
+    setState(() {
+      _selectedCustomer = null;
+    });
+    showSnackBar("delete customer successfully");
+  }
+
+  void showSnackBar(String message) {
+    var snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   Widget responsiveLayout() {
     var size = MediaQuery.of(context).size;
-    var heigh = size.height;
+    var height = size.height;
     var width = size.width;
 
-    if (width > heigh && width > 720) {
+    if (width > height && width > 720) {
       // landscape
       return showWideScreen();
     } else {
@@ -71,15 +134,19 @@ class _CustomerPageState extends State<CustomerPage> {
           flex: 1,
           child: CustomerListPage(
             customers: customers,
-            onCustomerSelected: _onCustomerSelectedWide,
+            onCustomerSelected: onCustomerSelectedWide,
             selectedCustomer: _selectedCustomer,
           ),
         ),
         Expanded(
           flex: 2,
           child: _selectedCustomer != null
-              ? CustomerDetailView(customer: _selectedCustomer!)
-              : Center(child: Text('Select a customer to view details')),
+              ? CustomerDetailView(
+                  customer: _selectedCustomer!,
+                  updateCustomer: onUpdateCustomer,
+                  deleteCustomer: onDeleteCustomer,
+                )
+              : const Center(child: Text('Select a customer to view details')),
         ),
       ],
     );
@@ -91,15 +158,33 @@ class _CustomerPageState extends State<CustomerPage> {
         Expanded(
           child: CustomerListPage(
             customers: customers,
-            onCustomerSelected: _onCustomerSelected,
+            onCustomerSelected: onCustomerSelected,
             selectedCustomer: _selectedCustomer,
           ),
         ),
-        if (_selectedCustomer != null)
-          Expanded(
-            child: CustomerDetailView(customer: _selectedCustomer!),
-          ),
       ],
+    );
+  }
+
+  Widget showAddCustomerButton() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 16.0),
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AddCustomerPage(
+                        title: 'Add Customer',
+                        addNewCustomer: onAddNewCustomer,
+                      )),
+            );
+          },
+          child: const Icon(Icons.add),
+        ),
+      ),
     );
   }
 
@@ -115,23 +200,7 @@ class _CustomerPageState extends State<CustomerPage> {
       body: Stack(
         children: [
           responsiveLayout(),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: FloatingActionButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            AddCustomerPage(title: 'Add Customer')),
-                  );
-                },
-                child: const Icon(Icons.add),
-              ),
-            ),
-          ),
+          showAddCustomerButton(),
         ],
       ),
     );
