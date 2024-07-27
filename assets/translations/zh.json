@@ -16,11 +16,16 @@
   "FULL_NAME"                                     : "全名",
   "GO_BACK"                                       : "返回",
   "DELETE"                                        : "删除",
+  "ALERT"                                         : "警告",
+  "OK"                                            : "好的",
   "WANT_TO_DELETE"                                : "是否要删除?",
   "PRES_YES_TO_DELETE"                            : "按'是'删除",
   "NO_RESERVATION_SELECTED"                       : "未选择任何预订",
   "RESERVATION_ADDED_SUCCESSFULLY"                : "预订添加成功",
   "PLEASE_FILL_ALL_FIELDS"                        : "请填写所有字段"
+
+
+
 
 
 
