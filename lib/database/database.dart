@@ -11,7 +11,7 @@ import '../flights/FlightItem.dart';
 import '../flights/FlightDao.dart';
 part 'database.g.dart'; // the generated code will be there
 
-@Database(version: 1, entities: [Customer, Airplane,FlightItem])
+@Database(version: 2, entities: [Customer, Airplane, FlightItem])
 abstract class AppDatabase extends FloorDatabase {
   CustomerDAO get customerDAO;
   AirplaneDAO get airplaneDAO;

@@ -3,6 +3,7 @@ import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import '../database/database.dart';
 import 'FlightDao.dart';
 import 'FlightItem.dart';
+import 'package:airline_management/database/DatabaseOperator.dart';
 
 
 class FlightsPage extends StatefulWidget{
@@ -36,9 +37,8 @@ class _FlightsPageState extends State<FlightsPage> {
     _loadPreferences();
   }
 
-  Future<void> _initDatabase() async {
-    _database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-    _flightDao = _database.flightDao;
+  Future<void> _initDatabase() async {;
+    _flightDao = (await DatabaseOperator.getFlightsDAO())!;
     _loadFlights();
   }
 

@@ -41,8 +41,7 @@ class _AddCustomerPageState extends State<AddCustomerPage> {
             TextField(
               controller: _firstNameController,
               decoration: InputDecoration(
-                  labelText:
-                      Properties.LABLE_FIRST_NAME[Properties.lang_index]),
+                  labelText:"First Name"),
             ),
             TextField(
               controller: _lastNameController,
@@ -63,7 +62,7 @@ class _AddCustomerPageState extends State<AddCustomerPage> {
                 submitNewCustomer();
                 Navigator.pop(context);
               },
-              child: Text(Properties.BUTTON_SUBMIT[Properties.lang_index]),
+              child: Text("Submit"),
             ),
           ],
         ),
