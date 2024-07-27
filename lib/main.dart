@@ -7,6 +7,7 @@ import 'package:airline_management/reservation/ReservationPage.dart';
 import 'package:airline_management/Properties.dart';
 
 import 'AppLocalizations.dart';
+import 'const/Const.dart';
 import 'database/DatabaseOperator.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
@@ -75,10 +76,19 @@ class _MyAppState extends State<MyApp> {
       routes: {
         Properties.NAV_HOME: (context) =>
             const MyHomePage(title: 'Airline Management Homepage'),
-        Properties.NAV_CUSTOMER: (context) => const CustomerPage(title: "Customer"),
-        Properties.NAV_AIRLINE: (context) => const AirplanePage(title: "Airplane"),
-        Properties.NAV_FLIGHTS: (context) => const FlightsPage(title: "Flights"),
-        Properties.NAV_RESERVATION: (context) => const ReservationPage(title: "Reservation"),
+        // Properties.NAV_CUSTOMER: (context) => const CustomerPage(title: "Customer"),
+        // Properties.NAV_AIRLINE: (context) => const AirplanePage(title: "Airplane"),
+        // Properties.NAV_FLIGHTS: (context) => const FlightsPage(title: "Flights"),
+        // Properties.NAV_RESERVATION: (context) => const ReservationPage(title: "Reservation"),
+        Properties.NAV_CUSTOMER: (context) => CustomerPage(
+            title: AppLocalizations.of(context)!.translate(Const.MAIN_BUTTON_CUSTOMER)!),
+        Properties.NAV_AIRLINE: (context) => AirplanePage(
+            title: AppLocalizations.of(context)!.translate(Const.MAIN_BUTTON_AIRPLANE)!),
+        Properties.NAV_FLIGHTS: (context) => FlightsPage(
+            title: AppLocalizations.of(context)!.translate(Const.MAIN_BUTTON_FLIGHTS)!),
+        Properties.NAV_RESERVATION: (context) => ReservationPage(
+            title: AppLocalizations.of(context)!.translate(Const.MAIN_BUTTON_RESERVATION)!)
+
       },
     );
   }

@@ -4,6 +4,7 @@ import '../AppLocalizations.dart';
 import '../database/database.dart';
 import 'Reservation.dart';
 import 'ReservationDAO.dart';
+import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 
 class ReservationPage extends StatefulWidget {
   const ReservationPage({super.key, required this.title});
@@ -24,7 +25,7 @@ class _ReservationPageState extends State<ReservationPage> {
   List<Reservation> reservations = [];
   late ReservationDAO reservationDAO;
   Reservation? selectedReservation;
-
+  final EncryptedSharedPreferences _preferences = EncryptedSharedPreferences();
   @override
   void initState() {
     super.initState();
