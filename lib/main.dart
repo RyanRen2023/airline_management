@@ -6,8 +6,12 @@ import 'package:airline_management/flights/FlightsPage.dart';
 import 'package:airline_management/reservation/ReservationPage.dart';
 import 'package:airline_management/Properties.dart';
 
+import 'AppLocalizations.dart';
 import 'database/DatabaseOperator.dart';
-
+import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'AppLocalizations.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,13 +19,52 @@ void main() async{
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget  {
   const MyApp({super.key});
+  @override
+  _MyAppState createState() {
+    return _MyAppState();
+  }
+
+  static void setLocale(BuildContext context, Locale newLocale) async {
+    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    state?.changeLanguage(newLocale);
+  }
+
+}
+
+
+
+//spilite to } class _MyAppState extends State<MyApp>  {
+class _MyAppState extends State<MyApp> {
+
+  var _locale = Locale("en","CA");//default is english from Canada
+
+  void changeLanguage(Locale newLanguage){
+    setState(() {
+      _locale = newLanguage;//set app language to new
+    });
+  }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      locale: _locale,//少了这一行会点击无法显示语言
+      supportedLocales: const[
+        Locale("en","CA"),
+        Locale("fr","FR"),
+        Locale("zh","ZH"),
+      ],
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate, // 添加这行
+      ],
+
+
+
       title: 'Airline Management',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
@@ -57,6 +100,24 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          OutlinedButton(onPressed: () {
+            MyApp.setLocale(context, Locale("fr","FR"));
+          }, child:Text(
+              "Switch to French(Français)"
+          )),
+          OutlinedButton(onPressed: () {
+            MyApp.setLocale(context, Locale("en","CA"));
+          }, child:Text(
+              "Switch to English"
+          )),
+          OutlinedButton(onPressed: () {
+            MyApp.setLocale(context, Locale("zh","ZH"));
+          }, child:Text(
+              "Switch to Chinese(中文)"
+          ))
+
+        ],
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
@@ -68,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   Navigator.pushNamed(context, Properties.NAV_AIRLINE);
                 },
-                child: const Text("Airplane")),
+                child: Text(AppLocalizations.of(context)!.translate('MAIN_BUTTON_AIRPLANE')!)),
             SizedBox(
               height: Properties.SIZEDBOX_HIGHT,
             ),
@@ -76,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   Navigator.pushNamed(context, Properties.NAV_FLIGHTS);
                 },
-                child: const Text("Flights")),
+                child: Text(AppLocalizations.of(context)!.translate('MAIN_BUTTON_FLIGHTS')!)),
             SizedBox(
               height: Properties.SIZEDBOX_HIGHT,
             ),
@@ -84,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   Navigator.pushNamed(context, Properties.NAV_CUSTOMER);
                 },
-                child: const Text("Customer")),
+                child: Text(AppLocalizations.of(context)!.translate('MAIN_BUTTON_CUSTOMER')!)),
             SizedBox(
               height: Properties.SIZEDBOX_HIGHT,
             ),
@@ -92,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   Navigator.pushNamed(context, Properties.NAV_RESERVATION);
                 },
-                child: const Text("Reservation")),
+                child: Text(AppLocalizations.of(context)!.translate('MAIN_BUTTON_RESERVATION')!)),
           ],
         ),
       ),
