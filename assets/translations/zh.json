@@ -2,7 +2,9 @@
   "MAIN_BUTTON_AIRPLANE"                          : "航线",
   "MAIN_BUTTON_FLIGHTS"                           : "航班",
   "MAIN_BUTTON_CUSTOMER"                          : "顾客",
-  "MAIN_BUTTON_RESERVATION"                       : "预定"
+  "MAIN_BUTTON_RESERVATION"                       : "预定",
+  "GO_BACK"                                       : "返回",
+  "DELETE"                                        : "删除"
 
 }
 

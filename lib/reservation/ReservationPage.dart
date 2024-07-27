@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+
+import '../AppLocalizations.dart';
+import '../database/database.dart';
 import 'Reservation.dart';
 import 'ReservationDAO.dart';
-import 'ReservationDatabase.dart';
 
 class ReservationPage extends StatefulWidget {
   const ReservationPage({super.key, required this.title});
@@ -30,8 +32,8 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
   Future<void> _initDb() async {
-    final database = await $FloorReservationDatabase.databaseBuilder('reservation_database.db').build();
-    reservationDAO = database.getReservationDao;
+    final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+    reservationDAO = database.reservationDao;
     _loadReservations();
   }
 
@@ -261,7 +263,7 @@ class _ReservationPageState extends State<ReservationPage> {
                     selectedReservation = null;
                   });
                 },
-                child: Text("Go back"),
+                child: Text(AppLocalizations.of(context)!.translate('GO_BACK')!)
               ),
               OutlinedButton(
                 onPressed: () {
@@ -269,7 +271,7 @@ class _ReservationPageState extends State<ReservationPage> {
                     _deleteTodoItem(selectedReservation!);
                   }
                 },
-                child: Text("Delete"),
+                child: Text(AppLocalizations.of(context)!.translate('DELETE')!)
               ),
 
             ],

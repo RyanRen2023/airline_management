@@ -104,17 +104,17 @@ class _MyHomePageState extends State<MyHomePage> {
           OutlinedButton(onPressed: () {
             MyApp.setLocale(context, Locale("fr","FR"));
           }, child:Text(
-              "Switch to French(Français)"
+              "French(Français)"
           )),
           OutlinedButton(onPressed: () {
             MyApp.setLocale(context, Locale("en","CA"));
           }, child:Text(
-              "Switch to English"
+              "English"
           )),
           OutlinedButton(onPressed: () {
             MyApp.setLocale(context, Locale("zh","ZH"));
           }, child:Text(
-              "Switch to Chinese(中文)"
+              "Chinese(中文)"
           ))
 
         ],

@@ -2,7 +2,20 @@
   "MAIN_BUTTON_AIRPLANE"                          : "Airplane",
   "MAIN_BUTTON_FLIGHTS"                           : "Flights",
   "MAIN_BUTTON_CUSTOMER"                          : "Customer",
-  "MAIN_BUTTON_RESERVATION"                       : "Reservation"
+  "MAIN_BUTTON_RESERVATION"                       : "Reservation",
+  "GO_BACK"                                       : "Go back",
+  "DELETE"                                        : "Delete"
+
+
+
+
+
+
+
+
+
+
+
 }
 
 
