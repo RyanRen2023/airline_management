@@ -16,7 +16,7 @@ abstract class AirplaneDAO {
   Future<void> deleteAirplaneById(int id);
 
   @insert
-  Future<void> insertAirplane(Airplane airplane);
+  Future<int> insertAirplane(Airplane airplane);
 
   @update
   Future<void> updateAirplane(Airplane airplane);

@@ -1,7 +1,7 @@
 import 'package:floor/floor.dart';
+
 @entity
 class Customer {
-
   @PrimaryKey(autoGenerate: true)
   final int? id;
   final String firstName;
@@ -9,5 +9,10 @@ class Customer {
   final String address;
   final String birthday;
 
-  Customer({this.id, required this.firstName, required this.lastName, required this.address, required this.birthday});
+  Customer(
+      {this.id,
+      required this.firstName,
+      required this.lastName,
+      required this.address,
+      required this.birthday});
 }

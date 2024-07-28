@@ -1,4 +1,3 @@
-import 'package:airline_management/database/database.dart';
 import 'package:flutter/material.dart';
 import 'package:airline_management/airplane/AddAirplanePage.dart';
 import 'package:airline_management/airplane/AirplaneListPage.dart';
@@ -9,7 +8,7 @@ import 'package:airline_management/airplane/AirplaneDAO.dart';
 
 
 
-import 'AirplaneDAO.dart';
+import '../database/DatabaseOperator.dart';
 
 
 class AirplanePage extends StatefulWidget {
@@ -22,25 +21,35 @@ class AirplanePage extends StatefulWidget {
 }
 
 class _AirplanePagePageState extends State<AirplanePage> {
-  int _selectedIndex = 0;
+  //int _selectedIndex = 0;
   Airplane? _selectedAirplane;
+  late AirplaneDAO? airplaneDAO;
   var airplanes = <Airplane>[];
 
   @override
   void initState() {
     super.initState();
-    _fetchAirplanes();
-  }
-
-
-  void _fetchAirplanes() async {
-    final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-    final airplaneDAO = database.airplaneDAO;
-    final fetchedAirplanes = await airplaneDAO.findAllAirplanes();
-    setState(() {
-      airplanes = fetchedAirplanes;
+    DatabaseOperator.getAllAirplanes().then((value) {
+      setState(() {
+        airplanes = value;
+      });
     });
+
+    DatabaseOperator.getAirplaneDAO().then((value) {
+      airplaneDAO = value;
+    });
+    //_fetchAirplanes();
   }
+
+
+  // void _fetchAirplanes() async {
+  //   final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  //   final airplaneDAO = database.airplaneDAO;
+  //   final fetchedAirplanes = await airplaneDAO.findAllAirplanes();
+  //   setState(() {
+  //     airplanes = fetchedAirplanes;
+  //   });
+  // }
 
   void _onAirplaneSelectedWide(Airplane airplane) {
     setState(() {
@@ -111,17 +120,61 @@ class _AirplanePagePageState extends State<AirplanePage> {
     );
   }
 
-  void _navigateToAddAirplanePage() async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AddAirplanePage(title: 'Add Airplane')),
-    );
+  // void _navigateToAddAirplanePage() async {
+  //   await Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => AddAirplanePage(title: 'Add Airplane')),
+  //   );
+  //
+  //   _fetchAirplanes();
+  // }
 
-    _fetchAirplanes();
+  void onAddNewAirplane(Airplane airplane) async {
+    int? airplaneId = await airplaneDAO?.insertAirplane(airplane);
+    Airplane newAirplane = Airplane(id:airplaneId,airplaneType: airplane.airplaneType,numberOfPassengers: airplane.numberOfPassengers,maxSpeed: airplane.maxSpeed,rangeToFly: airplane.rangeToFly);
+
+    if (airplaneId != null) {
+      setState(() {
+        airplanes.add(newAirplane);
+      });
+      //_fetchAirplanes();
+      print('New airplane ID: $airplaneId');
+      showSnackBar("add airplane successfully");
+    }else{
+      print('Add airplane failed.');
+      showSnackBar("add airplane failed.");
+    }
+  }
+
+  void showSnackBar(String message) {
+    var snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  Widget showAddAirplaneButton() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 16.0),
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AddAirplanePage(
+                    title: 'Add Airplane',
+                    addNewAirplane: onAddNewAirplane,
+                  )),
+            );
+          },
+          child: const Icon(Icons.add),
+        ),
+      ),
+    );
   }
   @override
   Widget build(BuildContext context) {
-    bool isWideScreen = MediaQuery.of(context).size.width >= 600;
+    //bool isWideScreen = MediaQuery.of(context).size.width >= 600;
 
     return Scaffold(
       appBar: AppBar(
@@ -131,16 +184,7 @@ class _AirplanePagePageState extends State<AirplanePage> {
       body: Stack(
         children: [
           responsiveLayout(),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: FloatingActionButton(
-                onPressed: _navigateToAddAirplanePage,
-                child: const Icon(Icons.add),
-              ),
-            ),
-          ),
+          showAddAirplaneButton()
         ],
       ),
     );

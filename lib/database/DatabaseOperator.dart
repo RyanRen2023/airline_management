@@ -8,6 +8,8 @@
 
 import 'package:airline_management/customer/CustomerDAO.dart';
 import 'package:airline_management/flights/FlightDao.dart';
+import '../airplane/Airplane.dart';
+import '../airplane/AirplaneDAO.dart';
 import '../customer/Customer.dart';
 import 'database.dart';
 
@@ -59,5 +61,21 @@ class DatabaseOperator {
       await initDatabase();
     }
     return _database?.flightDao;
+  }
+
+  static Future<AirplaneDAO?> getAirplaneDAO() async {
+    if (_database == null) {
+      await initDatabase();
+    }
+    return _database?.airplaneDAO;
+  }
+
+  static Future<List<Airplane>> getAllAirplanes() async {
+    List<Airplane> list = [];
+    AirplaneDAO? airplaneDAO = await getAirplaneDAO();
+    if (airplaneDAO != null) {
+      list = await airplaneDAO.findAllAirplanes();
+    }
+    return list;
   }
 }
