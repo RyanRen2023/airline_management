@@ -31,6 +31,26 @@ class _ReservationPageState extends State<ReservationPage> {
   void initState() {
     super.initState();
     _initDb();
+    //load data with encrypted
+    _loadEncryptedData();
+  }
+
+  //load encrypted data
+  Future<void> _loadEncryptedData() async {
+    _firstNameController.text = await _preferences.getString('firstName') ?? '';
+    _lastNameController.text = await _preferences.getString('lastName') ?? '';
+    _emailController.text = await _preferences.getString('email') ?? '';
+    _flightCodeController.text = await _preferences.getString('flightCode') ?? '';
+    _dateController.text = await _preferences.getString('date') ?? '';
+  }
+
+  //save encrypted data
+  Future<void> _saveEncryptedData() async {
+    await _preferences.setString('firstName', _firstNameController.text);
+    await _preferences.setString('lastName', _lastNameController.text);
+    await _preferences.setString('email', _emailController.text);
+    await _preferences.setString('flightCode', _flightCodeController.text);
+    await _preferences.setString('date', _dateController.text);
   }
 
   Future<void> _initDb() async {
@@ -39,6 +59,9 @@ class _ReservationPageState extends State<ReservationPage> {
     _loadReservations();
   }
 
+  /**
+   * get All Reservation data from database and load to Reservation List.
+   */
   Future<void> _loadReservations() async {
     final loadedReservations = await reservationDAO.getAllReservations();
     setState(() {
@@ -46,45 +69,37 @@ class _ReservationPageState extends State<ReservationPage> {
     });
   }
 
-
+  /**
+   * method for prompt DiaLog when delete Reservation Items
+   */
   void _deleteTodoItem(Reservation item) async {
     showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title:   Text(AppLocalizations.of(context)!.translate(Const.WANT_TO_DELETE)!),
-        content:  Text(AppLocalizations.of(context)!.translate(Const.PRES_YES_TO_DELETE)!),
+        title: Text(AppLocalizations.of(context)!.translate(Const.WANT_TO_DELETE)!),
+        content: Text(AppLocalizations.of(context)!.translate(Const.PRES_YES_TO_DELETE)!),
         actions: <Widget>[
-
-          FilledButton(onPressed: (){
-            // clearLoginData();
-            Navigator.of(context).pop();
-
-
-          }, child: Text(AppLocalizations.of(context)!.translate(Const.NO)!)),
-
           FilledButton(
-              onPressed: (){
-                _doDeleteItem(item);
-                Navigator.pop(context);
-                // Navigator.pushNamed(context, '/pageTwo')
-/*                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProfilePage(
-                        username: _controller_username.value.text
-                    ),
-                  ),
-                );*/
-              },
-              child: Text(AppLocalizations.of(context)!.translate(Const.YES)!)),
-
-
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(AppLocalizations.of(context)!.translate(Const.NO)!),
+          ),
+          FilledButton(
+            onPressed: () {
+              _doDeleteItem(item);
+              Navigator.pop(context);
+            },
+            child: Text(AppLocalizations.of(context)!.translate(Const.YES)!),
+          ),
         ],
       ),
-
     );
   }
 
+  /**
+   * method for deleting the selected Item
+   */
   void _doDeleteItem(Reservation item) async {
     await reservationDAO.deleteReservation(item);
     setState(() {
@@ -92,6 +107,10 @@ class _ReservationPageState extends State<ReservationPage> {
       selectedReservation = null;
     });
   }
+
+  /**
+   * method for validate fields are not empty, and add Reservation Item
+   */
   void _addReservation() async {
     final String firstName = _firstNameController.text;
     final String lastName = _lastNameController.text;
@@ -101,16 +120,18 @@ class _ReservationPageState extends State<ReservationPage> {
 
     if (firstName.isNotEmpty && lastName.isNotEmpty && email.isNotEmpty && flightCode.isNotEmpty && date.isNotEmpty) {
       final newReservation = Reservation(
-          id: null,
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          flightCode: flightCode,
-          date: date
+        id: null,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        flightCode: flightCode,
+        date: date,
       );
 
       await reservationDAO.insertReservation(newReservation);
       _loadReservations();
+      // Save encrypted data after adding reservation
+      await _saveEncryptedData();
       _clearInputs();
       _showSnackBar(Const.RESERVATION_ADDED_SUCCESSFULLY);
     } else {
@@ -118,6 +139,9 @@ class _ReservationPageState extends State<ReservationPage> {
     }
   }
 
+  /**
+   * Clear the content of input fields
+   */
   void _clearInputs() {
     _firstNameController.clear();
     _lastNameController.clear();
@@ -126,30 +150,32 @@ class _ReservationPageState extends State<ReservationPage> {
     _dateController.clear();
   }
 
+
+  /**
+   * show snackbar by passing String
+   */
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content:
-            Text(AppLocalizations.of(context)!.translate(message)!))
+      SnackBar(
+        content: Text(AppLocalizations.of(context)!.translate(message)!),
+      ),
     );
   }
 
+
+  /**
+   * show alert dialog by passing string
+   */
   void _showAlertDialog(String message) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title:
-          Text(AppLocalizations.of(context)!.translate(Const.ALERT)!),
-
+          title: Text(AppLocalizations.of(context)!.translate(Const.ALERT)!),
           content: Text(AppLocalizations.of(context)!.translate(message)!),
           actions: <Widget>[
             TextButton(
-              child:
-
-              Text(AppLocalizations.of(context)!.translate(Const.OK)!),
-
-
+              child: Text(AppLocalizations.of(context)!.translate(Const.OK)!),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -161,19 +187,24 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
 
+  /**
+   * Setting the main layout for input fields.
+   */
   Widget ReservationList() {
     return Scrollbar(
       thickness: 9.0,
       radius: Radius.circular(10),
-      child:
-      SingleChildScrollView( // Added SingleChildScrollView
+      child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: _firstNameController,
-                decoration: InputDecoration(labelText:  AppLocalizations.of(context)!.translate(Const.FIRST_NAME)!),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate(Const.FIRST_NAME)!),
+                //save as encrypted data when on change
+                onChanged: (value) => _saveEncryptedData(),
+
               ),
             ),
             Padding(
@@ -181,13 +212,16 @@ class _ReservationPageState extends State<ReservationPage> {
               child: TextField(
                 controller: _lastNameController,
                 decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate(Const.LAST_NAME)),
+                //save as encrypted data when on change
+                onChanged: (value) => _saveEncryptedData(),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText:  AppLocalizations.of(context)!.translate(Const.EMAIL)),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate(Const.EMAIL)),
+                onChanged: (value) => _saveEncryptedData(),
               ),
             ),
             Padding(
@@ -195,6 +229,7 @@ class _ReservationPageState extends State<ReservationPage> {
               child: TextField(
                 controller: _flightCodeController,
                 decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate(Const.FLIGHT_CODE)),
+                onChanged: (value) => _saveEncryptedData(),
               ),
             ),
             Padding(
@@ -202,30 +237,27 @@ class _ReservationPageState extends State<ReservationPage> {
               child: TextField(
                 controller: _dateController,
                 decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate(Const.DATE)),
+                onChanged: (value) => _saveEncryptedData(),
               ),
             ),
             ElevatedButton(
               child: Text(AppLocalizations.of(context)!.translate(Const.ADD_RESERVATION)!),
               onPressed: _addReservation,
             ),
-            SizedBox(  // Added SizedBox with a fixed height
-              height: 300, //height for the card list
+            SizedBox(
+              height: 300,
               child: ListView.builder(
                 itemCount: reservations.length,
                 itemBuilder: (context, index) {
                   final reservation = reservations[index];
                   return Card(
                     child: ListTile(
-                      title:
-
-                      Text('${AppLocalizations.of(context)!.translate(Const.FULL_NAME)}: ${reservation!.firstName} ${reservation!.lastName}'),
+                      title: Text('${AppLocalizations.of(context)!.translate(Const.FULL_NAME)}: ${reservation!.firstName} ${reservation!.lastName}'),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
                           Text('${AppLocalizations.of(context)!.translate(Const.FLIGHT_CODE)}: ${reservation.flightCode} '),
                           Text('${AppLocalizations.of(context)!.translate(Const.DATE)}: ${reservation.date} '),
-
                         ],
                       ),
                       isThreeLine: true,
@@ -241,12 +273,13 @@ class _ReservationPageState extends State<ReservationPage> {
             ),
           ],
         ),
-      )
-      ,
+      ),
     );
   }
 
-
+  /**
+   * show more details or Landscape Screen
+   */
   Widget DetailsPage() {
     if (selectedReservation == null) {
       return Center(child: Text(AppLocalizations.of(context)!.translate(Const.NO_RESERVATION_SELECTED)!));
@@ -255,40 +288,24 @@ class _ReservationPageState extends State<ReservationPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Column(
-
             children: [
-/*
-
-              Text('Reservation Id: ${selectedReservation!.id} '),
-              Text('Name: ${selectedReservation!.firstName} ${selectedReservation!.lastName}'),
-              Text('Email: ${selectedReservation!.email}'),
-              Text('Flight Code: ${selectedReservation!.flightCode}'),
-              Text('Date: ${selectedReservation!.date}'),
-*/
-
               Text('${AppLocalizations.of(context)!.translate(Const.RESERVATION_ID)}: ${selectedReservation!.id} '),
               Text('${AppLocalizations.of(context)!.translate(Const.FULL_NAME)}: ${selectedReservation!.firstName} ${selectedReservation!.lastName}'),
               Text('${AppLocalizations.of(context)!.translate(Const.EMAIL)}: ${selectedReservation!.email}'),
               Text('${AppLocalizations.of(context)!.translate(Const.FLIGHT_CODE)}: ${selectedReservation!.flightCode}'),
               Text('${AppLocalizations.of(context)!.translate(Const.DATE)}: ${selectedReservation!.date}'),
-
-
             ],
-
-
           ),
-
           SizedBox(height: 20),
           Row(
             children: [
-
               OutlinedButton(
                 onPressed: () {
                   setState(() {
                     selectedReservation = null;
                   });
                 },
-                child: Text(AppLocalizations.of(context)!.translate(Const.GO_BACK)!)
+                child: Text(AppLocalizations.of(context)!.translate(Const.GO_BACK)!),
               ),
               OutlinedButton(
                 onPressed: () {
@@ -296,19 +313,19 @@ class _ReservationPageState extends State<ReservationPage> {
                     _deleteTodoItem(selectedReservation!);
                   }
                 },
-                child: Text(AppLocalizations.of(context)!.translate(Const.DELETE)!)
+                child: Text(AppLocalizations.of(context)!.translate(Const.DELETE)!),
               ),
-
             ],
-
-
           )
-
         ],
       );
     }
   }
 
+
+  /**
+   * Method for determination by different screen directions(Landscape or Portrait)
+   */
   Widget responsiveLayout() {
     var size = MediaQuery.of(context).size;
     var width = size.width;
