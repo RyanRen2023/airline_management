@@ -37,11 +37,11 @@ class _ReservationPageState extends State<ReservationPage> {
 
   //load encrypted data
   Future<void> _loadEncryptedData() async {
-    _firstNameController.text = await _preferences.getString('firstName') ?? '';
-    _lastNameController.text = await _preferences.getString('lastName') ?? '';
-    _emailController.text = await _preferences.getString('email') ?? '';
-    _flightCodeController.text = await _preferences.getString('flightCode') ?? '';
-    _dateController.text = await _preferences.getString('date') ?? '';
+    _firstNameController.text = await _preferences.getString('firstName');
+    _lastNameController.text = await _preferences.getString('lastName');
+    _emailController.text = await _preferences.getString('email');
+    _flightCodeController.text = await _preferences.getString('flightCode') ;
+    _dateController.text = await _preferences.getString('date');
   }
 
   //save encrypted data
@@ -252,7 +252,7 @@ class _ReservationPageState extends State<ReservationPage> {
                   final reservation = reservations[index];
                   return Card(
                     child: ListTile(
-                      title: Text('${AppLocalizations.of(context)!.translate(Const.FULL_NAME)}: ${reservation!.firstName} ${reservation!.lastName}'),
+                      title: Text('${AppLocalizations.of(context)!.translate(Const.FULL_NAME)}: ${reservation.firstName} ${reservation.lastName}'),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
