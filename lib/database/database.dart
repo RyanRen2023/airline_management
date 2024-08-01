@@ -14,7 +14,7 @@ import '../reservation/Reservation.dart';
 part 'database.g.dart'; // the generated code will be there
 
 //添加了新的实体需要修改版本号！！
-@Database(version: 5, entities: [Customer, Airplane,FlightItem,Reservation])
+@Database(version: 1, entities: [Customer, Airplane,FlightItem,Reservation])
 abstract class AppDatabase extends FloorDatabase {
   CustomerDAO get customerDAO;
   AirplaneDAO get airplaneDAO;

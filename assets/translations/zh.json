@@ -22,16 +22,23 @@
   "PRES_YES_TO_DELETE"                            : "按'是'删除",
   "NO_RESERVATION_SELECTED"                       : "未选择任何预订",
   "RESERVATION_ADDED_SUCCESSFULLY"                : "预订添加成功",
-  "PLEASE_FILL_ALL_FIELDS"                        : "请填写所有字段"
-
-
-
-
-
-
-
-
-
+  "PLEASE_FILL_ALL_FIELDS"                        : "请填写所有字段",
+  "TITLE_CUSTOMER_DETAIL"                        : "客户详情",
+  "TITLE_ADD_CUSTOMER"                           : "添加客户",
+  "SNACKBAR_ADD_SUCCESS"                         : "客户添加成功",
+  "SNACKBAR_UPDATE_SUCCESS"                      : "客户更新成功",
+  "SNACKBAR_DELETE_SUCCESS"                      : "客户删除成功",
+  "BUTTON_ADD_ICON"                              : "图标.添加",
+  "LABEL_SELECT_CUSTOMER"                        : "选择一个客户查看详情",
+  "LABEL_ADDRESS"                                : "地址",
+  "LABEL_BIRTHDAY"                               : "生日",
+  "BUTTON_UPDATE"                                : "更新",
+  "BUTTON_DELETE"                                : "删除",
+  "DIALOG_CONFIRM_DELETE_TITLE"                  : "确认删除客户？",
+  "DIALOG_CONFIRM_DELETE_CONTENT"                : "确认删除客户？",
+  "BUTTON_OK"                                    : "确定",
+  "BUTTON_CANCEL"                                : "取消",
+  "BUTTON_SUBMIT"                                : "提交"
 
 }
 

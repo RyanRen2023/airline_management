@@ -2,6 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:airline_management/customer/Customer.dart';
 
+import '../AppLocalizations.dart';
+import '../const/Const.dart';
+
 class CustomerDetailView extends StatelessWidget {
   Customer customer;
   Function(Customer) updateCustomer;
@@ -38,18 +41,18 @@ class CustomerDetailView extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Confirm to Delete Customer?'),
-          content: Text('Confirm to Delete Customer?'),
+          title: Text(AppLocalizations.of(context)!.translate(Const.DIALOG_CONFIRM_DELETE_TITLE)!),
+          content: Text(AppLocalizations.of(context)!.translate(Const.DIALOG_CONFIRM_DELETE_CONTENT)!),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: Text(AppLocalizations.of(context)!.translate(Const.BUTTON_OK)!),
               onPressed: () {
                 deleteCustomers();
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.translate(Const.BUTTON_CANCEL)!),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -85,19 +88,19 @@ class CustomerDetailView extends StatelessWidget {
         children: <Widget>[
           TextField(
             controller: _firstNameController,
-            decoration: InputDecoration(labelText: 'First Name'),
+            decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate(Const.FIRST_NAME)!),
           ),
           TextField(
             controller: _lastNameController,
-            decoration: InputDecoration(labelText: 'Last Name'),
+            decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate(Const.LAST_NAME)!),
           ),
           TextField(
             controller: _addressController,
-            decoration: InputDecoration(labelText: 'Address'),
+            decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate(Const.LABEL_ADDRESS)!),
           ),
           TextField(
             controller: _birthdayController,
-            decoration: InputDecoration(labelText: 'Birthday'),
+            decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate(Const.LABEL_BIRTHDAY)!),
           ),
           SizedBox(height: 20),
           Row(
@@ -105,13 +108,13 @@ class CustomerDetailView extends StatelessWidget {
             children: <Widget>[
               ElevatedButton(
                 onPressed: updateCustomers,
-                child: Text('Update'),
+                child: Text(AppLocalizations.of(context)!.translate(Const.BUTTON_UPDATE)!),
               ),
               ElevatedButton(
                 onPressed: () {
                   deleteDialogConfirm(context);
                 },
-                child: Text('Delete'),
+                child: Text(AppLocalizations.of(context)!.translate(Const.BUTTON_DELETE)!),
               ),
             ],
           ),

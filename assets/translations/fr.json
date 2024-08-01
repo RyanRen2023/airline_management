@@ -22,16 +22,23 @@
   "PRES_YES_TO_DELETE"                            : "Appuyez sur 'Oui' pour supprimer",
   "NO_RESERVATION_SELECTED"                       : "Aucune réservation sélectionnée",
   "RESERVATION_ADDED_SUCCESSFULLY"                : "Réservation ajoutée avec succès",
-  "PLEASE_FILL_ALL_FIELDS"                        : "Veuillez remplir tous les champs"
-
-
-
-
-
-
-
-
-
+  "PLEASE_FILL_ALL_FIELDS"                        : "Veuillez remplir tous les champs",
+  "TITLE_CUSTOMER_DETAIL"                        : "Détail du client",
+  "TITLE_ADD_CUSTOMER"                           : "Ajouter un client",
+  "SNACKBAR_ADD_SUCCESS"                         : "client ajouté avec succès",
+  "SNACKBAR_UPDATE_SUCCESS"                      : "client mis à jour avec succès",
+  "SNACKBAR_DELETE_SUCCESS"                      : "client supprimé avec succès",
+  "BUTTON_ADD_ICON"                              : "Icônes.ajouter",
+  "LABEL_SELECT_CUSTOMER"                        : "Sélectionnez un client pour voir les détails",
+  "LABEL_ADDRESS"                                : "Adresse",
+  "LABEL_BIRTHDAY"                               : "Anniversaire",
+  "BUTTON_UPDATE"                                : "Mettre à jour",
+  "BUTTON_DELETE"                                : "Supprimer",
+  "DIALOG_CONFIRM_DELETE_TITLE"                  : "Confirmer la suppression du client ?",
+  "DIALOG_CONFIRM_DELETE_CONTENT"                : "Confirmer la suppression du client ?",
+  "BUTTON_OK"                                    : "OK",
+  "BUTTON_CANCEL"                                : "Annuler",
+  "BUTTON_SUBMIT"                                : "Soumettre"
 
 }
 

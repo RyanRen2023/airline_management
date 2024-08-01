@@ -1,6 +1,8 @@
 import 'package:airline_management/Properties.dart';
 import 'package:flutter/material.dart';
 
+import '../AppLocalizations.dart';
+import '../const/Const.dart';
 import 'Customer.dart';
 
 class AddCustomerPage extends StatefulWidget {
@@ -41,19 +43,19 @@ class _AddCustomerPageState extends State<AddCustomerPage> {
             TextField(
               controller: _firstNameController,
               decoration: InputDecoration(
-                  labelText:"First Name"),
+                  labelText:AppLocalizations.of(context)!.translate(Const.FIRST_NAME)!),
             ),
             TextField(
               controller: _lastNameController,
-              decoration: InputDecoration(labelText: 'Last Name'),
+              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate(Const.LAST_NAME)),
             ),
             TextField(
               controller: _addressController,
-              decoration: InputDecoration(labelText: 'Address'),
+              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate(Const.LABEL_ADDRESS)),
             ),
             TextField(
               controller: _birthdayController,
-              decoration: InputDecoration(labelText: 'Birthday'),
+              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate(Const.LABEL_BIRTHDAY)),
             ),
             SizedBox(height: Properties.SIZEDBOX_HIGHT),
             ElevatedButton(
@@ -62,7 +64,7 @@ class _AddCustomerPageState extends State<AddCustomerPage> {
                 submitNewCustomer();
                 Navigator.pop(context);
               },
-              child: Text("Submit"),
+              child: Text(AppLocalizations.of(context)!.translate(Const.BUTTON_SUBMIT)!),
             ),
           ],
         ),

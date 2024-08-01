@@ -22,17 +22,26 @@
   "PRES_YES_TO_DELETE"                            : "Press 'Yes' to Delete",
   "NO_RESERVATION_SELECTED"                       : "No reservation selected",
   "RESERVATION_ADDED_SUCCESSFULLY"                : "Reservation added successfully",
-  "PLEASE_FILL_ALL_FIELDS"                        : "Please fill all fields"
-
-
-
-
-
-
-
-
+  "PLEASE_FILL_ALL_FIELDS"                        : "Please fill all fields",
+  "TITLE_CUSTOMER_DETAIL"                         : "Customer Detail",
+  "TITLE_ADD_CUSTOMER"                            : "Add Customer",
+  "SNACKBAR_ADD_SUCCESS"                          : "add customer successfully",
+  "SNACKBAR_UPDATE_SUCCESS"                       : "update customer successfully",
+  "SNACKBAR_DELETE_SUCCESS"                       : "delete customer successfully",
+  "BUTTON_ADD_ICON"                               : "Icons.add",
+  "LABEL_SELECT_CUSTOMER"                         : "Select a customer to view details",
+  "LABEL_ADDRESS"                                 : "Address",
+  "LABEL_BIRTHDAY"                                : "Birthday",
+  "BUTTON_UPDATE"                                 : "Update",
+  "BUTTON_DELETE"                                 : "Delete",
+  "DIALOG_CONFIRM_DELETE_TITLE"                   : "Confirm to Delete Customer?",
+  "DIALOG_CONFIRM_DELETE_CONTENT"                 : "Confirm to Delete Customer?",
+  "BUTTON_OK"                                     : "OK",
+  "BUTTON_CANCEL"                                 : "Cancel",
+  "BUTTON_SUBMIT"                                 : "Submit"
 
 
 }
+
 
 

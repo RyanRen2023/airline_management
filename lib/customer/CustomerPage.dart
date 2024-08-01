@@ -5,6 +5,8 @@ import 'package:airline_management/customer/CustomerListPage.dart';
 import 'package:airline_management/customer/Customer.dart';
 import 'package:airline_management/customer/CustomerDetailView.dart';
 
+import '../AppLocalizations.dart';
+import '../const/Const.dart';
 import 'CustomerDAO.dart';
 import 'CustomerDetailPage.dart';
 
@@ -54,7 +56,8 @@ class _CustomerPageState extends State<CustomerPage> {
       context,
       MaterialPageRoute(builder: (context) {
         return CustomerDetailPage(
-          title: 'Customer Detail',
+          title: AppLocalizations.of(context)!
+              .translate(Const.TITLE_CUSTOMER_DETAIL)!,
           customer: _selectedCustomer!,
           updateCustomer: onUpdateCustomer,
           deleteCustomer: onDeleteCustomer,
@@ -65,15 +68,18 @@ class _CustomerPageState extends State<CustomerPage> {
 
   void onAddNewCustomer(Customer customer) async {
     int? customerId = await customerDAO?.insertCustomer(customer);
-    Customer newCus = Customer(id:customerId,firstName: customer.firstName,lastName: customer.lastName,address: customer.address,birthday: customer.birthday);
+    Customer newCus = Customer(
+        id: customerId,
+        firstName: customer.firstName,
+        lastName: customer.lastName,
+        address: customer.address,
+        birthday: customer.birthday);
     setState(() {
       customers.add(newCus);
     });
-    if (customerId != null) {
-      print('New customer ID: $customerId');
-    }
-    showSnackBar("add customer successfully");
 
+    showSnackBar(
+        AppLocalizations.of(context)!.translate(Const.SNACKBAR_ADD_SUCCESS)!);
   }
 
   void onUpdateCustomer(Customer customer) {
@@ -87,8 +93,8 @@ class _CustomerPageState extends State<CustomerPage> {
       }
     }
     customerDAO?.updateCustomer(customer);
-    showSnackBar("update customer successfully");
-
+    showSnackBar(AppLocalizations.of(context)!
+        .translate(Const.SNACKBAR_UPDATE_SUCCESS)!);
   }
 
   void onDeleteCustomer(Customer customer) {
@@ -105,7 +111,7 @@ class _CustomerPageState extends State<CustomerPage> {
     setState(() {
       _selectedCustomer = null;
     });
-    showSnackBar("delete customer successfully");
+    showSnackBar(AppLocalizations.of(context)!.translate(Const.SNACKBAR_DELETE_SUCCESS)!);
   }
 
   void showSnackBar(String message) {
@@ -146,7 +152,7 @@ class _CustomerPageState extends State<CustomerPage> {
                   updateCustomer: onUpdateCustomer,
                   deleteCustomer: onDeleteCustomer,
                 )
-              : const Center(child: Text('Select a customer to view details')),
+              :  Center(child: Text(AppLocalizations.of(context)!.translate(Const.SNACKBAR_ADD_SUCCESS)!)),
         ),
       ],
     );
@@ -177,7 +183,7 @@ class _CustomerPageState extends State<CustomerPage> {
               context,
               MaterialPageRoute(
                   builder: (context) => AddCustomerPage(
-                        title: 'Add Customer',
+                        title: AppLocalizations.of(context)!.translate(Const.TITLE_ADD_CUSTOMER)!,
                         addNewCustomer: onAddNewCustomer,
                       )),
             );
