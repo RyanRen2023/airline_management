@@ -4,10 +4,11 @@ import 'package:airline_management/database/DatabaseOperator.dart';
 import 'FlightDao.dart';
 import 'FlightItem.dart';
 
-  // version 2
+// Version 3 Flight Page
 class FlightsPage extends StatefulWidget{
   const FlightsPage({super.key,required this.title});
-  
+
+  // set the title in main
   final String title;
 
   @override
@@ -16,6 +17,7 @@ class FlightsPage extends StatefulWidget{
 }
 
 class _FlightsPageState extends State<FlightsPage> {
+  // init the variables for control the input fields.
   final List<FlightItem> _flightsList = [];
   final TextEditingController _flightCodeController = TextEditingController();
   final TextEditingController _departureCityController = TextEditingController();
@@ -35,11 +37,13 @@ class _FlightsPageState extends State<FlightsPage> {
     _loadPreferences();
   }
 
+  // init the database
   Future<void> _initDatabase() async {
     _flightDao = (await DatabaseOperator.getFlightsDAO())!;
     _loadFlights();
   }
 
+  // load all flights from database
   Future<void> _loadFlights() async {
     final items = await _flightDao.findAllFlights();
     setState(() {
@@ -48,6 +52,7 @@ class _FlightsPageState extends State<FlightsPage> {
     });
   }
 
+  // load the record in device
   Future<void> _loadPreferences() async {
     _flightCodeController.text = await _preferences.getString('flightCode') ?? '';
     _departureCityController.text = await _preferences.getString('departureCity') ?? '';
@@ -56,6 +61,7 @@ class _FlightsPageState extends State<FlightsPage> {
     _arrivalTimeController.text = await _preferences.getString('arrivalTime') ?? '';
   }
 
+  // save the data in device
   Future<void> _savePreferences() async {
     await _preferences.setString('flightCode', _flightCodeController.text);
     await _preferences.setString('departureCity', _departureCityController.text);
@@ -64,6 +70,7 @@ class _FlightsPageState extends State<FlightsPage> {
     await _preferences.setString('arrivalTime', _arrivalTimeController.text);
   }
 
+  // add flight item function
   void _addFlight() async {
     if (_flightCodeController.text.isNotEmpty &&
         _departureCityController.text.isNotEmpty &&
