@@ -38,8 +38,10 @@
   "DIALOG_CONFIRM_DELETE_CONTENT"                 : "Confirm to Delete Customer?",
   "BUTTON_OK"                                     : "OK",
   "BUTTON_CANCEL"                                 : "Cancel",
-  "BUTTON_SUBMIT"                                 : "Submit"
-
+  "BUTTON_SUBMIT"                                 : "Submit",
+  "DIALOG_CONFIRM_CREATE_FROM_PRECUSTOMER"        : "Create from previous Customer?",
+  "TITLE_AIRLINE_MANAGEMENT"                      : "Airline Management",
+  "TITLE_AIRLINE_MANAGEMENT_HOMEPAGE"             : "Airline Management Homepage"
 
 }
 

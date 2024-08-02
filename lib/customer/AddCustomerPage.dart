@@ -7,15 +7,18 @@ import 'Customer.dart';
 
 class AddCustomerPage extends StatefulWidget {
   AddCustomerPage(
-      {super.key, required this.title, required this.addNewCustomer});
+      {super.key, required this.title, required this.addNewCustomer,required this.createFromLast, this.preCustomer});
   final Function(Customer) addNewCustomer;
   final String title;
+  final bool createFromLast;
+  final Customer? preCustomer;
 
   @override
   State<StatefulWidget> createState() => _AddCustomerPageState();
 }
 
 class _AddCustomerPageState extends State<AddCustomerPage> {
+
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
@@ -27,6 +30,27 @@ class _AddCustomerPageState extends State<AddCustomerPage> {
     var address = _addressController.text;
     var birthday = _birthdayController.text;
     widget.addNewCustomer(Customer(firstName: firstName, lastName: lastName, address: address, birthday: birthday));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if(widget.createFromLast){
+      Customer preCustomer = widget.preCustomer!;
+      _firstNameController.text =preCustomer.firstName;
+      _lastNameController.text = preCustomer.lastName;
+      _addressController.text = preCustomer.address;
+      _birthdayController.text = preCustomer.birthday;
+    }
+  }
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _addressController.dispose();
+    _birthdayController.dispose();
+    super.dispose();
   }
 
   @override

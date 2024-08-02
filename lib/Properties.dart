@@ -1,5 +1,7 @@
 class Properties {
   static const double SIZEDBOX_HIGHT = 10;
+  static const double SIZEDBOX_WIDTH = 20;
+
 
   /**
     *  Navagation

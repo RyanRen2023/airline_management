@@ -4,6 +4,7 @@ import 'package:airline_management/customer/AddCustomerPage.dart';
 import 'package:airline_management/customer/CustomerListPage.dart';
 import 'package:airline_management/customer/Customer.dart';
 import 'package:airline_management/customer/CustomerDetailView.dart';
+import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 
 import '../AppLocalizations.dart';
 import '../const/Const.dart';
@@ -23,6 +24,40 @@ class _CustomerPageState extends State<CustomerPage> {
   Customer? _selectedCustomer;
   late CustomerDAO? customerDAO;
   List<Customer> customers = [];
+  final EncryptedSharedPreferences _preferences = EncryptedSharedPreferences();
+
+  /// add the previous customer to the preference
+  void savePreviousCustomerToPreference(Customer customer) {
+    _preferences.setString("cus_firstname", customer.firstName);
+    _preferences.setString("cus_lastname", customer.lastName);
+    _preferences.setString("cus_birthday", customer.birthday);
+    _preferences.setString("cus_address", customer.address);
+  }
+
+  /// load the previous customer from preference.
+  Future<Customer?> loadPreviousCustomerFromPreference() async {
+    // Retrieve customer information from preferences
+
+    String? firstName = await _preferences.getString('cus_firstname');
+    String? lastName = await _preferences.getString('cus_lastname');
+    String? birthday = await _preferences.getString('cus_birthday');
+    String? address = await _preferences.getString('cus_address');
+
+    // Check if any of the fields are null
+    if (firstName.isEmpty) {
+      // If any field is null, return null indicating no complete customer data in preferences
+      return null;
+    }
+
+    // Create a Customer object and return it
+    Customer preCustomer = Customer(
+      firstName: firstName,
+      lastName: lastName,
+      address: address,
+      birthday: birthday,
+    );
+    return preCustomer;
+  }
 
   @override
   void initState() {
@@ -77,6 +112,7 @@ class _CustomerPageState extends State<CustomerPage> {
     setState(() {
       customers.add(newCus);
     });
+    savePreviousCustomerToPreference(newCus);
 
     showSnackBar(
         AppLocalizations.of(context)!.translate(Const.SNACKBAR_ADD_SUCCESS)!);
@@ -111,7 +147,8 @@ class _CustomerPageState extends State<CustomerPage> {
     setState(() {
       _selectedCustomer = null;
     });
-    showSnackBar(AppLocalizations.of(context)!.translate(Const.SNACKBAR_DELETE_SUCCESS)!);
+    showSnackBar(AppLocalizations.of(context)!
+        .translate(Const.SNACKBAR_DELETE_SUCCESS)!);
   }
 
   void showSnackBar(String message) {
@@ -152,7 +189,9 @@ class _CustomerPageState extends State<CustomerPage> {
                   updateCustomer: onUpdateCustomer,
                   deleteCustomer: onDeleteCustomer,
                 )
-              :  Center(child: Text(AppLocalizations.of(context)!.translate(Const.SNACKBAR_ADD_SUCCESS)!)),
+              : Center(
+                  child: Text(AppLocalizations.of(context)!
+                      .translate(Const.SNACKBAR_ADD_SUCCESS)!)),
         ),
       ],
     );
@@ -179,19 +218,80 @@ class _CustomerPageState extends State<CustomerPage> {
         padding: const EdgeInsets.only(bottom: 16.0),
         child: FloatingActionButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => AddCustomerPage(
-                        title: AppLocalizations.of(context)!.translate(Const.TITLE_ADD_CUSTOMER)!,
-                        addNewCustomer: onAddNewCustomer,
-                      )),
-            );
+            // prompt weather create from last customer.
+            NavigateToAddCustomerPage();
           },
           child: const Icon(Icons.add),
         ),
       ),
     );
+  }
+
+  void showDialogForAddCustomer(BuildContext context, Customer preCustomer) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(AppLocalizations.of(context)!
+              .translate(Const.DIALOG_CONFIRM_CREATE_FROM_PRECUSTOMER)!),
+          content: Text(AppLocalizations.of(context)!
+              .translate(Const.DIALOG_CONFIRM_CREATE_FROM_PRECUSTOMER)!),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                  AppLocalizations.of(context)!.translate(Const.BUTTON_OK)!),
+              onPressed: () {
+                // when choose ok ,build customer from previous customer
+                Navigator.of(context).pop();
+                createCustomerByPreCustomer(preCustomer);
+              },
+            ),
+            TextButton(
+              child: Text(AppLocalizations.of(context)!.translate(Const.NO)!),
+              onPressed: () {
+                // when choose No ,build customer from previous customer
+                Navigator.of(context).pop();
+                createCustomer();
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  void createCustomer() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => AddCustomerPage(
+              title: AppLocalizations.of(context)!
+                  .translate(Const.TITLE_ADD_CUSTOMER)!,
+              addNewCustomer: onAddNewCustomer,
+              createFromLast: false)),
+    );
+  }
+
+  void createCustomerByPreCustomer(Customer preCustomer) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => AddCustomerPage(
+              title: AppLocalizations.of(context)!
+                  .translate(Const.TITLE_ADD_CUSTOMER)!,
+              addNewCustomer: onAddNewCustomer,
+              createFromLast: true,
+              preCustomer: preCustomer)),
+    );
+  }
+
+  Future<void> NavigateToAddCustomerPage() async {
+    Customer? preCustomer = await loadPreviousCustomerFromPreference();
+    if (preCustomer != null) {
+      showDialogForAddCustomer(context, preCustomer);
+    } else {
+      createCustomer();
+    }
   }
 
   @override

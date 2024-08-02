@@ -27,7 +27,7 @@ class DatabaseOperator {
   // Static variable to hold the database instance
 
   static late final AppDatabase? _database;
-  static final String databaseFile = "airline_database2.db";
+  static final String databaseFile = "airplane_database.db";
 
   /**
    * Initializes the database if it has not been initialized.

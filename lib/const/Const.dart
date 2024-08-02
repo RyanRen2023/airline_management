@@ -42,6 +42,10 @@ class Const {
   static const String BUTTON_OK                                = 'BUTTON_OK';
   static const String BUTTON_CANCEL                            = 'BUTTON_CANCEL';
   static const String BUTTON_SUBMIT                            = 'BUTTON_SUBMIT';
+  static const String DIALOG_CONFIRM_CREATE_FROM_PRECUSTOMER   = 'DIALOG_CONFIRM_CREATE_FROM_PRECUSTOMER';
+  static const String TITLE_AIRLINE_MANAGEMENT                 = 'TITLE_AIRLINE_MANAGEMENT';
+  static const String TITLE_AIRLINE_MANAGEMENT_HOMEPAGE        = 'TITLE_AIRLINE_MANAGEMENT_HOMEPAGE';
+
 
 
 }

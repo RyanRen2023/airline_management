@@ -34,6 +34,9 @@ dependencies:
     sdk: flutter
   floor: ^1.4.0
   encrypted_shared_preferences: ^3.0.1
+  flag: ^6.0.0
+  country_flags: ^3.0.0
+
 
 
   # The following adds the Cupertino Icons font to your application.

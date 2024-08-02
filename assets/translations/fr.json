@@ -38,7 +38,10 @@
   "DIALOG_CONFIRM_DELETE_CONTENT"                : "Confirmer la suppression du client ?",
   "BUTTON_OK"                                    : "OK",
   "BUTTON_CANCEL"                                : "Annuler",
-  "BUTTON_SUBMIT"                                : "Soumettre"
+  "BUTTON_SUBMIT"                                : "Soumettre",
+  "DIALOG_CONFIRM_CREATE_FROM_PRECUSTOMER"       : "Créer à partir du client précédent ?",
+  "TITLE_AIRLINE_MANAGEMENT"                      : "Gestion de la compagnie aérienne",
+  "TITLE_AIRLINE_MANAGEMENT_HOMEPAGE"             : "Page d'accueil de la gestion de la compagnie aérienne"
 
 }
 
