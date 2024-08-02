@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
       locale: defaultLocale, //少了这一行会点击无法显示语言
       supportedLocales: const [
         Locale("en", "CA"),
-        Locale("fr", "FR"),
+        Locale("fr", "CA"),
         Locale("zh", "ZH"),
       ],
       localizationsDelegates: const [
