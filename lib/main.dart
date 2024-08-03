@@ -14,6 +14,7 @@ import 'package:flag/flag.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseOperator.deleteOldDatabase();
   await DatabaseOperator.initDatabase();
   runApp(const MyApp());
 }

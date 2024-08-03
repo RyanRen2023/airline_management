@@ -8,6 +8,9 @@
 
 import 'package:airline_management/customer/CustomerDAO.dart';
 import 'package:airline_management/flights/FlightDao.dart';
+import 'package:floor/floor.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 import '../airplane/Airplane.dart';
 import '../airplane/AirplaneDAO.dart';
 import '../customer/Customer.dart';
@@ -27,7 +30,7 @@ class DatabaseOperator {
   // Static variable to hold the database instance
 
   static late final AppDatabase? _database;
-  static final String databaseFile = "airplane_database.db";
+  static const String databaseFile = "app_database.db";
 
   /**
    * Initializes the database if it has not been initialized.
@@ -37,6 +40,11 @@ class DatabaseOperator {
    */
   static Future<void> initDatabase() async {
     _database = await $FloorAppDatabase.databaseBuilder(databaseFile).build();
+  }
+
+  static Future<void> deleteOldDatabase() async {
+    final path = await sqfliteDatabaseFactory.getDatabasePath(databaseFile);
+    await deleteDatabase(path);
   }
 
 
