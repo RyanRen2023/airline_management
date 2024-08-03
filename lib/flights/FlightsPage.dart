@@ -48,25 +48,36 @@ class _FlightsPageState extends State<FlightsPage> {
     final items = await _flightDao.findAllFlights();
     setState(() {
       _flightsList.addAll(items);
-      _idCounter = items.isEmpty ? 0 : items.map((e) => e.id).reduce((a, b) => a > b ? a : b) + 1;
+      _idCounter = items.isEmpty ? 0 : items.map((e) => e.id).reduce((a, b) =>
+      a > b
+          ? a
+          : b) + 1;
     });
   }
 
   // load the record in device
   Future<void> _loadPreferences() async {
-    _flightCodeController.text = await _preferences.getString('flightCode') ?? '';
-    _departureCityController.text = await _preferences.getString('departureCity') ?? '';
-    _destinationCityController.text = await _preferences.getString('destinationCity') ?? '';
-    _departureTimeController.text = await _preferences.getString('departureTime') ?? '';
-    _arrivalTimeController.text = await _preferences.getString('arrivalTime') ?? '';
+    _flightCodeController.text =
+        await _preferences.getString('flightCode') ?? '';
+    _departureCityController.text =
+        await _preferences.getString('departureCity') ?? '';
+    _destinationCityController.text =
+        await _preferences.getString('destinationCity') ?? '';
+    _departureTimeController.text =
+        await _preferences.getString('departureTime') ?? '';
+    _arrivalTimeController.text =
+        await _preferences.getString('arrivalTime') ?? '';
   }
 
   // save the data in device
   Future<void> _savePreferences() async {
     await _preferences.setString('flightCode', _flightCodeController.text);
-    await _preferences.setString('departureCity', _departureCityController.text);
-    await _preferences.setString('destinationCity', _destinationCityController.text);
-    await _preferences.setString('departureTime', _departureTimeController.text);
+    await _preferences.setString(
+        'departureCity', _departureCityController.text);
+    await _preferences.setString(
+        'destinationCity', _destinationCityController.text);
+    await _preferences.setString(
+        'departureTime', _departureTimeController.text);
     await _preferences.setString('arrivalTime', _arrivalTimeController.text);
   }
 
@@ -118,7 +129,8 @@ class _FlightsPageState extends State<FlightsPage> {
       );
       await _flightDao.updateFlight(updatedFlight);
       setState(() {
-        final index = _flightsList.indexWhere((flight) => flight.id == _selectedFlight!.id);
+        final index = _flightsList.indexWhere((flight) =>
+        flight.id == _selectedFlight!.id);
         _flightsList[index] = updatedFlight;
         _clearTextFields();
         _selectedFlight = null;
@@ -133,6 +145,7 @@ class _FlightsPageState extends State<FlightsPage> {
       );
     }
   }
+
   // Add a delete alert dialog
   void _confirmDeleteFlight() async {
     showDialog(
@@ -157,6 +170,7 @@ class _FlightsPageState extends State<FlightsPage> {
         }
     );
   }
+
   void _deleteFlight() async {
     if (_selectedFlight != null) {
       await _flightDao.deleteFlight(_selectedFlight!);
@@ -288,9 +302,11 @@ class _FlightsPageState extends State<FlightsPage> {
           return ListTile(
             leading: Text('${index + 1}'),
             title: Text(
-                '${_flightsList[index].flightCode} - ${_flightsList[index].departureCity} to ${_flightsList[index].destinationCity}'),
+                '${_flightsList[index].flightCode} - ${_flightsList[index]
+                    .departureCity} to ${_flightsList[index].destinationCity}'),
             subtitle: Text(
-                '${_flightsList[index].departureTime} - ${_flightsList[index].arrivalTime}'),
+                '${_flightsList[index].departureTime} - ${_flightsList[index]
+                    .arrivalTime}'),
             onTap: () => _onFlightTapped(_flightsList[index]),
           );
         },
@@ -304,28 +320,48 @@ class _FlightsPageState extends State<FlightsPage> {
       return const Center(child: Text("No flight selected"));
     }
     return Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text('Flight Code: ${_selectedFlight!.flightCode}',
-                  style: const TextStyle(fontSize: 18)),
-            Text('Departure City: ${_selectedFlight!.departureCity}',
-                style: const TextStyle(fontSize: 18)),
-            Text('Destination City: ${_selectedFlight!.destinationCity}',
-                style: const TextStyle(fontSize: 18)),
-            Text('Departure Time: ${_selectedFlight!.departureTime}',
-                style: const TextStyle(fontSize: 18)),
-            Text('Arrival Time: ${_selectedFlight!.arrivalTime}',
-                style: const TextStyle(fontSize: 18)),
-          ],
-        ),
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text('Flight Code: ${_selectedFlight!.flightCode}',
+              style: const TextStyle(fontSize: 18)),
+          Text('Departure City: ${_selectedFlight!.departureCity}',
+              style: const TextStyle(fontSize: 18)),
+          Text('Destination City: ${_selectedFlight!.destinationCity}',
+              style: const TextStyle(fontSize: 18)),
+          Text('Departure Time: ${_selectedFlight!.departureTime}',
+              style: const TextStyle(fontSize: 18)),
+          Text('Arrival Time: ${_selectedFlight!.arrivalTime}',
+              style: const TextStyle(fontSize: 18)),
+          // const SizedBox(height: 20),
+          // Row(
+          //   children: <Widget>[
+          //     Expanded(
+          //       child: ElevatedButton(
+          //         onPressed: _updateFlight,
+          //         child: const Text('Updated Flight'),
+          //       ),
+          //     ),
+          //     const SizedBox(width: 10),
+          //     Expanded(
+          //         child: ElevatedButton(
+          //          onPressed: _confirmDeleteFlight,
+          //          child: const Text('Delete Flight'),
+          //         )
+          //     ),
+          //   ],
+          // ),
+        ],
+      ),
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery
+        .of(context)
+        .size;
     var height = size.height;
     var width = size.width;
 
@@ -333,7 +369,10 @@ class _FlightsPageState extends State<FlightsPage> {
       // Tablet in landscape mode
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          backgroundColor: Theme
+              .of(context)
+              .colorScheme
+              .inversePrimary,
           title: const Text('Flights List'),
         ),
         body: Row(
@@ -352,7 +391,7 @@ class _FlightsPageState extends State<FlightsPage> {
               flex: 3,
               child: _selectedFlight == null
                   ? const Center(child: Text('No flight selected'))
-                  : _buildFlightForm(),
+                  : _buildFlightDetails(), // Updated with details page
             ),
           ],
         ),
@@ -361,7 +400,10 @@ class _FlightsPageState extends State<FlightsPage> {
       // Phone or device in portrait mode, show form and list
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          backgroundColor: Theme
+              .of(context)
+              .colorScheme
+              .inversePrimary,
           title: const Text('Flights List'),
         ),
         body: Column(
@@ -375,3 +417,22 @@ class _FlightsPageState extends State<FlightsPage> {
     }
   }
 }
+    // else {
+    //   // show details
+    //   return Scaffold(
+    //
+    //     appBar: AppBar(
+    //       backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+    //       title: const Text('Flights List'),
+    //       leading: IconButton(
+    //         icon: const Icon(Icons.arrow_back),
+    //         onPressed: () {
+    //           setState(() {
+    //             _selectedFlight = null;
+    //           });
+    //         },
+    //       ),
+    //     ),
+    //     body: _buildFlightDetails(), // Updated to use the new details page function
+    //     );
+    // }
