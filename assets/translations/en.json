@@ -41,8 +41,20 @@
   "BUTTON_SUBMIT"                                 : "Submit",
   "DIALOG_CONFIRM_CREATE_FROM_PRECUSTOMER"        : "Create from previous Customer?",
   "TITLE_AIRLINE_MANAGEMENT"                      : "Airline Management",
-  "TITLE_AIRLINE_MANAGEMENT_HOMEPAGE"             : "Airline Management Homepage"
-
+  "TITLE_AIRLINE_MANAGEMENT_HOMEPAGE"             : "Airline Management Homepage",
+  "AIRPLANE_TYPE"                                 : "Airplane Type",
+  "NUMBER_OF_PASSENGERS"                          : "Number Of Passengers",
+  "MAX_SPEED"                                     : "Max Speed",
+  "RANGE_TO_FLY"                                  : "Range To Fly",
+  "AIRPLANE_DETAIL"                               : "Airplane Detail",
+  "VIEW_AIRPLANE_DETAIL"                          : "Select an airplane to view details",
+  "ADD_AIRPLANE_SUCCESS"                          : "add airplane successfully",
+  "ADD_AIRPLANE_FAIL"                             : "add airplane failed",
+  "ADD_AIRPLANE"                                  : "Add Airplane",
+  "DIALOG_CONFIRM_DELETE_AIRPLANE_TITLE"          : "Confirm to Delete Airplane?",
+  "DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT"        : "Are you sure to delete this airplane?",
+  "SNACKBAR_UPDATE_AIRPLANE_SUCCESS"              : "Update airplane successfully!",
+  "SNACKBAR_DELETE_AIRPLANE_SUCCESS"              : "Delete airplane successfully!"
 }
 
 

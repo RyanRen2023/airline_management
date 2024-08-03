@@ -46,6 +46,17 @@ class Const {
   static const String TITLE_AIRLINE_MANAGEMENT                 = 'TITLE_AIRLINE_MANAGEMENT';
   static const String TITLE_AIRLINE_MANAGEMENT_HOMEPAGE        = 'TITLE_AIRLINE_MANAGEMENT_HOMEPAGE';
 
-
-
+  static const String AIRPLANE_TYPE                            = 'AIRPLANE_TYPE';
+  static const String NUMBER_OF_PASSENGERS                     = 'NUMBER_OF_PASSENGERS';
+  static const String MAX_SPEED                                = 'MAX_SPEED';
+  static const String RANGE_TO_FLY                             = 'RANGE_TO_FLY';
+  static const String AIRPLANE_DETAIL                          = 'AIRPLANE_DETAIL';
+  static const String VIEW_AIRPLANE_DETAIL                     = 'VIEW_AIRPLANE_DETAIL';
+  static const String ADD_AIRPLANE_SUCCESS                     = 'ADD_AIRPLANE_SUCCESS';
+  static const String ADD_AIRPLANE_FAIL                        = 'ADD_AIRPLANE_FAIL';
+  static const String ADD_AIRPLANE                             = 'ADD_AIRPLANE';
+  static const String DIALOG_CONFIRM_DELETE_AIRPLANE_TITLE     = 'DIALOG_CONFIRM_DELETE_AIRPLANE_TITLE';
+  static const String DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT   = 'DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT';
+  static const String SNACKBAR_UPDATE_AIRPLANE_SUCCESS         = 'SNACKBAR_UPDATE_AIRPLANE_SUCCESS';
+  static const String SNACKBAR_DELETE_AIRPLANE_SUCCESS         = 'SNACKBAR_DELETE_AIRPLANE_SUCCESS';
 }

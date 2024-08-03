@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../AppLocalizations.dart';
+import '../const/Const.dart';
 import 'Airplane.dart';
 
 class AddAirplanePage extends StatefulWidget {
@@ -18,12 +20,18 @@ class _AddAirplanePageState extends State<AddAirplanePage>{
   final TextEditingController _numberOfPassengersController = TextEditingController();
   final TextEditingController _maxSpeedController = TextEditingController();
   final TextEditingController _rangeToFlyController = TextEditingController();
-  void submitNewCustomer()async {
+
+  void submitNewAirplane()async {
     var airplaneType = _airplaneTypeController.text;
     var numberOfPassengers = _numberOfPassengersController.text;
     var maxSpeed = _maxSpeedController.text;
     var rangeToFly = _rangeToFlyController.text;
-    widget.addNewAirplane(Airplane(airplaneType: airplaneType,numberOfPassengers: int.parse(numberOfPassengers),maxSpeed: int.parse(maxSpeed),rangeToFly: int.parse(rangeToFly)));
+    widget.addNewAirplane(
+        Airplane(
+            airplaneType: airplaneType,
+            numberOfPassengers: int.parse(numberOfPassengers),
+            maxSpeed: int.parse(maxSpeed),
+            rangeToFly: int.parse(rangeToFly)));
   }
 
   @override
@@ -35,35 +43,39 @@ class _AddAirplanePageState extends State<AddAirplanePage>{
           children: <Widget>[
             TextField(
               controller: _airplaneTypeController,
-              decoration: InputDecoration(labelText: 'Airplane Type'),
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.translate(Const.AIRPLANE_TYPE)!),
             ),
             TextField(
               controller: _numberOfPassengersController,
-              decoration: InputDecoration(labelText: 'Number Of Passengers'),
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.translate(Const.NUMBER_OF_PASSENGERS)!),
             ),
             TextField(
               controller: _maxSpeedController,
-              decoration: InputDecoration(labelText: 'Max Speed'),
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.translate(Const.MAX_SPEED)!),
             ),
             TextField(
               controller: _rangeToFlyController,
-              decoration: InputDecoration(labelText: 'Range To Fly'),
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.translate(Const.RANGE_TO_FLY)!),
             ),
             SizedBox(height: 20),
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
               ElevatedButton(
                 onPressed: () async{
-                  submitNewCustomer();
+                  submitNewAirplane();
                   Navigator.pop(context);
                 },
-                child: Text('Submit'),
+                child: Text(AppLocalizations.of(context)!.translate(Const.BUTTON_SUBMIT)!),
               ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('Go Back'),
+                child: Text(AppLocalizations.of(context)!.translate(Const.GO_BACK)!),
               ),
             ],)
           ],
