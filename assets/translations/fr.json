@@ -41,8 +41,18 @@
   "BUTTON_SUBMIT"                                : "Soumettre",
   "DIALOG_CONFIRM_CREATE_FROM_PRECUSTOMER"       : "Créer à partir du client précédent ?",
   "TITLE_AIRLINE_MANAGEMENT"                      : "Gestion de la compagnie aérienne",
-  "TITLE_AIRLINE_MANAGEMENT_HOMEPAGE"             : "Page d'accueil de la gestion de la compagnie aérienne"
-
+  "TITLE_AIRLINE_MANAGEMENT_HOMEPAGE"             : "Page d'accueil de la gestion de la compagnie aérienne",
+  "AIRPLANE_TYPE"                                : "Type d'avion",
+  "NUMBER_OF_PASSENGERS"                         : "Nombre de passagers",
+  "MAX_SPEED"                                    : "Vitesse maximale",
+  "RANGE_TO_FLY"                                 : "Portée de vol",
+  "AIRPLANE_DETAIL"                              : "Détail de l'avion",
+  "VIEW_AIRPLANE_DETAIL"                         : "Sélectionnez un avion pour afficher les détails",
+  "ADD_AIRPLANE_SUCCESS"                         : "ajouter un avion avec succès",
+  "ADD_AIRPLANE_FAIL"                            : "l'ajout d'un avion a échoué",
+  "ADD_AIRPLANE"                                 : "Ajouter un avion",
+  "DIALOG_CONFIRM_DELETE_AIRPLANE_TITLE"         : "",
+  "DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT"       : ""
 }
 
 

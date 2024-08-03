@@ -8,6 +8,8 @@ import 'package:airline_management/airplane/AirplaneDAO.dart';
 
 
 
+import '../AppLocalizations.dart';
+import '../const/Const.dart';
 import '../database/DatabaseOperator.dart';
 
 
@@ -16,15 +18,17 @@ class AirplanePage extends StatefulWidget {
 
   final String title;
 
+
   @override
-  State<StatefulWidget> createState() => _AirplanePagePageState();
+  State<StatefulWidget> createState() => _AirplanePageState();
 }
 
-class _AirplanePagePageState extends State<AirplanePage> {
+class _AirplanePageState extends State<AirplanePage> {
   //int _selectedIndex = 0;
   Airplane? _selectedAirplane;
   late AirplaneDAO? airplaneDAO;
   var airplanes = <Airplane>[];
+
 
   @override
   void initState() {
@@ -41,6 +45,10 @@ class _AirplanePagePageState extends State<AirplanePage> {
     //_fetchAirplanes();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   // void _fetchAirplanes() async {
   //   final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
@@ -50,6 +58,38 @@ class _AirplanePagePageState extends State<AirplanePage> {
   //     airplanes = fetchedAirplanes;
   //   });
   // }
+  void showSnackBar(String message) {
+    var snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void onUpdateAirplane(Airplane airplane) {
+    for (int i = 0; i < airplanes.length; i++) {
+      if (airplane.id == airplanes[i].id) {
+        setState(() {
+          airplanes[i] = airplane;
+          _selectedAirplane = airplane;
+        });
+        break;
+      }
+    }
+    airplaneDAO?.updateAirplane(airplane);
+    showSnackBar(AppLocalizations.of(context)!
+        .translate(Const.SNACKBAR_UPDATE_SUCCESS)!);
+  }
+
+  void onDeleteAirplane(Airplane airplane) {
+    for (int i = 0; i < airplanes.length; i++) {
+      if (airplane.id == airplanes[i].id) {
+        setState(() {
+          airplanes.removeAt(i);
+          _selectedAirplane = null;
+        });
+        break;
+      }
+    }
+  }
+
 
   void _onAirplaneSelectedWide(Airplane airplane) {
     setState(() {
@@ -62,45 +102,39 @@ class _AirplanePagePageState extends State<AirplanePage> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) {
-        return AirplaneDetailPage(title: 'Airplane Detail', airplane: airplane);
+        return AirplaneDetailPage(
+            title: AppLocalizations.of(context)!.translate(Const.AIRPLANE_DETAIL)!,
+            airplane: airplane,
+          updateAirplane: onUpdateAirplane,
+          deleteAirplane: onDeleteAirplane);
       }),
     );
   }
-
-  Widget responsiveLayout() {
-    var size = MediaQuery.of(context).size;
-    var heigh = size.height;
-    var width = size.width;
-
-    if (width > heigh && width > 720) {
-      // landscape
-      return showWideScreen();
-    } else {
-      //Portrait screen
-      return showNormalScreen();
-    }
-  }
-
-  Widget showWideScreen() {
-    return Row(
-      children: [
-        Expanded(
-          flex: 1,
-          child: AirplaneListPage(
-            airplanes: airplanes,
-            onAirplaneSelected: _onAirplaneSelectedWide,
-            selectedAirplane: _selectedAirplane,
+    Widget showWideScreen() {
+      return Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: AirplaneListPage(
+              airplanes: airplanes,
+              onAirplaneSelected: _onAirplaneSelectedWide,
+              selectedAirplane: _selectedAirplane,
+            ),
           ),
-        ),
-        Expanded(
-          flex: 2,
-          child: _selectedAirplane != null
-              ? AirplaneDetailView(airplane: _selectedAirplane!)
-              : Center(child: Text('Select a airplane to view details')),
-        ),
-      ],
-    );
-  }
+          Expanded(
+            flex: 2,
+            child: _selectedAirplane != null
+                ? AirplaneDetailView(
+                airplane: _selectedAirplane!,
+                updateAirplane: onUpdateAirplane,
+                deleteAirplane: onDeleteAirplane)
+                : Center(
+                child: Text(AppLocalizations.of(context)!.translate(Const.VIEW_AIRPLANE_DETAIL)!)),
+          ),
+        ],
+      );
+    }
+
 
   Widget showNormalScreen() {
     return Column(
@@ -114,7 +148,10 @@ class _AirplanePagePageState extends State<AirplanePage> {
         ),
         if (_selectedAirplane != null)
           Expanded(
-            child: AirplaneDetailView(airplane: _selectedAirplane!),
+            child: AirplaneDetailView(
+              airplane: _selectedAirplane!,
+                updateAirplane: onUpdateAirplane,
+                deleteAirplane: onDeleteAirplane),
           ),
       ],
     );
@@ -128,10 +165,28 @@ class _AirplanePagePageState extends State<AirplanePage> {
   //
   //   _fetchAirplanes();
   // }
+    Widget responsiveLayout() {
+      var size = MediaQuery.of(context).size;
+      var heigh = size.height;
+      var width = size.width;
+
+      if (width > heigh && width > 720) {
+        // landscape
+        return showWideScreen();
+      } else {
+        //Portrait screen
+        return showNormalScreen();
+      }
+    }
 
   void onAddNewAirplane(Airplane airplane) async {
     int? airplaneId = await airplaneDAO?.insertAirplane(airplane);
-    Airplane newAirplane = Airplane(id:airplaneId,airplaneType: airplane.airplaneType,numberOfPassengers: airplane.numberOfPassengers,maxSpeed: airplane.maxSpeed,rangeToFly: airplane.rangeToFly);
+    Airplane newAirplane = Airplane(
+        id:airplaneId,
+        airplaneType: airplane.airplaneType,
+        numberOfPassengers: airplane.numberOfPassengers,
+        maxSpeed: airplane.maxSpeed,
+        rangeToFly: airplane.rangeToFly);
 
     if (airplaneId != null) {
       setState(() {
@@ -139,17 +194,15 @@ class _AirplanePagePageState extends State<AirplanePage> {
       });
       //_fetchAirplanes();
       print('New airplane ID: $airplaneId');
-      showSnackBar("add airplane successfully");
+      showSnackBar(
+          AppLocalizations.of(context)!.translate(Const.ADD_AIRPLANE_SUCCESS)!);
     }else{
       print('Add airplane failed.');
-      showSnackBar("add airplane failed.");
+      showSnackBar(
+          AppLocalizations.of(context)!.translate(Const.ADD_AIRPLANE_FAIL)!);
     }
   }
 
-  void showSnackBar(String message) {
-    var snackBar = SnackBar(content: Text(message));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
 
   Widget showAddAirplaneButton() {
     return Align(
@@ -162,7 +215,7 @@ class _AirplanePagePageState extends State<AirplanePage> {
               context,
               MaterialPageRoute(
                   builder: (context) => AddAirplanePage(
-                    title: 'Add Airplane',
+                    title: AppLocalizations.of(context)!.translate(Const.ADD_AIRPLANE)!,
                     addNewAirplane: onAddNewAirplane,
                   )),
             );
@@ -172,6 +225,9 @@ class _AirplanePagePageState extends State<AirplanePage> {
       ),
     );
   }
+
+
+
   @override
   Widget build(BuildContext context) {
     //bool isWideScreen = MediaQuery.of(context).size.width >= 600;
@@ -184,9 +240,10 @@ class _AirplanePagePageState extends State<AirplanePage> {
       body: Stack(
         children: [
           responsiveLayout(),
-          showAddAirplaneButton()
+          showAddAirplaneButton(),
         ],
       ),
     );
   }
+
 }

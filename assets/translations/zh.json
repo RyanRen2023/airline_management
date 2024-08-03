@@ -41,8 +41,18 @@
   "BUTTON_SUBMIT"                                : "提交",
   "DIALOG_CONFIRM_CREATE_FROM_PRECUSTOMER"       : "从上一个客户创建？",
   "TITLE_AIRLINE_MANAGEMENT"                     : "航空管理",
-  "TITLE_AIRLINE_MANAGEMENT_HOMEPAGE"            : "航空管理主页"
-
+  "TITLE_AIRLINE_MANAGEMENT_HOMEPAGE"            : "航空管理主页",
+  "AIRPLANE_TYPE"                                : "飞机型号",
+  "NUMBER_OF_PASSENGERS"                         : "乘客数量",
+  "MAX_SPEED"                                    : "最大速度",
+  "RANGE_TO_FLY"                                 : "飞行范围",
+  "AIRPLANE_DETAIL"                              : "飞机信息",
+  "VIEW_AIRPLANE_DETAIL"                         : "查看所选飞机的详细信息",
+  "ADD_AIRPLANE_SUCCESS"                         : "成功添加飞机",
+  "ADD_AIRPLANE_FAIL"                            : "添加飞机失败",
+  "ADD_AIRPLANE"                                 : "添加飞机",
+  "DIALOG_CONFIRM_DELETE_AIRPLANE_TITLE"          : "删除确认",
+  "DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT"        : "你确定要删除吗？"
 }
 
 
