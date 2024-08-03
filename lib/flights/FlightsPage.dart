@@ -303,7 +303,24 @@ class _FlightsPageState extends State<FlightsPage> {
     if (_selectedFlight == null) {
       return const Center(child: Text("No flight selected"));
     }
-    return Padding(padding: padding)
+    return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text('Flight Code: ${_selectedFlight!.flightCode}',
+                  style: const TextStyle(fontSize: 18)),
+            Text('Departure City: ${_selectedFlight!.departureCity}',
+                style: const TextStyle(fontSize: 18)),
+            Text('Destination City: ${_selectedFlight!.destinationCity}',
+                style: const TextStyle(fontSize: 18)),
+            Text('Departure Time: ${_selectedFlight!.departureTime}',
+                style: const TextStyle(fontSize: 18)),
+            Text('Arrival Time: ${_selectedFlight!.arrivalTime}',
+                style: const TextStyle(fontSize: 18)),
+          ],
+        ),
+    );
   }
   
   @override
