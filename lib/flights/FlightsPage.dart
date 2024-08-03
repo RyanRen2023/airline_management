@@ -133,7 +133,30 @@ class _FlightsPageState extends State<FlightsPage> {
       );
     }
   }
-
+  // Add a delete alert dialog
+  void _confirmDeleteFlight() async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Delete Flight"),
+            content: const Text("Are u sure to delete this flight?"),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }, child: const Text("Cancel")
+              ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _deleteFlight();
+                  }, child: const Text("Delete"))
+            ],
+          );
+        }
+    );
+  }
   void _deleteFlight() async {
     if (_selectedFlight != null) {
       await _flightDao.deleteFlight(_selectedFlight!);
@@ -234,7 +257,7 @@ class _FlightsPageState extends State<FlightsPage> {
               const SizedBox(width: 10),
               Expanded(
                 child: ElevatedButton(
-                  onPressed: _deleteFlight,
+                  onPressed: _confirmDeleteFlight,
                   child: const Text('Delete Flight'),
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 ),
