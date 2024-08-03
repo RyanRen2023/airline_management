@@ -75,7 +75,7 @@ class _AirplanePageState extends State<AirplanePage> {
     }
     airplaneDAO?.updateAirplane(airplane);
     showSnackBar(AppLocalizations.of(context)!
-        .translate(Const.SNACKBAR_UPDATE_SUCCESS)!);
+        .translate(Const.SNACKBAR_UPDATE_AIRPLANE_SUCCESS)!);
   }
 
   void onDeleteAirplane(Airplane airplane) {
@@ -88,6 +88,13 @@ class _AirplanePageState extends State<AirplanePage> {
         break;
       }
     }
+
+    airplaneDAO?.deleteAirplaneById(airplane.id!);
+    setState(() {
+      _selectedAirplane = null;
+    });
+    showSnackBar(AppLocalizations.of(context)!
+        .translate(Const.SNACKBAR_DELETE_AIRPLANE_SUCCESS)!);
   }
 
 

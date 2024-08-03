@@ -51,8 +51,10 @@
   "ADD_AIRPLANE_SUCCESS"                         : "成功添加飞机",
   "ADD_AIRPLANE_FAIL"                            : "添加飞机失败",
   "ADD_AIRPLANE"                                 : "添加飞机",
-  "DIALOG_CONFIRM_DELETE_AIRPLANE_TITLE"          : "删除确认",
-  "DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT"        : "你确定要删除吗？"
+  "DIALOG_CONFIRM_DELETE_AIRPLANE_TITLE"         : "飞机删除确认",
+  "DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT"       : "你确定要删除这架飞机吗？",
+  "SNACKBAR_UPDATE_AIRPLANE_SUCCESS"             : "更新飞机成功！",
+  "SNACKBAR_DELETE_AIRPLANE_SUCCESS"             : "删除飞机成功！"
 }
 
 

@@ -51,8 +51,10 @@
   "ADD_AIRPLANE_SUCCESS"                         : "ajouter un avion avec succès",
   "ADD_AIRPLANE_FAIL"                            : "l'ajout d'un avion a échoué",
   "ADD_AIRPLANE"                                 : "Ajouter un avion",
-  "DIALOG_CONFIRM_DELETE_AIRPLANE_TITLE"         : "",
-  "DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT"       : ""
+  "DIALOG_CONFIRM_DELETE_AIRPLANE_TITLE"         : "Confirmez pour supprimer l'avion",
+  "DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT"       : "Êtes-vous sûr de supprimer cet avion ?",
+  "SNACKBAR_UPDATE_AIRPLANE_SUCCESS"             : "Mettez à jour l'avion avec succès !",
+  "SNACKBAR_DELETE_AIRPLANE_SUCCESS"             : "Supprimez l'avion avec succès !"
 }
 
 
