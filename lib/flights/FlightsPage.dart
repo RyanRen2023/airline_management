@@ -298,6 +298,14 @@ class _FlightsPageState extends State<FlightsPage> {
     );
   }
 
+  // Add details page
+  Widget _buildFlightDetails() {
+    if (_selectedFlight == null) {
+      return const Center(child: Text("No flight selected"));
+    }
+    return Padding(padding: padding)
+  }
+  
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
