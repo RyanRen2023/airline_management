@@ -75,14 +75,11 @@ class _MyAppState extends State<MyApp> {
               title: "Airline Management Homepage",
               locale: defaultLocale,
             ),
-        // Properties.NAV_CUSTOMER: (context) => const CustomerPage(title: "Customer"),
-        // Properties.NAV_AIRLINE: (context) => const AirplanePage(title: "Airplane"),
-        // Properties.NAV_FLIGHTS: (context) => const FlightsPage(title: "Flights"),
-        // Properties.NAV_RESERVATION: (context) => const ReservationPage(title: "Reservation"),
+
         Properties.NAV_CUSTOMER: (context) => CustomerPage(
             title: AppLocalizations.of(context)!
                 .translate(Const.MAIN_BUTTON_CUSTOMER)!),
-        Properties.NAV_AIRLINE: (context) => AirplanePage(
+        Properties.NAV_AIRPLANE: (context) => AirplanePage(
             title: AppLocalizations.of(context)!
                 .translate(Const.MAIN_BUTTON_AIRPLANE)!),
         Properties.NAV_FLIGHTS: (context) => FlightsPage(
@@ -137,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, Properties.NAV_AIRLINE);
+                      Navigator.pushNamed(context, Properties.NAV_AIRPLANE);
                     },
                     child: Column(
                       children: [
