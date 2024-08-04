@@ -54,7 +54,24 @@
   "DIALOG_CONFIRM_DELETE_AIRPLANE_TITLE"         : "Confirmez pour supprimer l'avion",
   "DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT"       : "Êtes-vous sûr de supprimer cet avion ?",
   "SNACKBAR_UPDATE_AIRPLANE_SUCCESS"             : "Mettez à jour l'avion avec succès !",
-  "SNACKBAR_DELETE_AIRPLANE_SUCCESS"             : "Supprimez l'avion avec succès !"
+  "SNACKBAR_DELETE_AIRPLANE_SUCCESS"             : "Supprimez l'avion avec succès !",
+  "fp_title"                                      : "Liste des vols",
+  "fp_flightCode"                                 : "Code du vol",
+  "fp_departureCity"                              : "Ville de départ",
+  "fp_destinationCity"                            : "Ville de destination",
+  "fp_departureTime"                              : "Heure de départ",
+  "fp_arrivalTime"                                : "Heure d'arrivée",
+  "fp_addFlight"                                  : "Ajouter un vol",
+  "fp_updateFlight"                               : "Mettre à jour le vol",
+  "fp_deleteFlight"                               : "Supprimer le vol",
+  "fp_cancel"                                     : "Annuler",
+  "fp_noFlightSelected"                           : "Aucun vol sélectionné",
+  "fp_flightAdded"                                : "Vol ajouté avec succès",
+  "fp_flightUpdated"                              : "Vol mis à jour avec succès",
+  "fp_flightDeleted"                              : "Vol supprimé avec succès",
+  "fp_pleaseFillAllFields"                        : "Veuillez remplir tous les champs",
+  "fp_deleteFlightConfirmation"                   : "Êtes-vous sûr de vouloir supprimer ce vol?",
+  "fp_noFlightsInList"                            : "Il n'y a aucun vol dans la liste"
 }
 
 

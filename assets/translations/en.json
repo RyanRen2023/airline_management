@@ -54,7 +54,24 @@
   "DIALOG_CONFIRM_DELETE_AIRPLANE_TITLE"          : "Confirm to Delete Airplane?",
   "DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT"        : "Are you sure to delete this airplane?",
   "SNACKBAR_UPDATE_AIRPLANE_SUCCESS"              : "Update airplane successfully!",
-  "SNACKBAR_DELETE_AIRPLANE_SUCCESS"              : "Delete airplane successfully!"
+  "SNACKBAR_DELETE_AIRPLANE_SUCCESS"              : "Delete airplane successfully!",
+  "fp_title"                                      : "Flights List",
+  "fp_flightCode"                                 : "Flight Code",
+  "fp_departureCity"                              : "Departure City",
+  "fp_destinationCity"                            : "Destination City",
+  "fp_departureTime"                              : "Departure Time",
+  "fp_arrivalTime"                                : "Arrival Time",
+  "fp_addFlight"                                  : "Add Flight",
+  "fp_updateFlight"                               : "Update Flight",
+  "fp_deleteFlight"                               : "Delete Flight",
+  "fp_cancel"                                     : "Cancel",
+  "fp_noFlightSelected"                           : "No flight selected",
+  "fp_flightAdded"                                : "Flight added successfully",
+  "fp_flightUpdated"                              : "Flight updated successfully",
+  "fp_flightDeleted"                              : "Flight deleted successfully",
+  "fp_pleaseFillAllFields"                        : "Please fill all fields",
+  "fp_deleteFlightConfirmation"                   : "Are you sure you want to delete this flight?",
+  "fp_noFlightsInList"                            : "There are no flights in the list"
 }
 
 
