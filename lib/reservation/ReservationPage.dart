@@ -32,7 +32,8 @@ class _ReservationPageState extends State<ReservationPage> {
     super.initState();
     _initDb();
     //load data with encrypted
-    _loadEncryptedData();
+    // _loadEncryptedData();
+    _clearInputs();
   }
 
   //load encrypted data

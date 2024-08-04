@@ -11,6 +11,7 @@ import '../const/Const.dart';
 import 'CustomerDAO.dart';
 import 'CustomerDetailPage.dart';
 
+/// A StatefulWidget that represents the Customer Page in the Airline Management System.
 class CustomerPage extends StatefulWidget {
   const CustomerPage({super.key, required this.title});
 
@@ -20,13 +21,16 @@ class CustomerPage extends StatefulWidget {
   State<StatefulWidget> createState() => _CustomerPageState();
 }
 
+/// State for [CustomerPage].
 class _CustomerPageState extends State<CustomerPage> {
   Customer? _selectedCustomer;
   late CustomerDAO? customerDAO;
   List<Customer> customers = [];
   final EncryptedSharedPreferences _preferences = EncryptedSharedPreferences();
 
-  /// add the previous customer to the preference
+  /// Adds the previous customer to the preferences.
+  ///
+  /// [customer] - The customer to save in preferences.
   void savePreviousCustomerToPreference(Customer customer) {
     _preferences.setString("cus_firstname", customer.firstName);
     _preferences.setString("cus_lastname", customer.lastName);
@@ -34,7 +38,9 @@ class _CustomerPageState extends State<CustomerPage> {
     _preferences.setString("cus_address", customer.address);
   }
 
-  /// load the previous customer from preference.
+  /// Loads the previous customer from preferences.
+  ///
+  /// Returns a [Customer] if data is found in preferences, otherwise null.
   Future<Customer?> loadPreviousCustomerFromPreference() async {
     // Retrieve customer information from preferences
 
@@ -77,13 +83,17 @@ class _CustomerPageState extends State<CustomerPage> {
   void dispose() {
     super.dispose();
   }
-
+  /// Handles customer selection in wide screen mode.
+  ///
+  /// [customer] - The selected customer.
   void onCustomerSelectedWide(Customer customer) {
     setState(() {
       _selectedCustomer = customer;
     });
   }
-
+  /// Handles customer selection.
+  ///
+  /// [customer] - The selected customer.
   void onCustomerSelected(Customer customer) {
     _selectedCustomer = customer;
 
@@ -100,7 +110,9 @@ class _CustomerPageState extends State<CustomerPage> {
       }),
     );
   }
-
+  /// Handles adding a new customer.
+  ///
+  /// [customer] - The customer to add.
   void onAddNewCustomer(Customer customer) async {
     int? customerId = await customerDAO?.insertCustomer(customer);
     Customer newCus = Customer(
@@ -117,7 +129,9 @@ class _CustomerPageState extends State<CustomerPage> {
     showSnackBar(
         AppLocalizations.of(context)!.translate(Const.SNACKBAR_ADD_SUCCESS)!);
   }
-
+  /// Handles updating a customer.
+  ///
+  /// [customer] - The customer to update.
   void onUpdateCustomer(Customer customer) {
     for (int i = 0; i < customers.length; i++) {
       if (customer.id == customers[i].id) {
@@ -132,7 +146,9 @@ class _CustomerPageState extends State<CustomerPage> {
     showSnackBar(AppLocalizations.of(context)!
         .translate(Const.SNACKBAR_UPDATE_SUCCESS)!);
   }
-
+  /// Handles deleting a customer.
+  ///
+  /// [customer] - The customer to delete.
   void onDeleteCustomer(Customer customer) {
     for (int i = 0; i < customers.length; i++) {
       if (customer.id == customers[i].id) {
@@ -150,12 +166,14 @@ class _CustomerPageState extends State<CustomerPage> {
     showSnackBar(AppLocalizations.of(context)!
         .translate(Const.SNACKBAR_DELETE_SUCCESS)!);
   }
-
+  /// Displays a SnackBar with a given message.
+  ///
+  /// [message] - The message to display in the SnackBar.
   void showSnackBar(String message) {
     var snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
-
+  /// Builds the responsive layout for the Customer Page.
   Widget responsiveLayout() {
     var size = MediaQuery.of(context).size;
     var height = size.height;
@@ -169,7 +187,7 @@ class _CustomerPageState extends State<CustomerPage> {
       return showNormalScreen();
     }
   }
-
+  /// Builds the wide screen layout.
   Widget showWideScreen() {
     return Row(
       children: [
@@ -196,7 +214,7 @@ class _CustomerPageState extends State<CustomerPage> {
       ],
     );
   }
-
+  /// Builds the normal screen layout.
   Widget showNormalScreen() {
     return Column(
       children: [
@@ -210,7 +228,7 @@ class _CustomerPageState extends State<CustomerPage> {
       ],
     );
   }
-
+  /// Builds the add customer button.
   Widget showAddCustomerButton() {
     return Align(
       alignment: Alignment.bottomCenter,
@@ -226,7 +244,10 @@ class _CustomerPageState extends State<CustomerPage> {
       ),
     );
   }
-
+  /// Displays a dialog for adding a customer.
+  ///
+  /// [context] - The BuildContext of the widget.
+  /// [preCustomer] - The previous customer data to prefill.
   void showDialogForAddCustomer(BuildContext context, Customer preCustomer) {
     showDialog(
       context: context,
@@ -259,7 +280,7 @@ class _CustomerPageState extends State<CustomerPage> {
       },
     );
   }
-
+  /// Navigates to the AddCustomerPage.
   void createCustomer() {
     Navigator.push(
       context,
@@ -271,7 +292,9 @@ class _CustomerPageState extends State<CustomerPage> {
               createFromLast: false)),
     );
   }
-
+  /// Navigates to the AddCustomerPage pre-filled with previous customer data.
+  ///
+  /// [preCustomer] - The previous customer data to prefill.
   void createCustomerByPreCustomer(Customer preCustomer) {
     Navigator.push(
       context,
@@ -284,7 +307,7 @@ class _CustomerPageState extends State<CustomerPage> {
               preCustomer: preCustomer)),
     );
   }
-
+  /// Navigates to the AddCustomerPage.
   Future<void> NavigateToAddCustomerPage() async {
     Customer? preCustomer = await loadPreviousCustomerFromPreference();
     if (preCustomer != null) {

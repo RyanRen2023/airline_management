@@ -8,7 +8,7 @@ class Properties {
     * */
   static const String NAV_HOME = '/home';
   static const String NAV_CUSTOMER = '/customer';
-  static const String NAV_AIRLINE = '/airline';
+  static const String NAV_AIRPLANE = '/airplane';
   static const String NAV_FLIGHTS = '/flights';
   static const String NAV_RESERVATION = '/conversation';
 

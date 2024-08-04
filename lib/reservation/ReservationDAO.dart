@@ -1,5 +1,5 @@
 import 'package:floor/floor.dart';
-import 'Reservation.dart';
+import 'package:airline_management/reservation/Reservation.dart';
 
 @dao
 abstract class ReservationDAO {
