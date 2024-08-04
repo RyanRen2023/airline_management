@@ -5,23 +5,32 @@ import 'package:intl/intl.dart';
 import '../AppLocalizations.dart';
 import '../const/Const.dart';
 import 'Customer.dart';
-
+/// A stateful widget that provides a form for adding a new customer.
 class AddCustomerPage extends StatefulWidget {
+  /// Creates an [AddCustomerPage].
+  ///
+  /// The [title], [addNewCustomer], and [createFromLast] parameters must not be null.
+  /// The [preCustomer] parameter is optional and used only if [createFromLast] is true.
   AddCustomerPage(
       {super.key,
       required this.title,
       required this.addNewCustomer,
       required this.createFromLast,
       this.preCustomer});
+
+  /// Callback function to add a new customer.
   final Function(Customer) addNewCustomer;
+  /// The title of the page.
   final String title;
+  /// A flag indicating whether to prefill the form with data from the previous customer.
   final bool createFromLast;
+  /// The previous customer data to prefill the form, if any.
   final Customer? preCustomer;
 
   @override
   State<StatefulWidget> createState() => _AddCustomerPageState();
 }
-
+/// State for [AddCustomerPage].
 class _AddCustomerPageState extends State<AddCustomerPage> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
@@ -29,7 +38,7 @@ class _AddCustomerPageState extends State<AddCustomerPage> {
   final TextEditingController _birthdayController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  /// Submits the new customer form if valid.
   void submitNewCustomer() {
     if (_formKey.currentState!.validate()) {
       var firstName = _firstNameController.text;
@@ -44,7 +53,9 @@ class _AddCustomerPageState extends State<AddCustomerPage> {
       Navigator.pop(context);
     }
   }
-
+  /// Shows a date picker dialog to select the customer's birthday.
+  ///
+  /// [context] - The build context.
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,

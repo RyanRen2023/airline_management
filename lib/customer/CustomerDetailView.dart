@@ -5,11 +5,17 @@ import 'package:intl/intl.dart';
 import '../AppLocalizations.dart';
 import '../const/Const.dart';
 
+/// A stateless widget that displays and allows editing of a customer's details.
 class CustomerDetailView extends StatelessWidget {
+  /// The customer to display and edit.
   Customer customer;
+  /// Callback function to update a customer.
   Function(Customer) updateCustomer;
+  /// Callback function to delete a customer.
   Function(Customer) deleteCustomer;
-
+  /// Creates a [CustomerDetailView].
+  ///
+  /// The [customer], [updateCustomer], and [deleteCustomer] parameters must not be null.
   CustomerDetailView(
       {super.key,
       required this.customer,
@@ -22,7 +28,9 @@ class CustomerDetailView extends StatelessWidget {
   final TextEditingController _birthdayController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  /// Updates the customer details.
+  ///
+  /// Returns `true` if the update is successful, `false` otherwise.
   bool updateCustomers() {
     if (_formKey.currentState!.validate()) {
       Customer cus = this.customer;
@@ -42,7 +50,9 @@ class CustomerDetailView extends StatelessWidget {
       return false;
     }
   }
-
+  /// Shows a confirmation dialog to delete the customer.
+  ///
+  /// [context] - The build context.
   void deleteDialogConfirm(BuildContext context) {
     showDialog(
       context: context,
@@ -73,7 +83,7 @@ class CustomerDetailView extends StatelessWidget {
       },
     );
   }
-
+  /// Deletes the customer.
   void deleteCustomers() {
     Customer cus = this.customer!;
     Customer customer = Customer(
@@ -84,7 +94,9 @@ class CustomerDetailView extends StatelessWidget {
         birthday: cus.birthday);
     deleteCustomer(customer);
   }
-
+  /// Shows a date picker dialog to select the customer's birthday.
+  ///
+  /// [context] - The build context.
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
