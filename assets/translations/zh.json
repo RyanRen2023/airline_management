@@ -44,8 +44,8 @@
   "TITLE_AIRLINE_MANAGEMENT_HOMEPAGE"            : "航空管理主页",
   "AIRPLANE_TYPE"                                : "飞机型号",
   "NUMBER_OF_PASSENGERS"                         : "乘客数量",
-  "MAX_SPEED"                                    : "最大速度",
-  "RANGE_TO_FLY"                                 : "飞行范围",
+  "MAX_SPEED"                                    : "最大速度（km/h）",
+  "RANGE_TO_FLY"                                 : "飞行范围（km）",
   "AIRPLANE_DETAIL"                              : "飞机信息",
   "VIEW_AIRPLANE_DETAIL"                         : "查看所选飞机的详细信息",
   "ADD_AIRPLANE_SUCCESS"                         : "成功添加飞机",
@@ -54,7 +54,24 @@
   "DIALOG_CONFIRM_DELETE_AIRPLANE_TITLE"         : "飞机删除确认",
   "DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT"       : "你确定要删除这架飞机吗？",
   "SNACKBAR_UPDATE_AIRPLANE_SUCCESS"             : "更新飞机成功！",
-  "SNACKBAR_DELETE_AIRPLANE_SUCCESS"             : "删除飞机成功！"
+  "SNACKBAR_DELETE_AIRPLANE_SUCCESS"             : "删除飞机成功！",
+  "fp_title"                                     : "航班列表",
+  "fp_flightCode"                                : "航班号",
+  "fp_departureCity"                             : "出发城市",
+  "fp_destinationCity"                           : "目的地城市",
+  "fp_departureTime"                             : "出发时间",
+  "fp_arrivalTime"                               : "到达时间",
+  "fp_addFlight"                                 : "添加航班",
+  "fp_updateFlight"                              : "更新航班",
+  "fp_deleteFlight"                              : "删除航班",
+  "fp_cancel"                                    : "取消",
+  "fp_noFlightSelected"                          : "未选择航班",
+  "fp_flightAdded"                               : "航班添加成功",
+  "fp_flightUpdated"                             : "航班更新成功",
+  "fp_flightDeleted"                             : "航班删除成功",
+  "fp_pleaseFillAllFields"                       : "请填写所有字段",
+  "fp_deleteFlightConfirmation"                  : "你确定要删除这个航班吗？",
+  "fp_noFlightsInList"                           : "列表中没有航班"
 }
 
 
