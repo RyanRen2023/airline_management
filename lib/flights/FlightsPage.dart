@@ -3,6 +3,9 @@ import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:airline_management/database/DatabaseOperator.dart';
 import 'FlightDao.dart';
 import 'FlightItem.dart';
+// Localization
+import '../AppLocalizations.dart';
+import '../const/Const.dart';
 
 // Version 3 Flight Page
 class FlightsPage extends StatefulWidget{
@@ -103,11 +106,11 @@ class _FlightsPageState extends State<FlightsPage> {
       });
       _savePreferences();
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Flight added successfully')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.translate(Const.FP_FLIGHT_ADDED)!)),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill all fields')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.translate(Const.FP_PLEASE_FILL_ALL_FIELDS)!)),
       );
     }
   }
@@ -136,12 +139,12 @@ class _FlightsPageState extends State<FlightsPage> {
         _selectedFlight = null;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Flight updated successfully')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.translate(Const.FP_FLIGHT_UPDATED)!)),
       );
       _savePreferences();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill all fields')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.translate(Const.FP_PLEASE_FILL_ALL_FIELDS)!)),
       );
     }
   }
@@ -152,19 +155,20 @@ class _FlightsPageState extends State<FlightsPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text("Delete Flight"),
-            content: const Text("Are u sure to delete this flight?"),
+            title: Text(AppLocalizations.of(context)!.translate(Const.FP_DELETE_FLIGHT)!),
+            content: Text(AppLocalizations.of(context)!.translate(Const.FP_DELETE_FLIGHT_CONFIRMATION)!),
             actions: <Widget>[
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                  }, child: const Text("Cancel")
+                  }, child: Text(AppLocalizations.of(context)!.translate(Const.FP_CANCEL)!)
               ),
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                     _deleteFlight();
-                  }, child: const Text("Delete"))
+                  }, child: Text(AppLocalizations.of(context)!.translate(Const.FP_DELETE_FLIGHT)!)
+              ),
             ],
           );
         }
@@ -180,7 +184,8 @@ class _FlightsPageState extends State<FlightsPage> {
         _clearTextFields();
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Flight deleted successfully')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.translate(Const.FP_FLIGHT_DELETED)!)
+        ),
       );
     }
   }
@@ -216,40 +221,40 @@ class _FlightsPageState extends State<FlightsPage> {
       children: <Widget>[
         TextField(
           controller: _flightCodeController,
-          decoration: const InputDecoration(
-            labelText: 'Flight Code',
+          decoration: InputDecoration(
+            labelText: AppLocalizations.of(context)!.translate(Const.FP_FLIGHT_CODE),
             border: OutlineInputBorder(),
           ),
         ),
         const SizedBox(height: 10),
         TextField(
           controller: _departureCityController,
-          decoration: const InputDecoration(
-            labelText: 'Departure City',
+          decoration: InputDecoration(
+            labelText: AppLocalizations.of(context)!.translate(Const.FP_DEPARTURE_CITY),
             border: OutlineInputBorder(),
           ),
         ),
         const SizedBox(height: 10),
         TextField(
           controller: _destinationCityController,
-          decoration: const InputDecoration(
-            labelText: 'Destination City',
+          decoration: InputDecoration(
+            labelText: AppLocalizations.of(context)!.translate(Const.FP_DESTINATION_CITY),
             border: OutlineInputBorder(),
           ),
         ),
         const SizedBox(height: 10),
         TextField(
           controller: _departureTimeController,
-          decoration: const InputDecoration(
-            labelText: 'Departure Time',
+          decoration: InputDecoration(
+            labelText: AppLocalizations.of(context)!.translate(Const.FP_DEPARTURE_TIME),
             border: OutlineInputBorder(),
           ),
         ),
         const SizedBox(height: 10),
         TextField(
           controller: _arrivalTimeController,
-          decoration: const InputDecoration(
-            labelText: 'Arrival Time',
+          decoration: InputDecoration(
+            labelText: AppLocalizations.of(context)!.translate(Const.FP_ARRIVAL_TIME),
             border: OutlineInputBorder(),
           ),
         ),
@@ -257,7 +262,7 @@ class _FlightsPageState extends State<FlightsPage> {
         if (_selectedFlight == null)
           ElevatedButton(
             onPressed: _addFlight,
-            child: const Text('Add Flight'),
+            child: Text(AppLocalizations.of(context)!.translate(Const.FP_ADD_FLIGHT)!),
           )
         else
           Row(
@@ -265,14 +270,14 @@ class _FlightsPageState extends State<FlightsPage> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: _updateFlight,
-                  child: const Text('Update Flight'),
+                  child: Text(AppLocalizations.of(context)!.translate(Const.FP_UPDATE_FLIGHT)!),
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
                 child: ElevatedButton(
                   onPressed: _confirmDeleteFlight,
-                  child: const Text('Delete Flight'),
+                  child: Text(AppLocalizations.of(context)!.translate(Const.FP_DELETE_FLIGHT)!),
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 ),
               ),
@@ -280,7 +285,7 @@ class _FlightsPageState extends State<FlightsPage> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: _cancelEditing,
-                  child: const Text('Cancel'),
+                  child: Text(AppLocalizations.of(context)!.translate(Const.FP_CANCEL)!),
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
                 ),
               ),
@@ -293,8 +298,8 @@ class _FlightsPageState extends State<FlightsPage> {
   Widget _buildFlightList() {
     return Expanded(
       child: _flightsList.isEmpty
-          ? const Center(
-        child: Text('There are no flights in the list'),
+          ? Center(
+        child: Text(AppLocalizations.of(context)!.translate(Const.FP_NO_FLIGHTS_IN_LIST)!),
       )
           : ListView.builder(
         itemCount: _flightsList.length,
@@ -317,22 +322,22 @@ class _FlightsPageState extends State<FlightsPage> {
   // Add details page
   Widget _buildFlightDetails() {
     if (_selectedFlight == null) {
-      return const Center(child: Text("No flight selected"));
+      return Center(child: Text(AppLocalizations.of(context)!.translate(Const.FP_NO_FLIGHT_SELECTED)!));
     }
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text('Flight Code: ${_selectedFlight!.flightCode}',
+          Text('${AppLocalizations.of(context)!.translate(Const.FP_FLIGHT_CODE)}: ${_selectedFlight!.flightCode}',
               style: const TextStyle(fontSize: 18)),
-          Text('Departure City: ${_selectedFlight!.departureCity}',
+          Text('${AppLocalizations.of(context)!.translate(Const.FP_DEPARTURE_CITY)}: ${_selectedFlight!.departureCity}',
               style: const TextStyle(fontSize: 18)),
-          Text('Destination City: ${_selectedFlight!.destinationCity}',
+          Text('${AppLocalizations.of(context)!.translate(Const.FP_DESTINATION_CITY)}: ${_selectedFlight!.destinationCity}',
               style: const TextStyle(fontSize: 18)),
-          Text('Departure Time: ${_selectedFlight!.departureTime}',
+          Text('${AppLocalizations.of(context)!.translate(Const.FP_DEPARTURE_TIME)}: ${_selectedFlight!.departureTime}',
               style: const TextStyle(fontSize: 18)),
-          Text('Arrival Time: ${_selectedFlight!.arrivalTime}',
+          Text('${AppLocalizations.of(context)!.translate(Const.FP_ARRIVAL_TIME)}: ${_selectedFlight!.arrivalTime}',
               style: const TextStyle(fontSize: 18)),
           // const SizedBox(height: 20),
           // Row(
@@ -373,7 +378,7 @@ class _FlightsPageState extends State<FlightsPage> {
               .of(context)
               .colorScheme
               .inversePrimary,
-          title: const Text('Flights List'),
+          title: Text(AppLocalizations.of(context)!.translate(Const.FP_TITLE)!),
         ),
         body: Row(
           children: <Widget>[
@@ -390,7 +395,7 @@ class _FlightsPageState extends State<FlightsPage> {
             Expanded(
               flex: 3,
               child: _selectedFlight == null
-                  ? const Center(child: Text('No flight selected'))
+                  ? Center(child: Text(AppLocalizations.of(context)!.translate(Const.FP_NO_FLIGHT_SELECTED)!))
                   : _buildFlightDetails(), // Updated with details page
             ),
           ],
@@ -404,7 +409,7 @@ class _FlightsPageState extends State<FlightsPage> {
               .of(context)
               .colorScheme
               .inversePrimary,
-          title: const Text('Flights List'),
+          title: Text(AppLocalizations.of(context)!.translate(Const.FP_TITLE)!),
         ),
         body: Column(
           children: [
