@@ -152,16 +152,16 @@ class _AirplanePageState extends State<AirplanePage> {
             onAirplaneSelected: _onAirplaneSelected,
             selectedAirplane: _selectedAirplane,
           ),
-        ),
-        if (_selectedAirplane != null)
+        )
+        /*if (_selectedAirplane != null)
           Expanded(
             child: AirplaneDetailView(
               airplane: _selectedAirplane!,
                 updateAirplane: onUpdateAirplane,
                 deleteAirplane: onDeleteAirplane),
           ),
-      ],
-    );
+      ,
+    );*/]);
   }
 
   // void _navigateToAddAirplanePage() async {
