@@ -24,7 +24,7 @@ class Const {
   static const String  NO_RESERVATION_SELECTED                 = "NO_RESERVATION_SELECTED";
   static const String  RESERVATION_ADDED_SUCCESSFULLY          = "RESERVATION_ADDED_SUCCESSFULLY";
   static const String  PLEASE_FILL_ALL_FIELDS                  = "PLEASE_FILL_ALL_FIELDS";
-  static const String  APP_DATABASE_DB                         = "app_database.db";
+  static const String  APP_DATABASE_DB                         = "airplane_database.db";
 
   static const String TITLE_CUSTOMER_DETAIL                    = 'TITLE_CUSTOMER_DETAIL';
   static const String TITLE_ADD_CUSTOMER                       = 'TITLE_ADD_CUSTOMER';
@@ -59,4 +59,18 @@ class Const {
   static const String DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT   = 'DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT';
   static const String SNACKBAR_UPDATE_AIRPLANE_SUCCESS         = 'SNACKBAR_UPDATE_AIRPLANE_SUCCESS';
   static const String SNACKBAR_DELETE_AIRPLANE_SUCCESS         = 'SNACKBAR_DELETE_AIRPLANE_SUCCESS';
+  static const String SELECT_CUSTOMER                          = 'SELECT_CUSTOMER';
+  static const String SELECT_FLIGHT                            = 'SELECT_FLIGHT';
+  static const String RESERVATION_DETAILS                      = 'RESERVATION_DETAILS';
+  static const String CUSTOMER                                 = 'CUSTOMER';
+  static const String FLIGHT                                   = 'FLIGHT';
+  static const String FROM                                     = 'FROM';
+  static const String TO                                       = 'TO';
+  static const String AT                                       = 'AT';
+  static const String SELECT_DATE                              = 'SELECT_DATE';
+  static const String PLEASE_SELECT_A_CUSTOMER_AND_A_FLIGHT    = 'PLEASE_SELECT_A_CUSTOMER_AND_A_FLIGHT';
+
+
+
+
 }

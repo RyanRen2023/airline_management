@@ -8,6 +8,7 @@
 
 import 'package:airline_management/customer/CustomerDAO.dart';
 import 'package:airline_management/flights/FlightDao.dart';
+import 'package:airline_management/reservation/ReservationDAO.dart';
 import '../airplane/Airplane.dart';
 import '../airplane/AirplaneDAO.dart';
 import '../customer/Customer.dart';
@@ -61,6 +62,13 @@ class DatabaseOperator {
       await initDatabase();
     }
     return _database?.flightDao;
+  }
+
+  static Future<ReservationDAO?> getReservationDAO() async {
+    if (_database == null) {
+      await initDatabase();
+    }
+    return _database?.reservationDao;
   }
 
   static Future<AirplaneDAO?> getAirplaneDAO() async {
