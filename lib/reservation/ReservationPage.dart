@@ -1,16 +1,16 @@
 import 'package:airline_management/customer/CustomerDAO.dart';
 import 'package:airline_management/flights/FlightDao.dart';
+import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 import '../AppLocalizations.dart';
 import '../const/Const.dart';
 import '../customer/Customer.dart';
 import '../database/DatabaseOperator.dart';
-import '../database/database.dart';
 import '../flights/FlightItem.dart';
 import 'Reservation.dart';
 import 'ReservationDAO.dart';
-import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
-import 'package:intl/intl.dart';
 
 class ReservationPage extends StatefulWidget {
   const ReservationPage({super.key, required this.title});
@@ -272,7 +272,7 @@ class _ReservationPageState extends State<ReservationPage> {
                 onPressed: () => _deleteTodoItem(selectedReservation!),
               ),
               IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: Icon(Icons.arrow_back_outlined),
                 onPressed: () {
                   setState(() {
                     selectedReservation = null;
@@ -287,40 +287,9 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-/*
-  Widget _buildReservationDetails() {
-    if (selectedReservation == null) {
-      return Center(child: Text(AppLocalizations.of(context)!.translate(Const.NO_RESERVATION_SELECTED)!));
-    }
-
-     final customer = customers.firstWhere((c) => c.id == selectedReservation!.customerId);
-    final flight = flights.firstWhere((f) => f.id == selectedReservation!.flightId);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(AppLocalizations.of(context)!.translate(Const.RESERVATION_DETAILS)!, style: Theme.of(context).textTheme.titleLarge),
-        Text('${AppLocalizations.of(context)!.translate(Const.CUSTOMER)!}: ${customer.firstName} ${customer.lastName}'),
-        Text('${AppLocalizations.of(context)!.translate(Const.FLIGHT)!}: ${flight.flightCode}'),
-        Text('${AppLocalizations.of(context)!.translate(Const.FROM)!}: ${flight.departureCity} ${AppLocalizations.of(context)!.translate(Const.AT)!} ${flight.departureTime}'),
-        Text('${AppLocalizations.of(context)!.translate(Const.TO)!}: ${flight.destinationCity} ${AppLocalizations.of(context)!.translate(Const.AT)!} ${flight.arrivalTime}'),
-        Text('${AppLocalizations.of(context)!.translate(Const.DATE)!}: ${selectedReservation!.date}'),
-      ],
-    );
-  }
-*/
-
+  /**
+   * Showing the item get from database for selecting
+   */
   Widget ReservationList() {
     return Scrollbar(
       thickness: 9.0,
@@ -390,35 +359,10 @@ class _ReservationPageState extends State<ReservationPage> {
     );
   }
 
-/*  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: OrientationBuilder(
-        builder: (context, orientation) {
-          if (orientation == Orientation.portrait) {
-            return Column(
-              children: [
-                Expanded(child: ReservationList()),
-                Expanded(child: _buildReservationDetails()),
-              ],
-            );
-          } else {
-            return Row(
-              children: [
-                Expanded(child: ReservationList()),
-                Expanded(child: _buildReservationDetails()),
-              ],
-            );
-          }
-        },
-      ),
-    );
-  }*/
 
-
+  /**
+   * Determine whether the screen is displayed in landscape or portrait
+   */
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -447,8 +391,6 @@ class _ReservationPageState extends State<ReservationPage> {
     );
   }
 }
-
-
 
 
 
