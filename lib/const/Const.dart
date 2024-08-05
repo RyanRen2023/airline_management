@@ -59,6 +59,10 @@ class Const {
   static const String DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT   = 'DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT';
   static const String SNACKBAR_UPDATE_AIRPLANE_SUCCESS         = 'SNACKBAR_UPDATE_AIRPLANE_SUCCESS';
   static const String SNACKBAR_DELETE_AIRPLANE_SUCCESS         = 'SNACKBAR_DELETE_AIRPLANE_SUCCESS';
+  static const String MESSAGE_NO_AIRPLANE_ON_LIST              = 'MESSAGE_NO_AIRPLANE_ON_LIST';
+  static const String MESSAGE_ERROR_EMPTY                      = 'MESSAGE_ERROR_EMPTY';
+  static const String MESSAGE_ERROR_NOT_INT                    = 'MESSAGE_ERROR_NOT_INT';
+
   static const String SELECT_CUSTOMER                          = 'SELECT_CUSTOMER';
   static const String SELECT_FLIGHT                            = 'SELECT_FLIGHT';
   static const String RESERVATION_DETAILS                      = 'RESERVATION_DETAILS';
