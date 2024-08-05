@@ -130,8 +130,7 @@ class _AirplanePageState extends State<AirplanePage> {
           ),
           Expanded(
             flex: 2,
-            child: _selectedAirplane != null
-                ? AirplaneDetailView(
+            child: _selectedAirplane != null ? AirplaneDetailView(
                 airplane: _selectedAirplane!,
                 updateAirplane: onUpdateAirplane,
                 deleteAirplane: onDeleteAirplane)
