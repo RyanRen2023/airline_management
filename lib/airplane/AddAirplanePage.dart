@@ -5,7 +5,10 @@ import '../const/Const.dart';
 import 'Airplane.dart';
 
 class AddAirplanePage extends StatefulWidget {
-  AddAirplanePage({super.key,required this.title,required this.addNewAirplane});
+  AddAirplanePage({
+    super.key,
+    required this.title,
+    required this.addNewAirplane});
   final Function(Airplane) addNewAirplane;
   final String title;
 
@@ -13,7 +16,6 @@ class AddAirplanePage extends StatefulWidget {
   State<StatefulWidget> createState() => _AddAirplanePageState();
 
 }
-
 
 class _AddAirplanePageState extends State<AddAirplanePage>{
   final TextEditingController _airplaneTypeController = TextEditingController();
@@ -43,7 +45,9 @@ class _AddAirplanePageState extends State<AddAirplanePage>{
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
     title: Text(widget.title),
     ),
-      body: Padding(
+      body: SafeArea( // control overflow with scrolling in landscape view
+        child: SingleChildScrollView(
+        child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
         key: _formKey,
@@ -119,7 +123,7 @@ class _AddAirplanePageState extends State<AddAirplanePage>{
           ],
         ),
       ),
-    ));
+    ))));
   }
 }
 
