@@ -24,7 +24,7 @@ class Const {
   static const String  NO_RESERVATION_SELECTED                 = "NO_RESERVATION_SELECTED";
   static const String  RESERVATION_ADDED_SUCCESSFULLY          = "RESERVATION_ADDED_SUCCESSFULLY";
   static const String  PLEASE_FILL_ALL_FIELDS                  = "PLEASE_FILL_ALL_FIELDS";
-  static const String  APP_DATABASE_DB                         = "app_database.db";
+  static const String  APP_DATABASE_DB                         = "airplane_database.db";
 
   static const String TITLE_CUSTOMER_DETAIL                    = 'TITLE_CUSTOMER_DETAIL';
   static const String TITLE_ADD_CUSTOMER                       = 'TITLE_ADD_CUSTOMER';
@@ -59,25 +59,18 @@ class Const {
   static const String DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT   = 'DIALOG_CONFIRM_DELETE_AIRPLANE_CONTENT';
   static const String SNACKBAR_UPDATE_AIRPLANE_SUCCESS         = 'SNACKBAR_UPDATE_AIRPLANE_SUCCESS';
   static const String SNACKBAR_DELETE_AIRPLANE_SUCCESS         = 'SNACKBAR_DELETE_AIRPLANE_SUCCESS';
-  static const String MESSAGE_NO_AIRPLANE_ON_LIST              = 'MESSAGE_NO_AIRPLANE_ON_LIST';
-  static const String MESSAGE_ERROR_EMPTY                      = 'MESSAGE_ERROR_EMPTY';
-  static const String MESSAGE_ERROR_NOT_INT                    = 'MESSAGE_ERROR_NOT_INT';
+  static const String SELECT_CUSTOMER                          = 'SELECT_CUSTOMER';
+  static const String SELECT_FLIGHT                            = 'SELECT_FLIGHT';
+  static const String RESERVATION_DETAILS                      = 'RESERVATION_DETAILS';
+  static const String CUSTOMER                                 = 'CUSTOMER';
+  static const String FLIGHT                                   = 'FLIGHT';
+  static const String FROM                                     = 'FROM';
+  static const String TO                                       = 'TO';
+  static const String AT                                       = 'AT';
+  static const String SELECT_DATE                              = 'SELECT_DATE';
+  static const String PLEASE_SELECT_A_CUSTOMER_AND_A_FLIGHT    = 'PLEASE_SELECT_A_CUSTOMER_AND_A_FLIGHT';
 
-  static const String FP_TITLE                                      = 'fp_title';
-  static const String FP_FLIGHT_CODE                                = 'fp_flightCode';
-  static const String FP_DEPARTURE_CITY                             = 'fp_departureCity';
-  static const String FP_DESTINATION_CITY                           = 'fp_destinationCity';
-  static const String FP_DEPARTURE_TIME                             = 'fp_departureTime';
-  static const String FP_ARRIVAL_TIME                               = 'fp_arrivalTime';
-  static const String FP_ADD_FLIGHT                                 = 'fp_addFlight';
-  static const String FP_UPDATE_FLIGHT                              = 'fp_updateFlight';
-  static const String FP_DELETE_FLIGHT                              = 'fp_deleteFlight';
-  static const String FP_CANCEL                                     = 'fp_cancel';
-  static const String FP_NO_FLIGHT_SELECTED                         = 'fp_noFlightSelected';
-  static const String FP_FLIGHT_ADDED                               = 'fp_flightAdded';
-  static const String FP_FLIGHT_UPDATED                             = 'fp_flightUpdated';
-  static const String FP_FLIGHT_DELETED                             = 'fp_flightDeleted';
-  static const String FP_PLEASE_FILL_ALL_FIELDS                     = 'fp_pleaseFillAllFields';
-  static const String FP_DELETE_FLIGHT_CONFIRMATION                 = 'fp_deleteFlightConfirmation';
-  static const String FP_NO_FLIGHTS_IN_LIST                         = 'fp_noFlightsInList';
+
+
+
 }

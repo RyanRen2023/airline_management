@@ -74,7 +74,17 @@
   "fp_flightDeleted"                             : "航班删除成功",
   "fp_pleaseFillAllFields"                       : "请填写所有字段",
   "fp_deleteFlightConfirmation"                  : "你确定要删除这个航班吗？",
-  "fp_noFlightsInList"                           : "列表中没有航班"
+  "fp_noFlightsInList"                           : "列表中没有航班",
+  "SELECT_CUSTOMER"                              : "选择客户",
+  "SELECT_FLIGHT"                                : "选择航班",
+  "RESERVATION_DETAILS"                          : "预订详情",
+  "CUSTOMER"                                     : "客户",
+  "FLIGHT"                                       : "航班",
+  "FROM"                                         : "始发",
+  "TO"                                           : "到达",
+  "AT"                                           : "于",
+  "SELECT_DATE"                                  : "选择日期",
+  "PLEASE_SELECT_A_CUSTOMER_AND_A_FLIGHT"        : "请选择客户和航班日期"
 }
 
 

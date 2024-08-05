@@ -74,7 +74,17 @@
   "fp_flightDeleted"                              : "Vol supprimé avec succès",
   "fp_pleaseFillAllFields"                        : "Veuillez remplir tous les champs",
   "fp_deleteFlightConfirmation"                   : "Êtes-vous sûr de vouloir supprimer ce vol?",
-  "fp_noFlightsInList"                            : "Il n'y a aucun vol dans la liste"
+  "fp_noFlightsInList"                            : "Il n'y a aucun vol dans la liste",
+  "SELECT_CUSTOMER"                               : "Sélectionner le client",
+  "SELECT_FLIGHT"                                 : "Sélectionner le vol",
+  "RESERVATION_DETAILS"                           : "Détails de la réservation",
+  "CUSTOMER"                                      : "Client",
+  "FLIGHT"                                        : "Vol",
+  "FROM"                                          : "De",
+  "TO"                                            : "À",
+  "AT"                                            : "À",
+  "SELECT_DATE"                                   : "Sélectionner la date",
+  "PLEASE_SELECT_A_CUSTOMER_AND_A_FLIGHT"         : "Veuillez sélectionner un client et une date de vol"
 }
 
 

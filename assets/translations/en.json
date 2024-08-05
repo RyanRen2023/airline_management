@@ -74,7 +74,17 @@
   "fp_flightDeleted"                              : "Flight deleted successfully",
   "fp_pleaseFillAllFields"                        : "Please fill all fields",
   "fp_deleteFlightConfirmation"                   : "Are you sure you want to delete this flight?",
-  "fp_noFlightsInList"                            : "There are no flights in the list"
+  "fp_noFlightsInList"                            : "There are no flights in the list",
+  "SELECT_CUSTOMER"                               : "Select customer",
+  "SELECT_FLIGHT"                                 : "Select Flight",
+  "RESERVATION_DETAILS"                           : "Reservation Details",
+  "CUSTOMER"                                      : "Customer",
+  "FLIGHT"                                        : "Flight",
+  "FROM"                                          : "From",
+  "TO"                                            : "To",
+  "AT"                                            : "At",
+  "SELECT_DATE"                                   : "Select Date",
+  "PLEASE_SELECT_A_CUSTOMER_AND_A_FLIGHT"         : "Please select a customer and a flight Date"
 }
 
 

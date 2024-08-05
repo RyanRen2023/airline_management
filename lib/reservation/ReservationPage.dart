@@ -1,11 +1,16 @@
+import 'package:airline_management/customer/CustomerDAO.dart';
+import 'package:airline_management/flights/FlightDao.dart';
+import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../AppLocalizations.dart';
 import '../const/Const.dart';
-import '../database/database.dart';
+import '../customer/Customer.dart';
+import '../database/DatabaseOperator.dart';
+import '../flights/FlightItem.dart';
 import 'Reservation.dart';
 import 'ReservationDAO.dart';
-import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 
 class ReservationPage extends StatefulWidget {
   const ReservationPage({super.key, required this.title});
@@ -17,61 +22,72 @@ class ReservationPage extends StatefulWidget {
 }
 
 class _ReservationPageState extends State<ReservationPage> {
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _flightCodeController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
 
+  //list for store data from database
   List<Reservation> reservations = [];
+  List<Customer> customers = [];
+  List<FlightItem> flights = [];
+
+  //dao
   late ReservationDAO reservationDAO;
-  Reservation? selectedReservation;
+  late CustomerDAO customerDAO;
+  late FlightDao flightDao;
+
+
   final EncryptedSharedPreferences _preferences = EncryptedSharedPreferences();
+
+  Customer? selectedCustomer;
+  FlightItem? selectedFlight;
+  Reservation? selectedReservation;
+
+
   @override
   void initState() {
     super.initState();
     _initDb();
-    //load data with encrypted
     _loadEncryptedData();
+    // _loadCustomersAndFlights();
   }
 
-  //load encrypted data
   Future<void> _loadEncryptedData() async {
-    _firstNameController.text = await _preferences.getString('firstName');
-    _lastNameController.text = await _preferences.getString('lastName');
-    _emailController.text = await _preferences.getString('email');
-    _flightCodeController.text = await _preferences.getString('flightCode') ;
     _dateController.text = await _preferences.getString('date');
   }
 
-  //save encrypted data
   Future<void> _saveEncryptedData() async {
-    await _preferences.setString('firstName', _firstNameController.text);
-    await _preferences.setString('lastName', _lastNameController.text);
-    await _preferences.setString('email', _emailController.text);
-    await _preferences.setString('flightCode', _flightCodeController.text);
     await _preferences.setString('date', _dateController.text);
   }
 
   Future<void> _initDb() async {
-    final database = await $FloorAppDatabase.databaseBuilder(Const.APP_DATABASE_DB).build();
-    reservationDAO = database.reservationDao;
+    reservationDAO = (await DatabaseOperator.getReservationDAO())!;
+    customerDAO = (await DatabaseOperator.getCustomerDAO())!;
+    flightDao = (await DatabaseOperator.getFlightsDAO())!;
     _loadReservations();
+    _loadCustomers();
+    _loadFlights();
   }
 
-  /**
-   * get All Reservation data from database and load to Reservation List.
-   */
   Future<void> _loadReservations() async {
     final loadedReservations = await reservationDAO.getAllReservations();
     setState(() {
       reservations = loadedReservations;
     });
   }
+  Future<void> _loadCustomers() async {
+    DatabaseOperator.getAllCustomers().then((value) {
+      setState(() {
+        customers = value;
+      });
+    });
 
-  /**
-   * method for prompt DiaLog when delete Reservation Items
-   */
+  }
+  Future<void> _loadFlights() async {
+    final items = await flightDao.findAllFlights();
+    setState(() {
+      flights.addAll(items);
+    });
+  }
+
   void _deleteTodoItem(Reservation item) async {
     showDialog(
       context: context,
@@ -108,46 +124,56 @@ class _ReservationPageState extends State<ReservationPage> {
     });
   }
 
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 365)),
+    );
+    if (picked != null) {
+      setState(() {
+        _dateController.text = DateFormat('yyyy-MM-dd').format(picked);
+      });
+      _saveEncryptedData();
+    }
+  }
+
   /**
    * method for validate fields are not empty, and add Reservation Item
    */
   void _addReservation() async {
-    final String firstName = _firstNameController.text;
-    final String lastName = _lastNameController.text;
-    final String email = _emailController.text;
-    final String flightCode = _flightCodeController.text;
-    final String date = _dateController.text;
-
-    if (firstName.isNotEmpty && lastName.isNotEmpty && email.isNotEmpty && flightCode.isNotEmpty && date.isNotEmpty) {
-      final newReservation = Reservation(
-        id: null,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        flightCode: flightCode,
-        date: date,
-      );
-
-      await reservationDAO.insertReservation(newReservation);
-      _loadReservations();
-      // Save encrypted data after adding reservation
-      await _saveEncryptedData();
-      _clearInputs();
-      _showSnackBar(Const.RESERVATION_ADDED_SUCCESSFULLY);
-    } else {
-      _showAlertDialog(Const.PLEASE_FILL_ALL_FIELDS);
+    if (selectedCustomer == null || selectedFlight == null) {
+      _showAlertDialog(Const.PLEASE_SELECT_A_CUSTOMER_AND_A_FLIGHT);
+      return;
     }
+    if (selectedCustomer == null || selectedFlight == null || _dateController.text.isEmpty) {
+      _showAlertDialog(Const.PLEASE_FILL_ALL_FIELDS);
+      return;
+    }
+
+    final newReservation = Reservation(
+      customerId: selectedCustomer!.id!,
+      flightId: selectedFlight!.id,
+      date: _dateController.text,
+    );
+
+    await reservationDAO.insertReservation(newReservation);
+    _loadReservations();
+    await _saveEncryptedData();
+    _clearInputs();
+    _showSnackBar(Const.RESERVATION_ADDED_SUCCESSFULLY);
   }
 
   /**
    * Clear the content of input fields
    */
   void _clearInputs() {
-    _firstNameController.clear();
-    _lastNameController.clear();
-    _emailController.clear();
-    _flightCodeController.clear();
-    _dateController.clear();
+    setState(() {
+      selectedCustomer = null;
+      selectedFlight = null;
+      _dateController.clear();
+    });
   }
 
 
@@ -187,8 +213,82 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
 
+
   /**
    * Setting the main layout for input fields.
+   */
+  Widget _buildReservationList() {
+    return ListView.builder(
+      itemCount: reservations.length,
+      itemBuilder: (context, index) {
+        final reservation = reservations[index];
+        return ListTile(
+          title: Text('${AppLocalizations.of(context)!.translate(Const.MAIN_BUTTON_RESERVATION)} ${reservation.id}'),
+          subtitle: Text('${AppLocalizations.of(context)!.translate(Const.DATE)}: ${reservation.date}'),
+          onTap: () {
+            setState(() {
+              selectedReservation = reservation;
+            });
+          },
+        );
+      },
+    );
+  }
+
+
+
+
+  Widget _buildReservationDetails() {
+    if (selectedReservation == null) {
+      return Center(child: Text(AppLocalizations.of(context)!.translate(Const.NO_RESERVATION_SELECTED)!));
+    }
+
+    final customer = customers.firstWhere((c) => c.id == selectedReservation!.customerId);
+    final flight = flights.firstWhere((f) => f.id == selectedReservation!.flightId);
+
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 50.0), // 为按钮留出空间
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(AppLocalizations.of(context)!.translate(Const.RESERVATION_DETAILS)!, style: Theme.of(context).textTheme.titleLarge),
+              Text('${AppLocalizations.of(context)!.translate(Const.CUSTOMER)!}: ${customer.firstName} ${customer.lastName}'),
+              Text('${AppLocalizations.of(context)!.translate(Const.FLIGHT)!}: ${flight.flightCode}'),
+              Text('${AppLocalizations.of(context)!.translate(Const.FROM)!}: ${flight.departureCity} ${AppLocalizations.of(context)!.translate(Const.AT)!} ${flight.departureTime}'),
+              Text('${AppLocalizations.of(context)!.translate(Const.TO)!}: ${flight.destinationCity} ${AppLocalizations.of(context)!.translate(Const.AT)!} ${flight.arrivalTime}'),
+              Text('${AppLocalizations.of(context)!.translate(Const.DATE)!}: ${selectedReservation!.date}'),
+            ],
+          ),
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: Row(
+            children: [
+              IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () => _deleteTodoItem(selectedReservation!),
+              ),
+              IconButton(
+                icon: Icon(Icons.arrow_back_outlined),
+                onPressed: () {
+                  setState(() {
+                    selectedReservation = null;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+
+  /**
+   * Showing the item get from database for selecting
    */
   Widget ReservationList() {
     return Scrollbar(
@@ -197,46 +297,51 @@ class _ReservationPageState extends State<ReservationPage> {
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _firstNameController,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate(Const.FIRST_NAME)!),
-                //save as encrypted data when on change
-                onChanged: (value) => _saveEncryptedData(),
-
-              ),
+            DropdownButton<Customer>(
+              value: selectedCustomer,
+              hint: Text(AppLocalizations.of(context)!.translate(Const.SELECT_CUSTOMER)!),
+              items: customers.map((Customer customer) {
+                return DropdownMenuItem<Customer>(
+                  value: customer,
+                  child: Text('${customer.firstName} ${customer.lastName}'),
+                );
+              }).toList(),
+              onChanged: (Customer? newValue) {
+                setState(() {
+                  selectedCustomer = newValue;
+                });
+              },
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _lastNameController,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate(Const.LAST_NAME)),
-                //save as encrypted data when on change
-                onChanged: (value) => _saveEncryptedData(),
-              ),
+            SizedBox(height: 20),
+            DropdownButton<FlightItem>(
+              value: selectedFlight,
+              hint: Text(AppLocalizations.of(context)!.translate(Const.SELECT_FLIGHT)!),
+              items: flights.map((FlightItem flight) {
+                return DropdownMenuItem<FlightItem>(
+                  value: flight,
+                  child: Text('${flight.flightCode}: ${flight.departureCity} to ${flight.destinationCity}'),
+                );
+              }).toList(),
+              onChanged: (FlightItem? newValue) {
+                setState(() {
+                  selectedFlight = newValue;
+                });
+              },
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _emailController,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate(Const.EMAIL)),
-                onChanged: (value) => _saveEncryptedData(),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _flightCodeController,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate(Const.FLIGHT_CODE)),
-                onChanged: (value) => _saveEncryptedData(),
-              ),
-            ),
+            SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: _dateController,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate(Const.DATE)),
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.translate(Const.DATE),
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.calendar_today),
+                    onPressed: () => _selectDate(context),
+                  ),
+                ),
+                readOnly: true,
+                onTap: () => _selectDate(context),
                 onChanged: (value) => _saveEncryptedData(),
               ),
             ),
@@ -246,30 +351,7 @@ class _ReservationPageState extends State<ReservationPage> {
             ),
             SizedBox(
               height: 300,
-              child: ListView.builder(
-                itemCount: reservations.length,
-                itemBuilder: (context, index) {
-                  final reservation = reservations[index];
-                  return Card(
-                    child: ListTile(
-                      title: Text('${AppLocalizations.of(context)!.translate(Const.FULL_NAME)}: ${reservation.firstName} ${reservation.lastName}'),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('${AppLocalizations.of(context)!.translate(Const.FLIGHT_CODE)}: ${reservation.flightCode} '),
-                          Text('${AppLocalizations.of(context)!.translate(Const.DATE)}: ${reservation.date} '),
-                        ],
-                      ),
-                      isThreeLine: true,
-                      onTap: () {
-                        setState(() {
-                          selectedReservation = reservation;
-                        });
-                      },
-                    ),
-                  );
-                },
-              ),
+              child: _buildReservationList(),
             ),
           ],
         ),
@@ -277,104 +359,42 @@ class _ReservationPageState extends State<ReservationPage> {
     );
   }
 
-  /**
-   * show more details or Landscape Screen
-   */
-  Widget DetailsPage() {
-    if (selectedReservation == null) {
-      return Center(child: Text(AppLocalizations.of(context)!.translate(Const.NO_RESERVATION_SELECTED)!));
-    } else {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Column(
-            children: [
-              Text('${AppLocalizations.of(context)!.translate(Const.RESERVATION_ID)}: ${selectedReservation!.id} '),
-              Text('${AppLocalizations.of(context)!.translate(Const.FULL_NAME)}: ${selectedReservation!.firstName} ${selectedReservation!.lastName}'),
-              Text('${AppLocalizations.of(context)!.translate(Const.EMAIL)}: ${selectedReservation!.email}'),
-              Text('${AppLocalizations.of(context)!.translate(Const.FLIGHT_CODE)}: ${selectedReservation!.flightCode}'),
-              Text('${AppLocalizations.of(context)!.translate(Const.DATE)}: ${selectedReservation!.date}'),
-            ],
-          ),
-          SizedBox(height: 20),
-          Row(
-            children: [
-              OutlinedButton(
-                onPressed: () {
-                  setState(() {
-                    selectedReservation = null;
-                  });
-                },
-                child: Text(AppLocalizations.of(context)!.translate(Const.GO_BACK)!),
-              ),
-              OutlinedButton(
-                onPressed: () {
-                  if (selectedReservation != null) {
-                    _deleteTodoItem(selectedReservation!);
-                  }
-                },
-                child: Text(AppLocalizations.of(context)!.translate(Const.DELETE)!),
-              ),
-            ],
-          )
-        ],
-      );
-    }
-  }
-
 
   /**
-   * Method for determination by different screen directions(Landscape or Portrait)
+   * Determine whether the screen is displayed in landscape or portrait
    */
-  Widget responsiveLayout() {
-    var size = MediaQuery.of(context).size;
-    var width = size.width;
-    var height = size.height;
-
-    if (width > height && width > 720) {
-      return Row(
-        children: [
-          Expanded(flex: 1, child: ReservationList()),
-          Expanded(flex: 2, child: DetailsPage()),
-        ],
-      );
-    } else {
-      if (selectedReservation == null) {
-        return ReservationList();
-      } else {
-        return DetailsPage();
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    _firstNameController.dispose();
-    _lastNameController.dispose();
-    _emailController.dispose();
-    _flightCodeController.dispose();
-    _dateController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        actions: [
-          if (selectedReservation != null)
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                setState(() {
-                  selectedReservation = null;
-                });
-              },
-            ),
-        ],
       ),
-      body: responsiveLayout(),
+      body: OrientationBuilder(
+        builder: (context, orientation) {
+          if (orientation == Orientation.portrait) {
+            return Column(
+              children: [
+                Expanded(child: ReservationList()),
+                Expanded(child: _buildReservationDetails()),
+              ],
+            );
+          } else {
+            return Row(
+              children: [
+                Expanded(child: ReservationList()),
+                Expanded(child: _buildReservationDetails()),
+              ],
+            );
+          }
+        },
+      ),
     );
   }
 }
+
+
+
+
+
+
+
