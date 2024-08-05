@@ -4,6 +4,7 @@ import '../AppLocalizations.dart';
 import '../const/Const.dart';
 import 'Airplane.dart';
 
+///a stateful widget to add a new airplane
 class AddAirplanePage extends StatefulWidget {
   AddAirplanePage({
     super.key,
@@ -17,14 +18,18 @@ class AddAirplanePage extends StatefulWidget {
 
 }
 
+///state for [AddAirplanePageState]
 class _AddAirplanePageState extends State<AddAirplanePage>{
+  ///Controllers for textFields with airplane fields
   final TextEditingController _airplaneTypeController = TextEditingController();
   final TextEditingController _numberOfPassengersController = TextEditingController();
   final TextEditingController _maxSpeedController = TextEditingController();
   final TextEditingController _rangeToFlyController = TextEditingController();
 
+  ///global key [_formKey] validates field value
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  ///creates and submits new airplane
   void submitNewAirplane()async {
     var airplaneType = _airplaneTypeController.text;
     var numberOfPassengers = _numberOfPassengersController.text;
@@ -38,6 +43,7 @@ class _AddAirplanePageState extends State<AddAirplanePage>{
             rangeToFly: int.parse(rangeToFly)));
   }
 
+  ///builds form of adding new airplane
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +66,7 @@ class _AddAirplanePageState extends State<AddAirplanePage>{
                   labelText: AppLocalizations.of(context)!.translate(Const.AIRPLANE_TYPE)!),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Airplane Type cannot be empty';
+                  return AppLocalizations.of(context)!.translate(Const.MESSAGE_ERROR_EMPTY)!;
                 }
                 return null;
               },
@@ -72,7 +78,7 @@ class _AddAirplanePageState extends State<AddAirplanePage>{
                   labelText: AppLocalizations.of(context)!.translate(Const.NUMBER_OF_PASSENGERS)!),
                   validator: (value) {
                     if (value!.isEmpty || int.tryParse(value) == null) {
-                      return 'Please enter a valid integer';
+                      return AppLocalizations.of(context)!.translate(Const.MESSAGE_ERROR_NOT_INT)!;
                     }
                     return null;
                   },
@@ -85,7 +91,7 @@ class _AddAirplanePageState extends State<AddAirplanePage>{
                   labelText: AppLocalizations.of(context)!.translate(Const.MAX_SPEED)!),
                   validator: (value) {
                     if (value!.isEmpty || int.tryParse(value) == null) {
-                      return 'Please enter a valid integer';
+                      return AppLocalizations.of(context)!.translate(Const.MESSAGE_ERROR_NOT_INT)!;
                     }
                     return null;
                   },
@@ -97,7 +103,7 @@ class _AddAirplanePageState extends State<AddAirplanePage>{
                   labelText: AppLocalizations.of(context)!.translate(Const.RANGE_TO_FLY)!),
                   validator: (value) {
                     if (value!.isEmpty || int.tryParse(value) == null) {
-                      return 'Please enter a valid integer';
+                      return AppLocalizations.of(context)!.translate(Const.MESSAGE_ERROR_NOT_INT)!;
                     }
                     return null;
                   },

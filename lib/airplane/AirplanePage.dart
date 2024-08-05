@@ -12,23 +12,21 @@ import '../AppLocalizations.dart';
 import '../const/Const.dart';
 import '../database/DatabaseOperator.dart';
 
-
+///airplane main class
 class AirplanePage extends StatefulWidget {
   const AirplanePage({super.key, required this.title});
-
   final String title;
-
 
   @override
   State<StatefulWidget> createState() => _AirplanePageState();
 }
 
+///airplane state page
 class _AirplanePageState extends State<AirplanePage> {
   //int _selectedIndex = 0;
   Airplane? _selectedAirplane;
   late AirplaneDAO? airplaneDAO;
   var airplanes = <Airplane>[];
-
 
   @override
   void initState() {
@@ -50,19 +48,13 @@ class _AirplanePageState extends State<AirplanePage> {
     super.dispose();
   }
 
-  // void _fetchAirplanes() async {
-  //   final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  //   final airplaneDAO = database.airplaneDAO;
-  //   final fetchedAirplanes = await airplaneDAO.findAllAirplanes();
-  //   setState(() {
-  //     airplanes = fetchedAirplanes;
-  //   });
-  // }
+  ///show snackBar with [message]
   void showSnackBar(String message) {
     var snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  ///find selected [airplane] and update in database
   void onUpdateAirplane(Airplane airplane) {
     for (int i = 0; i < airplanes.length; i++) {
       if (airplane.id == airplanes[i].id) {
@@ -74,10 +66,12 @@ class _AirplanePageState extends State<AirplanePage> {
       }
     }
     airplaneDAO?.updateAirplane(airplane);
+    ///show message if update successfully
     showSnackBar(AppLocalizations.of(context)!
         .translate(Const.SNACKBAR_UPDATE_AIRPLANE_SUCCESS)!);
   }
 
+  ///find selected [airplane] and delete in database
   void onDeleteAirplane(Airplane airplane) {
     for (int i = 0; i < airplanes.length; i++) {
       if (airplane.id == airplanes[i].id) {
@@ -88,22 +82,24 @@ class _AirplanePageState extends State<AirplanePage> {
         break;
       }
     }
-
     airplaneDAO?.deleteAirplaneById(airplane.id!);
     setState(() {
       _selectedAirplane = null;
     });
+
+    ///show message if delete successfully
     showSnackBar(AppLocalizations.of(context)!
         .translate(Const.SNACKBAR_DELETE_AIRPLANE_SUCCESS)!);
   }
 
-
+  /// set state of selected [airplane]
   void _onAirplaneSelectedWide(Airplane airplane) {
     setState(() {
       _selectedAirplane = airplane;
     });
   }
 
+  ///load detail page when [airplane] is selected on the list page
   void _onAirplaneSelected(Airplane airplane) {
     _selectedAirplane = airplane;
     Navigator.push(
@@ -117,11 +113,13 @@ class _AirplanePageState extends State<AirplanePage> {
       }),
     );
   }
+
+  ///show landscape screen for Ipad or Desktop with list and detail on the same page
     Widget showWideScreen() {
       return Row(
         children: [
           Expanded(
-            flex: 1,
+            flex: 2,
             child: AirplaneListPage(
               airplanes: airplanes,
               onAirplaneSelected: _onAirplaneSelectedWide,
@@ -129,7 +127,7 @@ class _AirplanePageState extends State<AirplanePage> {
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: _selectedAirplane != null ? AirplaneDetailView(
                 airplane: _selectedAirplane!,
                 updateAirplane: onUpdateAirplane,
@@ -141,7 +139,7 @@ class _AirplanePageState extends State<AirplanePage> {
       );
     }
 
-
+  ///show portrait screen for phone with list and detail on separated pages
   Widget showNormalScreen() {
     return Column(
       children: [
@@ -163,14 +161,7 @@ class _AirplanePageState extends State<AirplanePage> {
     );*/]);
   }
 
-  // void _navigateToAddAirplanePage() async {
-  //   await Navigator.push(
-  //     context,
-  //     MaterialPageRoute(builder: (context) => AddAirplanePage(title: 'Add Airplane')),
-  //   );
-  //
-  //   _fetchAirplanes();
-  // }
+///build responsive layouts for landscape or portrait mode
     Widget responsiveLayout() {
       var size = MediaQuery.of(context).size;
       var heigh = size.height;
@@ -185,6 +176,7 @@ class _AirplanePageState extends State<AirplanePage> {
       }
     }
 
+    ///add new [airplane] async with snackBar showing execute result
   void onAddNewAirplane(Airplane airplane) async {
     int? airplaneId = await airplaneDAO?.insertAirplane(airplane);
     Airplane newAirplane = Airplane(
@@ -209,7 +201,7 @@ class _AirplanePageState extends State<AirplanePage> {
     }
   }
 
-
+///build widget float button for adding new airplane
   Widget showAddAirplaneButton() {
     return Align(
       alignment: Alignment.bottomCenter,
@@ -233,11 +225,9 @@ class _AirplanePageState extends State<AirplanePage> {
   }
 
 
-
+///build widget for main page of airplane
   @override
   Widget build(BuildContext context) {
-    //bool isWideScreen = MediaQuery.of(context).size.width >= 600;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
