@@ -11,6 +11,7 @@ import '../database/DatabaseOperator.dart';
 import '../flights/FlightItem.dart';
 import 'Reservation.dart';
 import 'ReservationDAO.dart';
+import 'ReservationDetailPage.dart';
 
 class ReservationPage extends StatefulWidget {
   const ReservationPage({super.key, required this.title});
@@ -65,6 +66,8 @@ class _ReservationPageState extends State<ReservationPage> {
     _loadReservations();
     _loadCustomers();
     _loadFlights();
+    //clear the date at the beginning
+    _dateController.text = "";
   }
 
   Future<void> _loadReservations() async {
@@ -88,30 +91,38 @@ class _ReservationPageState extends State<ReservationPage> {
     });
   }
 
-  void _deleteTodoItem(Reservation item) async {
-    showDialog(
+
+  /**
+   * method for deleting the selected Item
+   */
+  Future<void> _deleteTodoItem(Reservation item) async {
+    bool confirm = await showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
         title: Text(AppLocalizations.of(context)!.translate(Const.WANT_TO_DELETE)!),
         content: Text(AppLocalizations.of(context)!.translate(Const.PRES_YES_TO_DELETE)!),
         actions: <Widget>[
           FilledButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            onPressed: () => Navigator.of(context).pop(false),
             child: Text(AppLocalizations.of(context)!.translate(Const.NO)!),
           ),
           FilledButton(
-            onPressed: () {
-              _doDeleteItem(item);
-              Navigator.pop(context);
-            },
+            onPressed: () => Navigator.of(context).pop(true),
             child: Text(AppLocalizations.of(context)!.translate(Const.YES)!),
           ),
         ],
       ),
-    );
+    ) ?? false;
+
+    if (confirm) {
+      await reservationDAO.deleteReservation(item);
+      await _loadReservations();
+      setState(() {
+        selectedReservation = null;
+      });
+    }
   }
+
 
   /**
    * method for deleting the selected Item
@@ -226,9 +237,15 @@ class _ReservationPageState extends State<ReservationPage> {
           title: Text('${AppLocalizations.of(context)!.translate(Const.MAIN_BUTTON_RESERVATION)} ${reservation.id}'),
           subtitle: Text('${AppLocalizations.of(context)!.translate(Const.DATE)}: ${reservation.date}'),
           onTap: () {
-            setState(() {
-              selectedReservation = reservation;
-            });
+            //determine jump to detail page or show in current page
+            if (MediaQuery.of(context).orientation == Orientation.portrait) {
+              _navigateToDetailPage(context, reservation);//portrait then jump to show in detail page
+            } else {
+              setState(() {
+                selectedReservation = reservation;
+              });
+            }
+
           },
         );
       },
@@ -239,9 +256,22 @@ class _ReservationPageState extends State<ReservationPage> {
 
 
   Widget _buildReservationDetails() {
-    if (selectedReservation == null) {
-      return Center(child: Text(AppLocalizations.of(context)!.translate(Const.NO_RESERVATION_SELECTED)!));
+    // if (selectedReservation == null) {
+    //   return Center(child: Text(AppLocalizations.of(context)!.translate(Const.NO_RESERVATION_SELECTED)!));
+    // }
+
+     if (selectedReservation == null) {
+      return Container(
+        height: 40, // reduce the height
+        alignment: Alignment.center,
+        child: Text(
+          AppLocalizations.of(context)!.translate(Const.NO_RESERVATION_SELECTED)!,
+          style: TextStyle(fontSize: 14),
+        ),
+      );
     }
+
+
 
     final customer = customers.firstWhere((c) => c.id == selectedReservation!.customerId);
     final flight = flights.firstWhere((f) => f.id == selectedReservation!.flightId);
@@ -284,6 +314,28 @@ class _ReservationPageState extends State<ReservationPage> {
         ),
       ],
     );
+  }
+
+
+
+  Future<void> _navigateToDetailPage(BuildContext context, Reservation reservation) async {
+    final customer = customers.firstWhere((c) => c.id == reservation.customerId);
+    final flight = flights.firstWhere((f) => f.id == reservation.flightId);
+
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ReservationDetailPage(
+          reservation: reservation,
+          customer: customer,
+          flight: flight,
+          onDelete: _deleteTodoItem,
+        ),
+      ),
+    );
+
+    // Reload reservations after returning from detail page
+    _loadReservations();
   }
 
 
