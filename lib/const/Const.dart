@@ -73,7 +73,11 @@ class Const {
   static const String AT                                       = 'AT';
   static const String SELECT_DATE                              = 'SELECT_DATE';
   static const String PLEASE_SELECT_A_CUSTOMER_AND_A_FLIGHT    = 'PLEASE_SELECT_A_CUSTOMER_AND_A_FLIGHT';
-
+  static const String FIRST_NAME_CANNOT_BE_EMPTY               = 'FIRST_NAME_CANNOT_BE_EMPTY';
+  static const String LAST_NAME_CANNOT_BE_EMPTY                = 'LAST_NAME_CANNOT_BE_EMPTY';
+  static const String ADDRESS_CANNOT_BE_EMPTY                  = 'ADDRESS_CANNOT_BE_EMPTY';
+  static const String BIRTHDAY_CANNOT_BE_EMPTY                 = 'BIRTHDAY_CANNOT_BE_EMPTY';
+  static const String THERE_IS_NO_CUSTOMER_IN_THE_LIST         = 'THERE_IS_NO_CUSTOMER_IN_THE_LIST';
 
 
 

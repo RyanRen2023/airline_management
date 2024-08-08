@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:airline_management/customer/CustomerPage.dart';
 import 'package:airline_management/airplane/AirplanePage.dart';
@@ -126,99 +127,227 @@ class _MyHomePageState extends State<MyHomePage> {
       // appBar: flagAppBar(context, widget.title),
       appBar:
           flagAppBar(context, widget.title, _currentLocale, _changeLanguage),
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Flexible(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, Properties.NAV_AIRLINE);
-                    },
-                    child: Column(
-                      children: [
-                        Icon(Icons.route, size: 48),
-                        SizedBox(height: 8),
-                        Text(AppLocalizations.of(context)!
-                            .translate('MAIN_BUTTON_AIRPLANE')!),
-                      ],
-                    ),
+      body: responsiveLayout(),
+    );
+  }
+
+  /// Builds the responsive layout for the Customer Page.
+  Widget responsiveLayout() {
+    var size = MediaQuery.of(context).size;
+    var height = size.height;
+    var width = size.width;
+
+    if (width > height && width > 360) {
+      // landscape
+      return showWideScreen();
+    } else {
+      //Portrait screen
+      return showNormalScreen();
+    }
+  }
+
+  Widget showWideScreen() {
+    return Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, Properties.NAV_AIRLINE);
+                  },
+                  child: Column(
+                    children: [
+                      Icon(Icons.route, size: 48),
+                      SizedBox(height: 8),
+                      Text(AppLocalizations.of(context)!
+                          .translate('MAIN_BUTTON_AIRPLANE')!),
+                    ],
                   ),
-                  SizedBox(height: Properties.SIZEDBOX_HIGHT),
-                ],
-              ),
+                ),
+                SizedBox(height: Properties.SIZEDBOX_HIGHT),
+              ],
             ),
-            SizedBox(width: Properties.SIZEDBOX_WIDTH,),
-            Flexible(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, Properties.NAV_FLIGHTS);
-                    },
-                    child: Column(
-                      children: [
-                        Icon(Icons.flight, size: 48),
-                        SizedBox(height: 8),
-                        Text(AppLocalizations.of(context)!
-                            .translate('MAIN_BUTTON_FLIGHTS')!),
-                      ],
-                    ),
+          ),
+          SizedBox(
+            width: Properties.SIZEDBOX_WIDTH,
+          ),
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, Properties.NAV_FLIGHTS);
+                  },
+                  child: Column(
+                    children: [
+                      Icon(Icons.flight, size: 48),
+                      SizedBox(height: 8),
+                      Text(AppLocalizations.of(context)!
+                          .translate('MAIN_BUTTON_FLIGHTS')!),
+                    ],
                   ),
-                  SizedBox(height: Properties.SIZEDBOX_HIGHT),
-                ],
-              ),
+                ),
+                SizedBox(height: Properties.SIZEDBOX_HIGHT),
+              ],
             ),
-            SizedBox(width: Properties.SIZEDBOX_WIDTH,),
-            Flexible(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, Properties.NAV_CUSTOMER);
-                    },
-                    child: Column(
-                      children: [
-                        Icon(Icons.person, size: 48),
-                        SizedBox(height: 8),
-                        Text(AppLocalizations.of(context)!
-                            .translate('MAIN_BUTTON_CUSTOMER')!),
-                      ],
-                    ),
+          ),
+          SizedBox(
+            width: Properties.SIZEDBOX_WIDTH,
+          ),
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, Properties.NAV_CUSTOMER);
+                  },
+                  child: Column(
+                    children: [
+                      Icon(Icons.person, size: 48),
+                      SizedBox(height: 8),
+                      Text(AppLocalizations.of(context)!
+                          .translate('MAIN_BUTTON_CUSTOMER')!),
+                    ],
                   ),
-                  SizedBox(height: Properties.SIZEDBOX_HIGHT),
-                ],
-              ),
+                ),
+                SizedBox(height: Properties.SIZEDBOX_HIGHT),
+              ],
             ),
-            SizedBox(width: Properties.SIZEDBOX_WIDTH,),
-            Flexible(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, Properties.NAV_RESERVATION);
-                    },
-                    child: Column(
-                      children: [
-                        Icon(Icons.calendar_today, size: 48),
-                        SizedBox(height: 8),
-                        Text(AppLocalizations.of(context)!
-                            .translate('MAIN_BUTTON_RESERVATION')!),
-                      ],
-                    ),
+          ),
+          SizedBox(
+            width: Properties.SIZEDBOX_WIDTH,
+          ),
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, Properties.NAV_RESERVATION);
+                  },
+                  child: Column(
+                    children: [
+                      Icon(Icons.calendar_today, size: 48),
+                      SizedBox(height: 8),
+                      Text(AppLocalizations.of(context)!
+                          .translate('MAIN_BUTTON_RESERVATION')!),
+                    ],
                   ),
-                  SizedBox(height: Properties.SIZEDBOX_HIGHT),
-                ],
-              ),
+                ),
+                SizedBox(height: Properties.SIZEDBOX_HIGHT),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget showNormalScreen() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, Properties.NAV_AIRLINE);
+                  },
+                  child: Column(
+                    children: [
+                      Icon(Icons.route, size: 48),
+                      SizedBox(height: 8),
+                      Text(AppLocalizations.of(context)!
+                          .translate('MAIN_BUTTON_AIRPLANE')!),
+                    ],
+                  ),
+                ),
+                SizedBox(height: Properties.SIZEDBOX_HIGHT),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: Properties.SIZEDBOX_WIDTH,
+          ),
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, Properties.NAV_FLIGHTS);
+                  },
+                  child: Column(
+                    children: [
+                      Icon(Icons.flight, size: 48),
+                      SizedBox(height: 8),
+                      Text(AppLocalizations.of(context)!
+                          .translate('MAIN_BUTTON_FLIGHTS')!),
+                    ],
+                  ),
+                ),
+                SizedBox(height: Properties.SIZEDBOX_HIGHT),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: Properties.SIZEDBOX_WIDTH,
+          ),
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, Properties.NAV_CUSTOMER);
+                  },
+                  child: Column(
+                    children: [
+                      Icon(Icons.person, size: 48),
+                      SizedBox(height: 8),
+                      Text(AppLocalizations.of(context)!
+                          .translate('MAIN_BUTTON_CUSTOMER')!),
+                    ],
+                  ),
+                ),
+                SizedBox(height: Properties.SIZEDBOX_HIGHT),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: Properties.SIZEDBOX_WIDTH,
+          ),
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, Properties.NAV_RESERVATION);
+                  },
+                  child: Column(
+                    children: [
+                      Icon(Icons.calendar_today, size: 48),
+                      SizedBox(height: 8),
+                      Text(AppLocalizations.of(context)!
+                          .translate('MAIN_BUTTON_RESERVATION')!),
+                    ],
+                  ),
+                ),
+                SizedBox(height: Properties.SIZEDBOX_HIGHT),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

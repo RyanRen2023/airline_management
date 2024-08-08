@@ -84,7 +84,13 @@
   "TO"                                           : "到达",
   "AT"                                           : "于",
   "SELECT_DATE"                                  : "选择日期",
-  "PLEASE_SELECT_A_CUSTOMER_AND_A_FLIGHT"        : "请选择客户和航班日期"
+  "PLEASE_SELECT_A_CUSTOMER_AND_A_FLIGHT"        : "请选择客户和航班日期",
+  "FIRST_NAME_CANNOT_BE_EMPTY"                    : "名字不能为空",
+  "LAST_NAME_CANNOT_BE_EMPTY"                     : "姓氏不能为空",
+  "ADDRESS_CANNOT_BE_EMPTY"                       : "地址不能为空",
+  "BIRTHDAY_CANNOT_BE_EMPTY"                      : "生日不能为空",
+  "THERE_IS_NO_CUSTOMER_IN_THE_LIST"              : "列表中没有客户"
+
 }
 
 

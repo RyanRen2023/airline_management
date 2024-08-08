@@ -84,7 +84,12 @@
   "TO"                                            : "To",
   "AT"                                            : "At",
   "SELECT_DATE"                                   : "Select Date",
-  "PLEASE_SELECT_A_CUSTOMER_AND_A_FLIGHT"         : "Please select a customer and a flight Date"
+  "PLEASE_SELECT_A_CUSTOMER_AND_A_FLIGHT"         : "Please select a customer and a flight Date",
+  "FIRST_NAME_CANNOT_BE_EMPTY"                    : "First name cannot be empty",
+  "LAST_NAME_CANNOT_BE_EMPTY"                     : "Last name cannot be empty",
+  "ADDRESS_CANNOT_BE_EMPTY"                       : "Address cannot be empty",
+  "BIRTHDAY_CANNOT_BE_EMPTY"                      : "Birthday cannot be empty",
+  "THERE_IS_NO_CUSTOMER_IN_THE_LIST"              : "There is no customer in the list"
 }
 
 

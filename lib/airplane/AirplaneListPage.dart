@@ -6,7 +6,6 @@ import '../const/Const.dart';
 
 ///Stateless widget for airplane list page
 class AirplaneListPage extends StatelessWidget {
-
   final List<Airplane> airplanes;
   final Function(Airplane) onAirplaneSelected;
   final Airplane? selectedAirplane;
@@ -19,32 +18,33 @@ class AirplaneListPage extends StatelessWidget {
 
   ///build widget ListView to display saved airplanes
   @override
-  Widget build(BuildContext context){
-    final String message = AppLocalizations.of(context)!.translate(Const.MESSAGE_NO_AIRPLANE_ON_LIST)!;
+  Widget build(BuildContext context) {
+    final String message = AppLocalizations.of(context)!
+        .translate(Const.MESSAGE_NO_AIRPLANE_ON_LIST)!;
     return Container(
         height: double.infinity, // Ensure the ListView takes the full height
         child: airplanes.isEmpty
             ? Center(
-          child: Text(
-            message,
-            style: TextStyle(fontSize: 20, color: Colors.grey),
-          ),
-        )
+                child: Text(
+                  message,
+                  style: TextStyle(fontSize: 20, color: Colors.grey),
+                ),
+              )
             : ListView.builder(
-        itemCount: airplanes.length,
-        itemBuilder: (context, index) {
-        return ListTile(
-          title: Text('${airplanes[index].id}. '
-                      '${airplanes[index].airplaneType}, '
-                      '${airplanes[index].numberOfPassengers}, '
-                      '${airplanes[index].maxSpeed}, '
-                      '${airplanes[index].rangeToFly}'),
-          selected: selectedAirplane == airplanes[index],
-          onTap: () {
-            onAirplaneSelected(airplanes[index]);
-          },
-        );
-      },
-    ));
+                itemCount: airplanes.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text('${airplanes[index].id}. '
+                        '${airplanes[index].airplaneType}, '
+                        '${airplanes[index].numberOfPassengers}, '
+                        '${airplanes[index].maxSpeed}, '
+                        '${airplanes[index].rangeToFly}'),
+                    selected: selectedAirplane == airplanes[index],
+                    onTap: () {
+                      onAirplaneSelected(airplanes[index]);
+                    },
+                  );
+                },
+              ));
   }
 }
