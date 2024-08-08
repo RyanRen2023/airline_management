@@ -1,3 +1,4 @@
+import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:airline_management/airplane/AddAirplanePage.dart';
 import 'package:airline_management/airplane/AirplaneListPage.dart';
@@ -27,6 +28,25 @@ class _AirplanePageState extends State<AirplanePage> {
   Airplane? _selectedAirplane;
   late AirplaneDAO? airplaneDAO;
   var airplanes = <Airplane>[];
+
+  final EncryptedSharedPreferences _preferences = EncryptedSharedPreferences();
+  void savePreviousAirplaneToPreference(Airplane airplane) {
+    _preferences.setString("airplaneType", airplane.airplaneType);
+  }
+
+  Future<Airplane?> loadPreviousAirplaneFromPreference() async {
+    // Retrieve Airplane information from preferences
+    String? airplaneType = await _preferences.getString('airplaneType');
+
+    // Create a template Airplane
+    Airplane preAirplane = Airplane(
+      airplaneType: "Boeing 737-800",
+      numberOfPassengers: 162,
+      maxSpeed: 839,
+      rangeToFly: 5765,
+    );
+    return preAirplane;
+  }
 
   @override
   void initState() {
@@ -92,7 +112,7 @@ class _AirplanePageState extends State<AirplanePage> {
         .translate(Const.SNACKBAR_DELETE_AIRPLANE_SUCCESS)!);
   }
 
-  /// set state of selected [airplane]
+  /// set state of selected [airplane]Airplane airplane
   void _onAirplaneSelectedWide(Airplane airplane) {
     setState(() {
       _selectedAirplane = airplane;
@@ -176,6 +196,19 @@ class _AirplanePageState extends State<AirplanePage> {
       }
     }
 
+
+    void createBlankAirplane(){
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AddAirplanePage(
+              title: AppLocalizations.of(context)!.translate(Const.ADD_AIRPLANE)!,
+              addNewAirplane: onAddNewAirplane,
+              createFromLast: false,
+            )),
+      );
+
+    }
     ///add new [airplane] async with snackBar showing execute result
   void onAddNewAirplane(Airplane airplane) async {
     int? airplaneId = await airplaneDAO?.insertAirplane(airplane);
@@ -200,6 +233,15 @@ class _AirplanePageState extends State<AirplanePage> {
           AppLocalizations.of(context)!.translate(Const.ADD_AIRPLANE_FAIL)!);
     }
   }
+  Future<void> NavigateToAddAirplanePage() async {
+    Airplane? preAirplane = await loadPreviousAirplaneFromPreference();
+    if (preAirplane != null) {
+      showDialogForAddAirplane(context, preAirplane);
+    } else {
+      createBlankAirplane();
+    }
+  }
+
 
 ///build widget float button for adding new airplane
   Widget showAddAirplaneButton() {
@@ -209,20 +251,62 @@ class _AirplanePageState extends State<AirplanePage> {
         padding: const EdgeInsets.only(bottom: 16.0),
         child: FloatingActionButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => AddAirplanePage(
-                    title: AppLocalizations.of(context)!.translate(Const.ADD_AIRPLANE)!,
-                    addNewAirplane: onAddNewAirplane,
-                  )),
-            );
+            NavigateToAddAirplanePage();
           },
           child: const Icon(Icons.add),
         ),
       ),
     );
   }
+
+  /// [preAirplane] - The previous Airplane data to prefill.
+  void createPreviousAirplane(Airplane preAirplane) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => AddAirplanePage(
+              title: AppLocalizations.of(context)!
+                  .translate(Const.ADD_AIRPLANE)!,
+              addNewAirplane: onAddNewAirplane,
+              createFromLast: true,
+              preAirplane: preAirplane)),
+    );
+  }
+
+  /// [preAirplane] - The previous Airplane data to prefill.
+  void showDialogForAddAirplane(BuildContext context, Airplane preAirplane) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(AppLocalizations.of(context)!
+              .translate(Const.ADD_AIRPLANE)!),
+          content: Text(AppLocalizations.of(context)!
+              .translate(Const.CHOOSE_TTEMPLATE_AIRPLANE)!),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                  AppLocalizations.of(context)!.translate(Const.BUTTON_OK)!),
+              onPressed: () {
+                // when choose ok ,build Airplane from previous Airplane
+                Navigator.of(context).pop();
+                createPreviousAirplane(preAirplane);
+              },
+            ),
+            TextButton(
+              child: Text(AppLocalizations.of(context)!.translate(Const.NO)!),
+              onPressed: () {
+                // when choose No ,build a blank Airplane
+                Navigator.of(context).pop();
+                createBlankAirplane();
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
 
 
 ///build widget for main page of airplane

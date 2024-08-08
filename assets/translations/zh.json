@@ -89,7 +89,8 @@
   "LAST_NAME_CANNOT_BE_EMPTY"                     : "姓氏不能为空",
   "ADDRESS_CANNOT_BE_EMPTY"                       : "地址不能为空",
   "BIRTHDAY_CANNOT_BE_EMPTY"                      : "生日不能为空",
-  "THERE_IS_NO_CUSTOMER_IN_THE_LIST"              : "列表中没有客户"
+  "THERE_IS_NO_CUSTOMER_IN_THE_LIST"              : "列表中没有客户",
+  "CHOOSE_TTEMPLATE_AIRPLANE"                     : "您想从模板创建一架新飞机吗?"
 
 }
 

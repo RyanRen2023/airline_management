@@ -78,6 +78,7 @@ class Const {
   static const String ADDRESS_CANNOT_BE_EMPTY                  = 'ADDRESS_CANNOT_BE_EMPTY';
   static const String BIRTHDAY_CANNOT_BE_EMPTY                 = 'BIRTHDAY_CANNOT_BE_EMPTY';
   static const String THERE_IS_NO_CUSTOMER_IN_THE_LIST         = 'THERE_IS_NO_CUSTOMER_IN_THE_LIST';
+  static const String CHOOSE_TTEMPLATE_AIRPLANE                = 'CHOOSE_TTEMPLATE_AIRPLANE';
 
 
 

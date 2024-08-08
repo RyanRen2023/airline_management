@@ -89,7 +89,8 @@
   "LAST_NAME_CANNOT_BE_EMPTY"                     : "Le nom de famille ne peut pas être vide",
   "ADDRESS_CANNOT_BE_EMPTY"                       : "L'adresse ne peut pas être vide",
   "BIRTHDAY_CANNOT_BE_EMPTY"                      : "La date de naissance ne peut pas être vide",
-  "THERE_IS_NO_CUSTOMER_IN_THE_LIST"              : "Il n'y a aucun client dans la liste"
+  "THERE_IS_NO_CUSTOMER_IN_THE_LIST"              : "Il n'y a aucun client dans la liste",
+  "CHOOSE_TTEMPLATE_AIRPLANE"                     : "Voulez-vous créer un nouvel avion à partir d'un modèle?"
 }
 
 

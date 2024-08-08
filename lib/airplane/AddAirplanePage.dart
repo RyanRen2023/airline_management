@@ -9,9 +9,16 @@ class AddAirplanePage extends StatefulWidget {
   AddAirplanePage({
     super.key,
     required this.title,
-    required this.addNewAirplane});
+    required this.addNewAirplane,
+    required this.createFromLast,
+    this.preAirplane});
+
   final Function(Airplane) addNewAirplane;
   final String title;
+  /// A flag indicating whether to prefill the form with data from the previous Airplane.
+  final bool createFromLast;
+  /// The previous Airplane data to prefill the form, if any.
+  final Airplane? preAirplane;
 
   @override
   State<StatefulWidget> createState() => _AddAirplanePageState();
@@ -41,6 +48,27 @@ class _AddAirplanePageState extends State<AddAirplanePage>{
             numberOfPassengers: int.parse(numberOfPassengers),
             maxSpeed: int.parse(maxSpeed),
             rangeToFly: int.parse(rangeToFly)));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.createFromLast) {
+      Airplane preAirplane = widget.preAirplane!;
+      _airplaneTypeController.text = preAirplane.airplaneType;
+      _numberOfPassengersController.text = preAirplane.numberOfPassengers.toString();
+      _maxSpeedController.text = preAirplane.maxSpeed.toString();
+      _rangeToFlyController.text = preAirplane.rangeToFly.toString();
+    }
+  }
+
+  @override
+  void dispose() {
+    _airplaneTypeController.dispose();
+    _numberOfPassengersController.dispose();
+    _maxSpeedController.dispose();
+    _rangeToFlyController.dispose();
+    super.dispose();
   }
 
   ///builds form of adding new airplane
