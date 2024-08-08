@@ -1,13 +1,18 @@
+
 import 'package:flutter/material.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:airline_management/database/DatabaseOperator.dart';
 import 'FlightDao.dart';
 import 'FlightItem.dart';
+// Localization
+import '../AppLocalizations.dart';
+import '../const/Const.dart';
 
-  // version 2
+// Version 3 Flight Page
 class FlightsPage extends StatefulWidget{
   const FlightsPage({super.key,required this.title});
-  
+
+  // set the title in main
   final String title;
 
   @override
@@ -16,6 +21,7 @@ class FlightsPage extends StatefulWidget{
 }
 
 class _FlightsPageState extends State<FlightsPage> {
+  // init the variables for control the input fields.
   final List<FlightItem> _flightsList = [];
   final TextEditingController _flightCodeController = TextEditingController();
   final TextEditingController _departureCityController = TextEditingController();
@@ -35,35 +41,51 @@ class _FlightsPageState extends State<FlightsPage> {
     _loadPreferences();
   }
 
+  // init the database
   Future<void> _initDatabase() async {
     _flightDao = (await DatabaseOperator.getFlightsDAO())!;
     _loadFlights();
   }
 
+  // load all flights from database
   Future<void> _loadFlights() async {
     final items = await _flightDao.findAllFlights();
     setState(() {
       _flightsList.addAll(items);
-      _idCounter = items.isEmpty ? 0 : items.map((e) => e.id).reduce((a, b) => a > b ? a : b) + 1;
+      _idCounter = items.isEmpty ? 0 : items.map((e) => e.id).reduce((a, b) =>
+      a > b
+          ? a
+          : b) + 1;
     });
   }
 
+  // load the record in device
   Future<void> _loadPreferences() async {
-    _flightCodeController.text = await _preferences.getString('flightCode') ?? '';
-    _departureCityController.text = await _preferences.getString('departureCity') ?? '';
-    _destinationCityController.text = await _preferences.getString('destinationCity') ?? '';
-    _departureTimeController.text = await _preferences.getString('departureTime') ?? '';
-    _arrivalTimeController.text = await _preferences.getString('arrivalTime') ?? '';
+    _flightCodeController.text =
+        await _preferences.getString('flightCode') ?? '';
+    _departureCityController.text =
+        await _preferences.getString('departureCity') ?? '';
+    _destinationCityController.text =
+        await _preferences.getString('destinationCity') ?? '';
+    _departureTimeController.text =
+        await _preferences.getString('departureTime') ?? '';
+    _arrivalTimeController.text =
+        await _preferences.getString('arrivalTime') ?? '';
   }
 
+  // save the data in device
   Future<void> _savePreferences() async {
     await _preferences.setString('flightCode', _flightCodeController.text);
-    await _preferences.setString('departureCity', _departureCityController.text);
-    await _preferences.setString('destinationCity', _destinationCityController.text);
-    await _preferences.setString('departureTime', _departureTimeController.text);
+    await _preferences.setString(
+        'departureCity', _departureCityController.text);
+    await _preferences.setString(
+        'destinationCity', _destinationCityController.text);
+    await _preferences.setString(
+        'departureTime', _departureTimeController.text);
     await _preferences.setString('arrivalTime', _arrivalTimeController.text);
   }
 
+  // add flight item function
   void _addFlight() async {
     if (_flightCodeController.text.isNotEmpty &&
         _departureCityController.text.isNotEmpty &&
@@ -85,11 +107,11 @@ class _FlightsPageState extends State<FlightsPage> {
       });
       _savePreferences();
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Flight added successfully')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.translate(Const.FP_FLIGHT_ADDED)!)),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill all fields')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.translate(Const.FP_PLEASE_FILL_ALL_FIELDS)!)),
       );
     }
   }
@@ -111,20 +133,47 @@ class _FlightsPageState extends State<FlightsPage> {
       );
       await _flightDao.updateFlight(updatedFlight);
       setState(() {
-        final index = _flightsList.indexWhere((flight) => flight.id == _selectedFlight!.id);
+        final index = _flightsList.indexWhere((flight) =>
+        flight.id == _selectedFlight!.id);
         _flightsList[index] = updatedFlight;
         _clearTextFields();
         _selectedFlight = null;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Flight updated successfully')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.translate(Const.FP_FLIGHT_UPDATED)!)),
       );
       _savePreferences();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill all fields')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.translate(Const.FP_PLEASE_FILL_ALL_FIELDS)!)),
       );
     }
+  }
+
+  // Add a delete alert dialog
+  void _confirmDeleteFlight() async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(AppLocalizations.of(context)!.translate(Const.FP_DELETE_FLIGHT)!),
+            content: Text(AppLocalizations.of(context)!.translate(Const.FP_DELETE_FLIGHT_CONFIRMATION)!),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }, child: Text(AppLocalizations.of(context)!.translate(Const.FP_CANCEL)!)
+              ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _deleteFlight();
+                  }, child: Text(AppLocalizations.of(context)!.translate(Const.FP_DELETE_FLIGHT)!)
+              ),
+            ],
+          );
+        }
+    );
   }
 
   void _deleteFlight() async {
@@ -136,7 +185,8 @@ class _FlightsPageState extends State<FlightsPage> {
         _clearTextFields();
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Flight deleted successfully')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.translate(Const.FP_FLIGHT_DELETED)!)
+        ),
       );
     }
   }
@@ -172,40 +222,40 @@ class _FlightsPageState extends State<FlightsPage> {
       children: <Widget>[
         TextField(
           controller: _flightCodeController,
-          decoration: const InputDecoration(
-            labelText: 'Flight Code',
+          decoration: InputDecoration(
+            labelText: AppLocalizations.of(context)!.translate(Const.FP_FLIGHT_CODE),
             border: OutlineInputBorder(),
           ),
         ),
         const SizedBox(height: 10),
         TextField(
           controller: _departureCityController,
-          decoration: const InputDecoration(
-            labelText: 'Departure City',
+          decoration: InputDecoration(
+            labelText: AppLocalizations.of(context)!.translate(Const.FP_DEPARTURE_CITY),
             border: OutlineInputBorder(),
           ),
         ),
         const SizedBox(height: 10),
         TextField(
           controller: _destinationCityController,
-          decoration: const InputDecoration(
-            labelText: 'Destination City',
+          decoration: InputDecoration(
+            labelText: AppLocalizations.of(context)!.translate(Const.FP_DESTINATION_CITY),
             border: OutlineInputBorder(),
           ),
         ),
         const SizedBox(height: 10),
         TextField(
           controller: _departureTimeController,
-          decoration: const InputDecoration(
-            labelText: 'Departure Time',
+          decoration: InputDecoration(
+            labelText: AppLocalizations.of(context)!.translate(Const.FP_DEPARTURE_TIME),
             border: OutlineInputBorder(),
           ),
         ),
         const SizedBox(height: 10),
         TextField(
           controller: _arrivalTimeController,
-          decoration: const InputDecoration(
-            labelText: 'Arrival Time',
+          decoration: InputDecoration(
+            labelText: AppLocalizations.of(context)!.translate(Const.FP_ARRIVAL_TIME),
             border: OutlineInputBorder(),
           ),
         ),
@@ -213,7 +263,7 @@ class _FlightsPageState extends State<FlightsPage> {
         if (_selectedFlight == null)
           ElevatedButton(
             onPressed: _addFlight,
-            child: const Text('Add Flight'),
+            child: Text(AppLocalizations.of(context)!.translate(Const.FP_ADD_FLIGHT)!),
           )
         else
           Row(
@@ -221,14 +271,14 @@ class _FlightsPageState extends State<FlightsPage> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: _updateFlight,
-                  child: const Text('Update Flight'),
+                  child: Text(AppLocalizations.of(context)!.translate(Const.FP_UPDATE_FLIGHT)!),
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
                 child: ElevatedButton(
-                  onPressed: _deleteFlight,
-                  child: const Text('Delete Flight'),
+                  onPressed: _confirmDeleteFlight,
+                  child: Text(AppLocalizations.of(context)!.translate(Const.FP_DELETE_FLIGHT)!),
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 ),
               ),
@@ -236,7 +286,7 @@ class _FlightsPageState extends State<FlightsPage> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: _cancelEditing,
-                  child: const Text('Cancel'),
+                  child: Text(AppLocalizations.of(context)!.translate(Const.FP_CANCEL)!),
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
                 ),
               ),
@@ -249,8 +299,8 @@ class _FlightsPageState extends State<FlightsPage> {
   Widget _buildFlightList() {
     return Expanded(
       child: _flightsList.isEmpty
-          ? const Center(
-        child: Text('There are no flights in the list'),
+          ? Center(
+        child: Text(AppLocalizations.of(context)!.translate(Const.FP_NO_FLIGHTS_IN_LIST)!),
       )
           : ListView.builder(
         itemCount: _flightsList.length,
@@ -258,9 +308,11 @@ class _FlightsPageState extends State<FlightsPage> {
           return ListTile(
             leading: Text('${index + 1}'),
             title: Text(
-                '${_flightsList[index].flightCode} - ${_flightsList[index].departureCity} to ${_flightsList[index].destinationCity}'),
+                '${_flightsList[index].flightCode} - ${_flightsList[index]
+                    .departureCity} to ${_flightsList[index].destinationCity}'),
             subtitle: Text(
-                '${_flightsList[index].departureTime} - ${_flightsList[index].arrivalTime}'),
+                '${_flightsList[index].departureTime} - ${_flightsList[index]
+                    .arrivalTime}'),
             onTap: () => _onFlightTapped(_flightsList[index]),
           );
         },
@@ -268,9 +320,54 @@ class _FlightsPageState extends State<FlightsPage> {
     );
   }
 
+  // Add details page
+  Widget _buildFlightDetails() {
+    if (_selectedFlight == null) {
+      return Center(child: Text(AppLocalizations.of(context)!.translate(Const.FP_NO_FLIGHT_SELECTED)!));
+    }
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text('${AppLocalizations.of(context)!.translate(Const.FP_FLIGHT_CODE)}: ${_selectedFlight!.flightCode}',
+              style: const TextStyle(fontSize: 18)),
+          Text('${AppLocalizations.of(context)!.translate(Const.FP_DEPARTURE_CITY)}: ${_selectedFlight!.departureCity}',
+              style: const TextStyle(fontSize: 18)),
+          Text('${AppLocalizations.of(context)!.translate(Const.FP_DESTINATION_CITY)}: ${_selectedFlight!.destinationCity}',
+              style: const TextStyle(fontSize: 18)),
+          Text('${AppLocalizations.of(context)!.translate(Const.FP_DEPARTURE_TIME)}: ${_selectedFlight!.departureTime}',
+              style: const TextStyle(fontSize: 18)),
+          Text('${AppLocalizations.of(context)!.translate(Const.FP_ARRIVAL_TIME)}: ${_selectedFlight!.arrivalTime}',
+              style: const TextStyle(fontSize: 18)),
+          // const SizedBox(height: 20),
+          // Row(
+          //   children: <Widget>[
+          //     Expanded(
+          //       child: ElevatedButton(
+          //         onPressed: _updateFlight,
+          //         child: const Text('Updated Flight'),
+          //       ),
+          //     ),
+          //     const SizedBox(width: 10),
+          //     Expanded(
+          //         child: ElevatedButton(
+          //          onPressed: _confirmDeleteFlight,
+          //          child: const Text('Delete Flight'),
+          //         )
+          //     ),
+          //   ],
+          // ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery
+        .of(context)
+        .size;
     var height = size.height;
     var width = size.width;
 
@@ -278,8 +375,11 @@ class _FlightsPageState extends State<FlightsPage> {
       // Tablet in landscape mode
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: const Text('Flights List'),
+          backgroundColor: Theme
+              .of(context)
+              .colorScheme
+              .inversePrimary,
+          title: Text(AppLocalizations.of(context)!.translate(Const.FP_TITLE)!),
         ),
         body: Row(
           children: <Widget>[
@@ -296,8 +396,8 @@ class _FlightsPageState extends State<FlightsPage> {
             Expanded(
               flex: 3,
               child: _selectedFlight == null
-                  ? const Center(child: Text('No flight selected'))
-                  : _buildFlightForm(),
+                  ? Center(child: Text(AppLocalizations.of(context)!.translate(Const.FP_NO_FLIGHT_SELECTED)!))
+                  : _buildFlightDetails(), // Updated with details page
             ),
           ],
         ),
@@ -306,8 +406,11 @@ class _FlightsPageState extends State<FlightsPage> {
       // Phone or device in portrait mode, show form and list
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: const Text('Flights List'),
+          backgroundColor: Theme
+              .of(context)
+              .colorScheme
+              .inversePrimary,
+          title: Text(AppLocalizations.of(context)!.translate(Const.FP_TITLE)!),
         ),
         body: Column(
           children: [
@@ -320,3 +423,22 @@ class _FlightsPageState extends State<FlightsPage> {
     }
   }
 }
+// else {
+//   // show details
+//   return Scaffold(
+//
+//     appBar: AppBar(
+//       backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+//       title: const Text('Flights List'),
+//       leading: IconButton(
+//         icon: const Icon(Icons.arrow_back),
+//         onPressed: () {
+//           setState(() {
+//             _selectedFlight = null;
+//           });
+//         },
+//       ),
+//     ),
+//     body: _buildFlightDetails(), // Updated to use the new details page function
+//     );
+// }

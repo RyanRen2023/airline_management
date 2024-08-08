@@ -80,6 +80,22 @@ class Const {
   static const String THERE_IS_NO_CUSTOMER_IN_THE_LIST         = 'THERE_IS_NO_CUSTOMER_IN_THE_LIST';
   static const String CHOOSE_TTEMPLATE_AIRPLANE                = 'CHOOSE_TTEMPLATE_AIRPLANE';
 
-
+  static const String FP_TITLE                                      = 'fp_title';
+  static const String FP_FLIGHT_CODE                                = 'fp_flightCode';
+  static const String FP_DEPARTURE_CITY                             = 'fp_departureCity';
+  static const String FP_DESTINATION_CITY                           = 'fp_destinationCity';
+  static const String FP_DEPARTURE_TIME                             = 'fp_departureTime';
+  static const String FP_ARRIVAL_TIME                               = 'fp_arrivalTime';
+  static const String FP_ADD_FLIGHT                                 = 'fp_addFlight';
+  static const String FP_UPDATE_FLIGHT                              = 'fp_updateFlight';
+  static const String FP_DELETE_FLIGHT                              = 'fp_deleteFlight';
+  static const String FP_CANCEL                                     = 'fp_cancel';
+  static const String FP_NO_FLIGHT_SELECTED                         = 'fp_noFlightSelected';
+  static const String FP_FLIGHT_ADDED                               = 'fp_flightAdded';
+  static const String FP_FLIGHT_UPDATED                             = 'fp_flightUpdated';
+  static const String FP_FLIGHT_DELETED                             = 'fp_flightDeleted';
+  static const String FP_PLEASE_FILL_ALL_FIELDS                     = 'fp_pleaseFillAllFields';
+  static const String FP_DELETE_FLIGHT_CONFIRMATION                 = 'fp_deleteFlightConfirmation';
+  static const String FP_NO_FLIGHTS_IN_LIST                         = 'fp_noFlightsInList';
 
 }
